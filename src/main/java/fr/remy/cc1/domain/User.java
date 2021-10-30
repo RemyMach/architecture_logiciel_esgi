@@ -1,7 +1,5 @@
 package fr.remy.cc1.domain;
 
-import java.util.Objects;
-
 public final class User {
 
     private final UserId userId;
@@ -19,12 +17,20 @@ public final class User {
     }
 
     public static User of(UserId userId, String lastname, String firstname, String email, String password) {
-        return new User(userId, lastname, firstname, email,  password);
+        User user = new User(userId, lastname, firstname, email,  password);
+        if(ValidationUserEngine.getInstance().test(user)) {
+            return user;
+        }
+        throw new IllegalArgumentException("Illegal arguments");
     }
 
     public UserId getUserId() {
         return userId;
     }
+
+    public String getEmail() { return email; }
+
+    public String getPassword() { return password; }
 
     @Override
     public String toString() {
@@ -33,6 +39,7 @@ public final class User {
                 ", lastname='" + lastname + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
