@@ -16,6 +16,5 @@ public class RegisterUserEventSubscription implements Subscriber<RegisterUserEve
     public void accept(RegisterUserEvent registerUserEvent) {
         User user = registerUserEvent.getUser();
         mailSender.sendMail(user);
-
     }
 }

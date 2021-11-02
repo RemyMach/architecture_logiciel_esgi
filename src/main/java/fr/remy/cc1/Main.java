@@ -1,33 +1,42 @@
 package fr.remy.cc1;
 
 import fr.remy.cc1.domain.*;
+import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
+import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.UserMailSender;
 import fr.remy.cc1.domain.payment.ApproveTradesman;
 import fr.remy.cc1.domain.payment.Contractor;
 import fr.remy.cc1.domain.payment.PaymentProcess;
-import fr.remy.cc1.infrastructure.DefaultEventBus;
-import fr.remy.cc1.infrastructure.InMemoryUsers;
-import fr.remy.cc1.infrastructure.RegisterUserEvent;
-import fr.remy.cc1.infrastructure.RegisterUserEventSubscription;
+import fr.remy.cc1.infrastructure.*;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        var subscriptionMap =
+        Map<Class, List<Subscriber>> subscriptionMap = new HashMap<Class, List<Subscriber>>();
+        subscriptionMap.put(
+                RegisterUserEvent.class,
+                Collections.singletonList(new RegisterUserEventSubscription(new UserMailSender()))
+        );
+        subscriptionMap.put(
+                PaySubscriptionEvent.class,
+                Collections.singletonList(new PaySubscriptionEventSubscription())
+        );
+        /*var subscriptionMap =
                 Collections.singletonMap(RegisterUserEvent.class,
-                        Collections.singletonList(new RegisterUserEventSubscription(new UserMailSender())));
+                        Collections.singletonList(
+                                new RegisterUserEventSubscription(new UserMailSender())
+                                ));*/
+
         EventBus eventBus = new DefaultEventBus(subscriptionMap);
         Users users = new InMemoryUsers();
-        Handler approveTradesman = new ApproveTradesman();
-        Handler contractor = new Contractor();
-        Handler paymentProcess = new PaymentProcess();
-        paymentProcess.setNext(approveTradesman);
-        approveTradesman.setNext(contractor);
-        UserService userService = new UserService(users, eventBus, paymentProcess);
+        UserService userService = new UserService(users, eventBus);
         final UserId myUserId = users.nextIdentity();
         createUser(userService, myUserId);
     }
