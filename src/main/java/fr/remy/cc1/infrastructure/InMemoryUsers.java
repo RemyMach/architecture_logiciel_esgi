@@ -17,6 +17,7 @@ public class InMemoryUsers implements Users {
 
     @Override
     public void save(User user) {
+        System.out.println("we register the user");
         data.put(user.getUserId(), user);
     }
 
