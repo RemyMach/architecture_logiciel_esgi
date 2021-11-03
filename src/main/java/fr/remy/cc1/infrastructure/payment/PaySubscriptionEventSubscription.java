@@ -1,9 +1,7 @@
-package fr.remy.cc1.infrastructure;
+package fr.remy.cc1.infrastructure.payment;
 
 import fr.remy.cc1.domain.Handler;
-import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.event.Subscriber;
-import fr.remy.cc1.domain.mail.UserMailSender;
 import fr.remy.cc1.domain.payment.ApproveTradesman;
 import fr.remy.cc1.domain.payment.Contractor;
 import fr.remy.cc1.domain.payment.PaymentProcess;

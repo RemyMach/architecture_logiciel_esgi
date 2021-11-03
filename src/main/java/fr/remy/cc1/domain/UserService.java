@@ -2,7 +2,7 @@ package fr.remy.cc1.domain;
 
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
-import fr.remy.cc1.infrastructure.PaySubscriptionEvent;
+import fr.remy.cc1.infrastructure.payment.PaySubscriptionEvent;
 import fr.remy.cc1.infrastructure.RegisterUserEvent;
 
 import java.util.List;
@@ -19,9 +19,9 @@ public final class UserService {
     }
 
     public void create(User user) {
-        this.eventBus.send(PaySubscriptionEvent.withUser(user));
         this.users.save(user);
         this.eventBus.send(RegisterUserEvent.withUser(user));
+        this.eventBus.send(PaySubscriptionEvent.withUser(user));
     }
 
     public List<User> all() {
