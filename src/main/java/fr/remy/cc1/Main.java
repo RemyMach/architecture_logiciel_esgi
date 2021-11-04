@@ -5,8 +5,10 @@ import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.UserMailSender;
 import fr.remy.cc1.infrastructure.*;
+import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 import fr.remy.cc1.infrastructure.payment.PaySubscriptionEvent;
 import fr.remy.cc1.infrastructure.payment.PaySubscriptionEventSubscription;
+import fr.remy.cc1.infrastructure.users.InMemoryUsers;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,9 +18,10 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // à voir comment passer l'objet de l'interface payment pour configurer l'event
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventSubscription(new UserMailSender())),
-                PaySubscriptionEvent.class, Collections.singletonList(new PaySubscriptionEventSubscription())
+                PaySubscriptionEvent.class, Collections.singletonList(new PaySubscriptionEventSubscription(new CreditCardPayment()))
         );
 
         EventBus eventBus = new DefaultEventBus(subscriptionMap);

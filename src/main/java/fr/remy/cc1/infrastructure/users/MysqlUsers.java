@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure;
+package fr.remy.cc1.infrastructure.users;
 
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;

@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure;
+package fr.remy.cc1.infrastructure.creditcards;
 import fr.remy.cc1.domain.CreditCard;
 import fr.remy.cc1.domain.CreditCards;
 
