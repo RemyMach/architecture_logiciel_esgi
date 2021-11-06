@@ -1,10 +1,11 @@
-package fr.remy.cc1.infrastructure;
+package fr.remy.cc1.infrastructure.mail;
 
-import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.Content;
 import fr.remy.cc1.domain.mail.Mail;
 import fr.remy.cc1.domain.mail.Message;
+import fr.remy.cc1.infrastructure.RegisterUserEvent;
 
 public class RegisterUserEventMessengerSubscription implements Subscriber<RegisterUserEvent> {
 

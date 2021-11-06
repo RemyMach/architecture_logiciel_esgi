@@ -1,5 +1,7 @@
 package fr.remy.cc1.domain;
 
+import fr.remy.cc1.domain.user.User;
+
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,5 +1,7 @@
 package fr.remy.cc1.domain;
 
+import fr.remy.cc1.domain.user.User;
+import fr.remy.cc1.domain.user.UserId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

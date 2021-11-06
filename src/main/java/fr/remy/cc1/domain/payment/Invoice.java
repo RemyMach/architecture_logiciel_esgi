@@ -1,8 +1,6 @@
 package fr.remy.cc1.domain.payment;
 
-import fr.remy.cc1.domain.User;
-import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.domain.ValidationUserEngine;
+import fr.remy.cc1.domain.user.User;
 
 import java.math.BigDecimal;
 

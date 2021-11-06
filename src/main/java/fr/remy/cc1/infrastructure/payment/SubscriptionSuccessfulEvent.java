@@ -2,7 +2,7 @@ package fr.remy.cc1.infrastructure.payment;
 
 import fr.remy.cc1.domain.Currency;
 import fr.remy.cc1.domain.SubscriptionOffer;
-import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventId;
 

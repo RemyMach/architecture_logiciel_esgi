@@ -7,11 +7,6 @@ import java.math.BigDecimal;
 public class PaypalPayment implements Payment {
     @Override
     public boolean start(BigDecimal amount) {
-        this.displayMessage();
-        return false;
-    }
-
-    private void displayMessage() {
-        System.out.println("je suis une pômme affiche toi");
+        throw new UnsupportedOperationException("Not yet implemented.");
     }
 }

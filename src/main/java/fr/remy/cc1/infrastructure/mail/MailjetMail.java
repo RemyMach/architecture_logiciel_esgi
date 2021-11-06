@@ -7,6 +7,6 @@ public class MailjetMail implements Mail {
 
     @Override
     public void send(Message message) {
-        System.out.println("Mailjet is sending email to " + message.getRecipient().getEmail());
+        throw new UnsupportedOperationException("Not yet implemented.");
     }
 }

@@ -1,4 +1,6 @@
-package fr.remy.cc1.domain;
+package fr.remy.cc1.domain.user;
+
+import fr.remy.cc1.domain.ValidationUserEngine;
 
 public final class User {
 

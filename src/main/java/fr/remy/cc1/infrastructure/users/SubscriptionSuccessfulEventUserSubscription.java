@@ -1,7 +1,8 @@
-package fr.remy.cc1.infrastructure.payment;
+package fr.remy.cc1.infrastructure.users;
 
-import fr.remy.cc1.domain.Users;
+import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.domain.event.Subscriber;
+import fr.remy.cc1.infrastructure.payment.SubscriptionSuccessfulEvent;
 
 public class SubscriptionSuccessfulEventUserSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
 

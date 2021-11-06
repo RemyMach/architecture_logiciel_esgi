@@ -2,18 +2,19 @@ package fr.remy.cc1.domain;
 
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
+import fr.remy.cc1.domain.user.User;
+import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEvent;
+import fr.remy.cc1.infrastructure.payment.SubscriptionSuccessfulEvent;
 
 public class CreditCardService {
-    private final CreditCards creditCards;
 
     private final EventBus<Event> eventBus;
 
-    public CreditCardService(CreditCards creditCards,EventBus eventBus) {
-        this.creditCards = creditCards;
+    public CreditCardService(EventBus eventBus) {
         this.eventBus = eventBus;
     }
 
-    public void create(CreditCard creditCard) {
-        this.creditCards.save(creditCard);
+    public void save(CreditCard creditCard, User user) {
+        this.eventBus.send(SaveCreditCardEvent.of(creditCard, user));
     }
 }

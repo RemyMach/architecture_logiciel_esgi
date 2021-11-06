@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain.mail;
 
-import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.user.User;
 
 public class Message {
 
