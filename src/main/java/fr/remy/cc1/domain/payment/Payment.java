@@ -1,6 +1,8 @@
 package fr.remy.cc1.domain.payment;
 
+import java.math.BigDecimal;
+
 public interface Payment {
 
-    boolean process(int amount);
+    boolean start(BigDecimal amount);
 }

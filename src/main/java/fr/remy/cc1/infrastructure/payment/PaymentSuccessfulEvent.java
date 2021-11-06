@@ -6,20 +6,18 @@ import fr.remy.cc1.domain.event.EventId;
 
 import java.time.ZonedDateTime;
 
-public class PaySubscriptionEvent implements Event {
+public class PaymentSuccessfulEvent implements Event {
 
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
-    private final User user;
 
-    private PaySubscriptionEvent(EventId eventId, ZonedDateTime occurredDate, User user) {
+    private PaymentSuccessfulEvent(EventId eventId, ZonedDateTime occurredDate) {
         this.eventId = eventId;
         this.occurredDate = occurredDate;
-        this.user = user;
     }
 
-    public static PaySubscriptionEvent withUser(User user) {
-        return new PaySubscriptionEvent(EventId.create(), ZonedDateTime.now(), user);
+    public static PaymentSuccessfulEvent withUser() {
+        return new PaymentSuccessfulEvent(EventId.create(), ZonedDateTime.now());
     }
 
     @Override
@@ -34,9 +32,5 @@ public class PaySubscriptionEvent implements Event {
 
     public EventId getEventId() {
         return eventId;
-    }
-
-    public User getUser() {
-        return user;
     }
 }
