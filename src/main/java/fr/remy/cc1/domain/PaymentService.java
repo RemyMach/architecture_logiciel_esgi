@@ -3,10 +3,7 @@ package fr.remy.cc1.domain;
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.infrastructure.RegisterUserEvent;
-import fr.remy.cc1.infrastructure.payment.PaymentSuccessfulEvent;
-
-import java.math.BigDecimal;
+import fr.remy.cc1.infrastructure.payment.SubscriptionSuccessfulEvent;
 
 public class PaymentService {
 
@@ -19,12 +16,12 @@ public class PaymentService {
         this.eventBus = eventBus;
     }
 
-    public void verifyPayment(BigDecimal amount) {
+    public void paySubscription(SubscriptionOffer subscriptionOffer, Currency currency, User user) {
         try {
-            this.payment.start(amount);
+            this.payment.start(subscriptionOffer.getAmount());
         } catch(Exception e) {
             // voir ce qu'on fait pour l'erreur
         }
-        this.eventBus.send(PaymentSuccessfulEvent.withUser());
+        this.eventBus.send(SubscriptionSuccessfulEvent.of(user, subscriptionOffer, currency));
     }
 }

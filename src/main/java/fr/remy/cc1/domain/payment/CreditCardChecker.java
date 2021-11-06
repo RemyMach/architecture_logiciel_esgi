@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain.payment;
 
-public class PaymentProcess extends PaymentHandler{
+public class CreditCardChecker extends PaymentHandler{
 
     @Override
     public boolean process() {

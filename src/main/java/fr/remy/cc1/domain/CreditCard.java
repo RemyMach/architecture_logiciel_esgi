@@ -10,17 +10,14 @@ public class CreditCard {
 
     private final String name;
 
-    private final User user;
-
-    private CreditCard(int number, int expiryDate, int securityCode, String name, User user) {
+    private CreditCard(int number, int expiryDate, int securityCode, String name) {
         this.number = number;
         this.expiryDate = expiryDate;
         this.securityCode = securityCode;
         this.name = name;
-        this.user = user;
     }
 
-    public static CreditCard of(int number, int expiryDate, int securityCode, String name, User user) {
-        return new CreditCard(number, expiryDate, securityCode, name, user);
+    public static CreditCard of(int number, int expiryDate, int securityCode, String name) {
+        return new CreditCard(number, expiryDate, securityCode, name);
     }
 }

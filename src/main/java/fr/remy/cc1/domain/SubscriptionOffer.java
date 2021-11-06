@@ -1,19 +1,27 @@
 package fr.remy.cc1.domain;
 
+import java.math.BigDecimal;
+
 public class SubscriptionOffer {
 
-    private final float price;
-    private final Currency currency;
+    private final BigDecimal amount;
+
     private final int discountPercentage;
 
-
-    private SubscriptionOffer(float price, Currency currency, int discountPercentage) {
-        this.price = price;
-        this.currency = currency;
+    private SubscriptionOffer(BigDecimal amount, int discountPercentage) {
+        this.amount = amount;
         this.discountPercentage = discountPercentage;
     }
 
-    public static SubscriptionOffer of(float price, Currency currency, int discountPercentage) {
-       return new SubscriptionOffer(price, currency, discountPercentage);
+    public static SubscriptionOffer of(BigDecimal amount, int discountPercentage) {
+       return new SubscriptionOffer(amount, discountPercentage);
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public int getDiscountPercentage() {
+        return discountPercentage;
     }
 }

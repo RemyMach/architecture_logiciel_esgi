@@ -1,5 +1,6 @@
 package fr.remy.cc1.infrastructure.users;
 
+import fr.remy.cc1.domain.SubscriptionOffer;
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.domain.Users;
@@ -19,6 +20,11 @@ public class InMemoryUsers implements Users {
     public void save(User user) {
         System.out.println("we register the user");
         data.put(user.getUserId(), user);
+    }
+
+    @Override
+    public void saveSubscriptionOffer(User user, SubscriptionOffer subscriptionOffer) {
+        System.out.println("we register the subscription for the user");
     }
 
     @Override

@@ -4,16 +4,16 @@ import fr.remy.cc1.domain.*;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.Mail;
-import fr.remy.cc1.domain.mail.UserMailSender;
+import fr.remy.cc1.domain.payment.Invoices;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.infrastructure.*;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.infrastructure.payment.PaymentSuccessfulEvent;
-import fr.remy.cc1.infrastructure.payment.PaymentSuccessfulEventSubscription;
-import fr.remy.cc1.infrastructure.payment.PaypalPayment;
+import fr.remy.cc1.infrastructure.payment.*;
 import fr.remy.cc1.infrastructure.users.InMemoryUsers;
+import fr.remy.cc1.infrastructure.users.MysqlUsers;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -22,34 +22,36 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // à voir comment passer l'objet de l'interface payment pour configurer l'event
-        /*Map<Class, List<Subscriber>> subscriptionMap = Map.of(
-                RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventSubscription(new UserMailSender())),
-                PaySubscriptionEvent.class, Collections.singletonList(new PaySubscriptionEventSubscription(new CreditCardPayment()))
-        );*/
-
-        // passer le moyen de paiement autrement que par le paymentEventSubscription
-        // un event qui représente le fail du user pour payer
-        // un event qui représente le success du user pour payer
         Mail sandboxMail = new SandboxMail();
-
+        Invoices invoices = new InMemoryInvoices();
+        Users users = new InMemoryUsers();
+        List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
+                new PaymentSuccessfulEventMessengerSubscription(sandboxMail),
+                new PaymentSuccessfulEventInvoiceSubscription(invoices),
+                new PaymentSuccessfulEventUserSubscription(users)
+        );
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
-                RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventSubscription(sandboxMail)),
-                PaymentSuccessfulEvent.class, Collections.singletonList(new PaymentSuccessfulEventSubscription(sandboxMail))
+                RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(sandboxMail)),
+                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
         );
 
-
-        Payment payment = new PaypalPayment();
+        CreditCard creditCard = CreditCard.of(1234567262, 1203, 321, "POMME");
+        Payment payment = new CreditCardPayment(creditCard);
         EventBus eventBus = new DefaultEventBus(subscriptionMap);
-        Users users = new InMemoryUsers();
         UserService userService = new UserService(users, eventBus);
-        final UserId myUserId = users.nextIdentity();
-        createUser(userService, myUserId);
         PaymentService paymentService = new PaymentService(payment, eventBus);
-        paymentService.verifyPayment(new BigDecimal(12.05));
+        final UserId myUserId = users.nextIdentity();
+        createUser(userService, myUserId, paymentService);
     }
-    private static void createUser(UserService userService, UserId myUserId) {
+
+    private static void createUser(UserService userService, UserId myUserId, PaymentService paymentService) {
         User user = User.of(myUserId, "Machavoine", "Rémy", "pomme@pomme.fr", "aZertyu9!");
         userService.create(user);
+        paySubscriptionOffer(user, paymentService);
+    }
+
+    private static void paySubscriptionOffer(User user, PaymentService paymentService) {
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(12.05),10);
+        paymentService.paySubscription(subscriptionOffer,  Currency.EUR, user);
     }
 }

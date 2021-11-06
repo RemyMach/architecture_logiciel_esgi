@@ -5,19 +5,22 @@ import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.Content;
 import fr.remy.cc1.domain.mail.Mail;
 import fr.remy.cc1.domain.mail.Message;
-import fr.remy.cc1.domain.mail.UserMailSender;
 
-public class RegisterUserEventSubscription implements Subscriber<RegisterUserEvent> {
+public class RegisterUserEventMessengerSubscription implements Subscriber<RegisterUserEvent> {
 
     private final Mail mail;
 
-    public RegisterUserEventSubscription(Mail mail) {
+    public RegisterUserEventMessengerSubscription(Mail mail) {
         this.mail = mail;
     }
 
     @Override
     public void accept(RegisterUserEvent registerUserEvent) {
         User user = registerUserEvent.getUser();
+        this.sendMail(user);
+    }
+
+    private void sendMail(User user) {
         Message message = new Message(
                 user,
                 "pomme@pomme.fr",

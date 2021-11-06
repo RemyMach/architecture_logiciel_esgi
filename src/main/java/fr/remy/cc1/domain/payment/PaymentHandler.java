@@ -1,5 +1,6 @@
 package fr.remy.cc1.domain.payment;
 
+import fr.remy.cc1.domain.CreditCard;
 import fr.remy.cc1.domain.Handler;
 
 public abstract class PaymentHandler implements Handler {
@@ -12,7 +13,7 @@ public abstract class PaymentHandler implements Handler {
     }
 
     @Override
-    public abstract boolean process();
+    public abstract boolean process(CreditCard creditCard);
 
     @Override
     public boolean checkNext() {
