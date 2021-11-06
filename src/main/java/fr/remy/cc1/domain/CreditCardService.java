@@ -4,7 +4,6 @@ import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEvent;
-import fr.remy.cc1.infrastructure.payment.SubscriptionSuccessfulEvent;
 
 public class CreditCardService {
 
