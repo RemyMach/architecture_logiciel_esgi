@@ -1,14 +1,8 @@
 package fr.remy.cc1.infrastructure.payment;
 
 import fr.remy.cc1.domain.CreditCard;
-import fr.remy.cc1.domain.Handler;
-import fr.remy.cc1.domain.payment.ApproveTradesman;
-import fr.remy.cc1.domain.payment.Contractor;
-import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.domain.payment.CreditCardChecker;
-
+import fr.remy.cc1.domain.payment.*;
 import java.math.BigDecimal;
-
 
 public class CreditCardPayment implements Payment {
 
@@ -21,16 +15,16 @@ public class CreditCardPayment implements Payment {
     @Override
     public boolean start(BigDecimal amount) {
 
-        Handler firstPaymentHandler = this.buildPaymentHandlers();
-        firstPaymentHandler.process();
+        PaymentCreditCardHandler firstPaymentHandler = this.buildPaymentHandlers();
+        firstPaymentHandler.process(this.creditCard);
         return true;
     }
 
-    private Handler buildPaymentHandlers() {
+    private PaymentCreditCardHandler buildPaymentHandlers() {
 
-        Handler paymentProcess = new CreditCardChecker();
-        Handler approveTradesman = new ApproveTradesman();
-        Handler contractor = new Contractor();
+        PaymentCreditCardHandler paymentProcess = new CreditCardChecker();
+        PaymentCreditCardHandler approveTradesman = new CreditCardApproveTradesman();
+        PaymentCreditCardHandler contractor = new CreditCardContractor();
 
         paymentProcess.setNext(approveTradesman);
         approveTradesman.setNext(contractor);

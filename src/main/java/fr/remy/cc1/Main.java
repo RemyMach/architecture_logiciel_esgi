@@ -10,7 +10,6 @@ import fr.remy.cc1.infrastructure.*;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.infrastructure.payment.*;
 import fr.remy.cc1.infrastructure.users.InMemoryUsers;
-import fr.remy.cc1.infrastructure.users.MysqlUsers;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -26,9 +25,9 @@ public class Main {
         Invoices invoices = new InMemoryInvoices();
         Users users = new InMemoryUsers();
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
-                new PaymentSuccessfulEventMessengerSubscription(sandboxMail),
-                new PaymentSuccessfulEventInvoiceSubscription(invoices),
-                new PaymentSuccessfulEventUserSubscription(users)
+                new SubscriptionSuccessfulEventMessengerSubscription(sandboxMail),
+                new SubscriptionSuccessfulEventInvoiceSubscription(invoices),
+                new SubscriptionSuccessfulEventUserSubscription(users)
         );
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(sandboxMail)),

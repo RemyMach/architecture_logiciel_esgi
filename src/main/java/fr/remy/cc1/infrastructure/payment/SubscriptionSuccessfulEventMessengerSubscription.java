@@ -3,11 +3,11 @@ package fr.remy.cc1.infrastructure.payment;
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.Mail;
 
-public class PaymentSuccessfulEventMessengerSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
+public class SubscriptionSuccessfulEventMessengerSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
 
     private final Mail mail;
 
-    public PaymentSuccessfulEventMessengerSubscription(Mail mail) {
+    public SubscriptionSuccessfulEventMessengerSubscription(Mail mail) {
         this.mail = mail;
     }
 

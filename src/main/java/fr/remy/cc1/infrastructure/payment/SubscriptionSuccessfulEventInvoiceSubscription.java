@@ -4,16 +4,17 @@ import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.payment.Invoice;
 import fr.remy.cc1.domain.payment.Invoices;
 
-public class PaymentSuccessfulEventInvoiceSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
+public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
 
     private final Invoices invoices;
 
-    public PaymentSuccessfulEventInvoiceSubscription(Invoices invoices) {
+    public SubscriptionSuccessfulEventInvoiceSubscription(Invoices invoices) {
         this.invoices = invoices;
     }
 
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
+        System.out.println("on enregistre la facture");
         Invoice invoice = Invoice.of(subscriptionSuccessfulEvent.getSubscriptionOffer().getAmount(), subscriptionSuccessfulEvent.getUser());
         this.invoices.save(invoice);
     }
