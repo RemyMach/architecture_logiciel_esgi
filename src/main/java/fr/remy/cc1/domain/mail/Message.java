@@ -18,4 +18,20 @@ public class Message {
         this.subject = subject;
         this.content = content;
     }
+
+    public User getRecipient() {
+        return recipient;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public Content getContent() {
+        return content;
+    }
 }

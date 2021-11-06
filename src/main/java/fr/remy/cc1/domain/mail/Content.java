@@ -11,7 +11,7 @@ public class Content {
 
     private Content(String text) {};
 
-    public Content withTemplate(String templatePath) {
+    public static Content withTemplate(String templatePath) {
         try {
             Path templateFilePath = Path.of(templatePath);
             if (Files.notExists(templateFilePath)) {
@@ -23,7 +23,7 @@ public class Content {
         }
     }
 
-    public Content withString(String text) {
+    public static Content withText(String text) {
         return new Content(text);
     }
 
