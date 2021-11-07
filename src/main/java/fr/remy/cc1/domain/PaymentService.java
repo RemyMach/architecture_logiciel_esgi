@@ -5,16 +5,15 @@ import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.infrastructure.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.infrastructure.UserCreationEventBus;
 
 public class PaymentService {
 
     private final Payment payment;
 
-    private final EventBus<Event> eventBus;
 
-    public PaymentService(Payment payment, EventBus eventBus) {
+    public PaymentService(Payment payment) {
         this.payment = payment;
-        this.eventBus = eventBus;
     }
 
     public void paySubscription(SubscriptionOffer subscriptionOffer, Currency currency, User user) {
@@ -23,6 +22,6 @@ public class PaymentService {
         } catch(Exception e) {
             // voir ce qu'on fait pour l'erreur
         }
-        this.eventBus.send(SubscriptionSuccessfulEvent.of(user, subscriptionOffer, currency));
+        UserCreationEventBus.getInstance().send(SubscriptionSuccessfulEvent.of(user, subscriptionOffer, currency));
     }
 }

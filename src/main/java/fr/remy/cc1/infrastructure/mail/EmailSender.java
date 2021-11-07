@@ -9,7 +9,7 @@ public class EmailSender {
 
     private Mail mail;
 
-    private void constructor() { }
+    private void EmailSender() { }
 
     public static EmailSender getInstance() {
         if (emailSenderInstance == null) {
@@ -25,5 +25,4 @@ public class EmailSender {
     public void send(Message message) {
         this.mail.send(message);
     }
-
 }

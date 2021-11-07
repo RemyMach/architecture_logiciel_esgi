@@ -3,7 +3,6 @@ package fr.remy.cc1;
 import fr.remy.cc1.domain.*;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.event.Subscriber;
-import fr.remy.cc1.domain.mail.Mail;
 import fr.remy.cc1.domain.payment.CreditCardId;
 import fr.remy.cc1.domain.payment.Invoices;
 import fr.remy.cc1.domain.payment.Payment;
@@ -38,6 +37,15 @@ public class Main {
         EmailSender emailSender = EmailSender.getInstance();
         emailSender.setMail(new SandboxMail());
 
+        Users users = new InMemoryUsers();
+        Invoices invoices = new InMemoryInvoices();
+        CreditCards creditCards = new InMemoryCreditCards();
+
+        Map<Class, List<Subscriber>> subscriptionMap = initSubscriptionMap(emailSender, invoices, users, creditCards);
+        UserCreationEventBus userCreationEventBus = UserCreationEventBus.getInstance();
+        userCreationEventBus.setSubscribers(subscriptionMap);
+
+
         String lastnameStub = "Machavoine";
         String firstnameStub = "Rémy";
         String emailStub = "pomme@pomme.fr";
@@ -50,13 +58,6 @@ public class Main {
         String paymentChoiceStub = "CreditCard";
         boolean saveCreditCardStub = true;
 
-        Users users = new InMemoryUsers();
-        Invoices invoices = new InMemoryInvoices();
-        CreditCards creditCards = new InMemoryCreditCards();
-
-        Map<Class, List<Subscriber>> subscriptionMap = initSubscriptionMap(emailSender, invoices, users, creditCards);
-        EventBus eventBus = new DefaultEventBus(subscriptionMap);
-
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(priceSubscriptionOfferStub,discountPercentageStub);
 
         final UserId myUserId = users.nextIdentity();
@@ -67,13 +68,12 @@ public class Main {
         final CreditCardId creditCardId = creditCards.nextIdentity();
         CreditCard creditCard = CreditCard.of(creditCardId,1234567262, 1203, 321, "POMME");
 
-        createUser(user, users, eventBus, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
     }
 
     private static void createUser(
             User user,
             Users users,
-            EventBus eventBus,
             CreditCard creditCard, String currency,
             String paymentMethod,
             boolean saveCreditCard,
@@ -82,13 +82,13 @@ public class Main {
 
         Payment payment = getPayment(paymentMethod, creditCard);
 
-        UserService userService = new UserService(users, eventBus);
-        PaymentService paymentService = new PaymentService(payment, eventBus);
+        UserService userService = new UserService(users);
+        PaymentService paymentService = new PaymentService(payment);
 
         paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(currency), user);
         userService.create(user);
         if(saveCreditCard)
-            eventBus.send(SaveCreditCardEvent.of(creditCard, user));
+            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(creditCard, user));
     }
 
 

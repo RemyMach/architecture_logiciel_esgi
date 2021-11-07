@@ -3,16 +3,28 @@ package fr.remy.cc1.infrastructure;
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.event.Subscriber;
+import fr.remy.cc1.infrastructure.mail.EmailSender;
 
 import java.util.List;
 import java.util.Map;
 
 
-public class DefaultEventBus<E extends Event> implements EventBus<E>  {
+public class UserCreationEventBus<E extends Event> implements EventBus<E>  {
 
     private Map<Class<E>, List<Subscriber<E>>> subscribers;
 
-    public DefaultEventBus(Map<Class<E>, List<Subscriber<E>>> subscribers) {
+    private static UserCreationEventBus userCreationEventBusInstance;
+
+    private UserCreationEventBus() { }
+
+    public static UserCreationEventBus getInstance() {
+        if (userCreationEventBusInstance == null) {
+            userCreationEventBusInstance = new UserCreationEventBus();
+        }
+        return userCreationEventBusInstance;
+    }
+
+    public void setSubscribers(Map<Class<E>, List<Subscriber<E>>> subscribers) {
         this.subscribers = subscribers;
     }
 
