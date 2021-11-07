@@ -2,6 +2,7 @@ package fr.remy.cc1.infrastructure.invoices;
 
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.payment.Invoice;
+import fr.remy.cc1.domain.payment.InvoiceId;
 import fr.remy.cc1.domain.payment.Invoices;
 import fr.remy.cc1.infrastructure.payment.SubscriptionSuccessfulEvent;
 
@@ -16,7 +17,8 @@ public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscribe
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
         System.out.println("on enregistre la facture");
-        Invoice invoice = Invoice.of(subscriptionSuccessfulEvent.getSubscriptionOffer().getAmount(), subscriptionSuccessfulEvent.getUser());
+        final InvoiceId invoiceId = this.invoices.nextIdentity();
+        Invoice invoice = Invoice.of(invoiceId, subscriptionSuccessfulEvent.getSubscriptionOffer().getAmount(), subscriptionSuccessfulEvent.getUser());
         this.invoices.save(invoice);
     }
 }

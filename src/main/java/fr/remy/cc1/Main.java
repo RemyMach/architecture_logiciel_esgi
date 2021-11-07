@@ -4,6 +4,7 @@ import fr.remy.cc1.domain.*;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.Mail;
+import fr.remy.cc1.domain.payment.CreditCardId;
 import fr.remy.cc1.domain.payment.Invoices;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.user.User;
@@ -55,7 +56,10 @@ public class Main {
         final UserId myUserId = users.nextIdentity();
         User user = User.of(myUserId, lastnameStub, firstnameStub, emailStub, passwordStub);
 
-        CreditCard creditCard = CreditCard.of(1234567262, 1203, 321, "POMME");
+        validCurrency(currencyChoiceStub);
+
+        final CreditCardId creditCardId = creditCards.nextIdentity();
+        CreditCard creditCard = CreditCard.of(creditCardId,1234567262, 1203, 321, "POMME");
 
         Map<Class, List<Subscriber>> subscriptionMap = initSubscriptionMap(mail, invoices, users, creditCards);
         createACompleteUser(user, users, subscriptionMap, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
@@ -78,8 +82,8 @@ public class Main {
         PaymentService paymentService = new PaymentService(payment, eventBus);
         CreditCardService creditCardService = new CreditCardService(eventBus);
 
-        userService.create(user);
         paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(currency), user);
+        userService.create(user);
         if(saveCreditCard)
             creditCardService.save(creditCard, user);
     }
@@ -91,7 +95,15 @@ public class Main {
         }else if (choice.equals("CreditCard")) {
             return new CreditCardPayment(creditCard);
         }
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("You can choose uniquely Paypal and CreditCard to pay");
+    }
+
+    private static void validCurrency(String currencyChoice) {
+        try {
+            Currency.valueOf(currencyChoice);
+        }catch(IllegalArgumentException illegalArgumentException) {
+            throw new IllegalArgumentException("EUR and USD are available to pay");
+        }
     }
 
     private static Map<Class, List<Subscriber>> initSubscriptionMap(Mail mail, Invoices invoices, Users users, CreditCards creditCards) {
