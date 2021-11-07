@@ -13,11 +13,10 @@ public class CreditCardPayment implements Payment {
     }
 
     @Override
-    public boolean start(BigDecimal amount) {
+    public void start(BigDecimal amount) {
 
         PaymentCreditCardHandler firstPaymentHandler = this.buildPaymentHandlers();
         firstPaymentHandler.process(this.creditCard);
-        return true;
     }
 
     private PaymentCreditCardHandler buildPaymentHandlers() {

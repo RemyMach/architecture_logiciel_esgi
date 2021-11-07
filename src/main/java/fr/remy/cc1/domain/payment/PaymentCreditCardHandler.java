@@ -10,12 +10,11 @@ public abstract class PaymentCreditCardHandler {
         this.nextHandler = handler;
     }
 
-    public abstract boolean process(CreditCard creditCard);
+    public abstract void process(CreditCard creditCard);
 
-    public boolean checkNext(CreditCard creditCard) {
-        if(this.nextHandler == null) {
-            return false;
+    public void checkNext(CreditCard creditCard) {
+        if(this.nextHandler != null) {
+            this.nextHandler.process(creditCard);
         }
-        return this.nextHandler.process(creditCard);
     }
 }

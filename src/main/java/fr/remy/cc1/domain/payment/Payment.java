@@ -4,5 +4,5 @@ import java.math.BigDecimal;
 
 public interface Payment {
 
-    boolean start(BigDecimal amount);
+    void start(BigDecimal amount);
 }

@@ -5,8 +5,8 @@ import fr.remy.cc1.domain.CreditCard;
 public class CreditCardApproveTradesman extends PaymentCreditCardHandler {
 
     @Override
-    public boolean process(CreditCard creditCard) {
+    public void process(CreditCard creditCard) {
         System.out.println("je suis dans le approve tradesman");
-        return checkNext(creditCard);
+        checkNext(creditCard);
     }
 }

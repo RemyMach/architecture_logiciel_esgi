@@ -1,6 +1,10 @@
 package fr.remy.cc1.domain;
 
+import fr.remy.cc1.domain.payment.CreditCardId;
+
 public class CreditCard {
+
+    private final CreditCardId creditCardId;
 
     private final int number;
 
@@ -10,14 +14,19 @@ public class CreditCard {
 
     private final String name;
 
-    private CreditCard(int number, int expiryDate, int securityCode, String name) {
+    private CreditCard(CreditCardId creditCardId, int number, int expiryDate, int securityCode, String name) {
+        this.creditCardId = creditCardId;
         this.number = number;
         this.expiryDate = expiryDate;
         this.securityCode = securityCode;
         this.name = name;
     }
 
-    public static CreditCard of(int number, int expiryDate, int securityCode, String name) {
-        return new CreditCard(number, expiryDate, securityCode, name);
+    public static CreditCard of(CreditCardId creditCardId, int number, int expiryDate, int securityCode, String name) {
+        return new CreditCard(creditCardId, number, expiryDate, securityCode, name);
+    }
+
+    public CreditCardId getCreditCardId() {
+        return creditCardId;
     }
 }

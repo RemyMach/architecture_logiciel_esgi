@@ -33,45 +33,78 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Mail sandboxMail = new SandboxMail();
-        Invoices invoices = new InMemoryInvoices();
+        String lastnameStub = "Machavoine";
+        String firstnameStub = "Rémy";
+        String emailStub = "pomme@pomme.fr";
+        String passwordStub = "aZertyu9?";
+
+        BigDecimal priceSubscriptionOfferStub = new BigDecimal("12.05");
+        int discountPercentageStub = 10;
+
+        String currencyChoiceStub = "EUR";
+        String paymentChoiceStub = "CreditCard";
+        boolean saveCreditCardStub = true;
+
         Users users = new InMemoryUsers();
+        Mail mail = new SandboxMail();
+        Invoices invoices = new InMemoryInvoices();
         CreditCards creditCards = new InMemoryCreditCards();
 
-        List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
-                new SubscriptionSuccessfulEventMessengerSubscription(sandboxMail),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices),
-                new SubscriptionSuccessfulEventUserSubscription(users)
-        );
-
-        Map<Class, List<Subscriber>> subscriptionMap = Map.of(
-                RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(sandboxMail)),
-                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCards)),
-                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
-        );
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(priceSubscriptionOfferStub,discountPercentageStub);
 
         final UserId myUserId = users.nextIdentity();
-        User user = User.of(myUserId, "Machavoine", "Rémy", "pomme@pomme.fr", "aZertyu9!");
+        User user = User.of(myUserId, lastnameStub, firstnameStub, emailStub, passwordStub);
+
         CreditCard creditCard = CreditCard.of(1234567262, 1203, 321, "POMME");
 
-        Payment payment = new CreditCardPayment(creditCard);
+        Map<Class, List<Subscriber>> subscriptionMap = initSubscriptionMap(mail, invoices, users, creditCards);
+        createACompleteUser(user, users, subscriptionMap, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+    }
+
+    private static void createACompleteUser(
+            User user,
+            Users users,
+            Map<Class, List<Subscriber>> subscriptionMap,
+            CreditCard creditCard, String currency,
+            String paymentMethod,
+            boolean saveCreditCard,
+            SubscriptionOffer subscriptionOffer
+    ) {
+
+        Payment payment = getPayment(paymentMethod, creditCard);
 
         EventBus eventBus = new DefaultEventBus(subscriptionMap);
         UserService userService = new UserService(users, eventBus);
         PaymentService paymentService = new PaymentService(payment, eventBus);
         CreditCardService creditCardService = new CreditCardService(eventBus);
 
-        createUser(userService, user, paymentService);
-        creditCardService.save(creditCard, user);
-    }
-
-    private static void createUser(UserService userService, User user, PaymentService paymentService) {
         userService.create(user);
-        paySubscriptionOffer(user, paymentService);
+        paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(currency), user);
+        if(saveCreditCard)
+            creditCardService.save(creditCard, user);
     }
 
-    private static void paySubscriptionOffer(User user, PaymentService paymentService) {
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(12.05),10);
-        paymentService.paySubscription(subscriptionOffer,  Currency.EUR, user);
+
+    private static Payment getPayment(String choice, CreditCard creditCard) {
+        if(choice.equals("Paypal")) {
+            return new PaypalPayment();
+        }else if (choice.equals("CreditCard")) {
+            return new CreditCardPayment(creditCard);
+        }
+        throw new UnsupportedOperationException();
+    }
+
+    private static Map<Class, List<Subscriber>> initSubscriptionMap(Mail mail, Invoices invoices, Users users, CreditCards creditCards) {
+        List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
+                new SubscriptionSuccessfulEventMessengerSubscription(mail),
+                new SubscriptionSuccessfulEventInvoiceSubscription(invoices),
+                new SubscriptionSuccessfulEventUserSubscription(users)
+        );
+
+        return Map.of(
+                RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(mail)),
+                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCards)),
+                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
+        );
     }
 }

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public class PaypalPayment implements Payment {
     @Override
-    public boolean start(BigDecimal amount) {
+    public void start(BigDecimal amount) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 }
