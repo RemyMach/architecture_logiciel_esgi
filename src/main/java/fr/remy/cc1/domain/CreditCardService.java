@@ -7,13 +7,13 @@ import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEvent;
 
 public class CreditCardService {
 
-    private final EventBus<Event> eventBus;
+    private final CreditCards creditCards;
 
-    public CreditCardService(EventBus eventBus) {
-        this.eventBus = eventBus;
+    public CreditCardService(CreditCards creditCards) {
+        this.creditCards = creditCards;
     }
 
     public void save(CreditCard creditCard, User user) {
-        this.eventBus.send(SaveCreditCardEvent.of(creditCard, user));
+        this.creditCards.save(creditCard, user);
     }
 }

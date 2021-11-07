@@ -1,5 +1,6 @@
 package fr.remy.cc1.domain.user;
 
+import fr.remy.cc1.domain.PaymentService;
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.infrastructure.RegisterUserEvent;

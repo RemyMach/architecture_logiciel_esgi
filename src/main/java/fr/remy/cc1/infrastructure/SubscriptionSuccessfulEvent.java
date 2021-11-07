@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure.payment;
+package fr.remy.cc1.infrastructure;
 
 import fr.remy.cc1.domain.Currency;
 import fr.remy.cc1.domain.SubscriptionOffer;

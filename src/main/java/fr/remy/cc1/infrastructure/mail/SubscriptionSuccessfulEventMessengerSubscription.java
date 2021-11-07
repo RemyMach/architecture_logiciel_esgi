@@ -2,14 +2,14 @@ package fr.remy.cc1.infrastructure.mail;
 
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.Mail;
-import fr.remy.cc1.infrastructure.payment.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.infrastructure.SubscriptionSuccessfulEvent;
 
 public class SubscriptionSuccessfulEventMessengerSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
 
-    private final Mail mail;
+    private final EmailSender emailSender;
 
-    public SubscriptionSuccessfulEventMessengerSubscription(Mail mail) {
-        this.mail = mail;
+    public SubscriptionSuccessfulEventMessengerSubscription(EmailSender emailSender) {
+        this.emailSender = emailSender;
     }
 
     @Override

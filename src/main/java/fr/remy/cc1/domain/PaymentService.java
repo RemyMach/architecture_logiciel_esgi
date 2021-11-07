@@ -4,7 +4,7 @@ import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.infrastructure.payment.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.infrastructure.SubscriptionSuccessfulEvent;
 
 public class PaymentService {
 
