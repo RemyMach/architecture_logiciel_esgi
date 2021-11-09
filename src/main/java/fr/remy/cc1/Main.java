@@ -1,11 +1,11 @@
 package fr.remy.cc1;
 
 import fr.remy.cc1.domain.*;
-import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.payment.CreditCardId;
 import fr.remy.cc1.domain.payment.Invoices;
 import fr.remy.cc1.domain.payment.Payment;
+import fr.remy.cc1.domain.payment.PaymentBuild;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.UserService;
@@ -20,7 +20,6 @@ import fr.remy.cc1.infrastructure.mail.EmailSender;
 import fr.remy.cc1.infrastructure.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.infrastructure.mail.SubscriptionSuccessfulEventMessengerSubscription;
-import fr.remy.cc1.infrastructure.payment.*;
 import fr.remy.cc1.infrastructure.users.InMemoryUsers;
 import fr.remy.cc1.infrastructure.users.SubscriptionSuccessfulEventUserSubscription;
 
@@ -63,7 +62,7 @@ public class Main {
         final UserId myUserId = users.nextIdentity();
         User user = User.of(myUserId, lastnameStub, firstnameStub, emailStub, passwordStub);
 
-        validateCurrency(currencyChoiceStub);
+        CurrencyValidator.getInstance().test(currencyChoiceStub);
 
         final CreditCardId creditCardId = creditCards.nextIdentity();
         CreditCard creditCard = CreditCard.of(creditCardId,1234567262, 1203, 321, "POMME");
@@ -80,7 +79,8 @@ public class Main {
             SubscriptionOffer subscriptionOffer
     ) {
 
-        Payment payment = getPayment(paymentMethod, creditCard);
+        PaymentBuild paymentBuild = new PaymentBuild();
+        Payment payment = paymentBuild.getPaymentOf(paymentMethod, creditCard);
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
@@ -89,24 +89,6 @@ public class Main {
         userService.create(user);
         if(saveCreditCard)
             UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(creditCard, user));
-    }
-
-
-    private static Payment getPayment(String choice, CreditCard creditCard) {
-        if(choice.equals("Paypal")) {
-            return new PaypalPayment();
-        }else if (choice.equals("CreditCard")) {
-            return new CreditCardPayment(creditCard);
-        }
-        throw new UnsupportedOperationException("You can choose uniquely Paypal or CreditCard to pay");
-    }
-
-    private static void validateCurrency(String currencyChoice) {
-        try {
-            Currency.valueOf(currencyChoice);
-        }catch(IllegalArgumentException illegalArgumentException) {
-            throw new IllegalArgumentException("Uniquely EUR and USD are available to pay");
-        }
     }
 
     private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users, CreditCards creditCards) {
