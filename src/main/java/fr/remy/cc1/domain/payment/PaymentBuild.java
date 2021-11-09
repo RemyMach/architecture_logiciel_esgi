@@ -16,7 +16,7 @@ public class PaymentBuild {
 
     public Payment getPaymentOf(String paymentMethod, CreditCard creditCard) {
         if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {
-            throw new UnsupportedOperationException(exceptionMessage);
+            throw new IllegalArgumentException(exceptionMessage);
         }
 
         if(paymentMethod.equals(PAYMENT_METHOD_SUPPORTED.get(0))) {
@@ -25,7 +25,11 @@ public class PaymentBuild {
             return new CreditCardPayment(creditCard);
         }
 
-        throw new UnsupportedOperationException(exceptionMessage);
+        throw new IllegalArgumentException(exceptionMessage);
+    }
+
+    public String getExceptionMessage() {
+        return exceptionMessage;
     }
 
 }

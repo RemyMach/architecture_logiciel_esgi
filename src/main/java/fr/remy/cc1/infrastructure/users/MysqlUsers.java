@@ -32,4 +32,7 @@ public class MysqlUsers implements Users {
     public List<User> findAll() {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
+
+    @Override
+    public SubscriptionOffer getSubscriptionOffer(UserId userId) { throw new UnsupportedOperationException("Not yet implemented."); }
 }

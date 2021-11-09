@@ -13,4 +13,6 @@ public interface Users {
     UserId nextIdentity();
 
     List<User> findAll();
+
+    SubscriptionOffer getSubscriptionOffer(UserId userId);
 }

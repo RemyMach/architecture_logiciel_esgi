@@ -25,9 +25,9 @@ import java.util.Map;
 
 public class UserCreationStub {
 
-    public static void initUserCreationTest() {
+    public static void initUserCreationTest(Users users, Invoices invoices, CreditCards creditCards) {
         buildStubMailSender();
-        buildStubEventBus();
+        buildStubEventBus(users, invoices, creditCards);
     }
 
     private static void buildStubMailSender() {
@@ -35,10 +35,7 @@ public class UserCreationStub {
         emailSender.setMail(new SandboxMail());
     }
 
-    private static void buildStubEventBus() {
-        Users users = new InMemoryUsers();
-        Invoices invoices = new InMemoryInvoices();
-        CreditCards creditCards = new InMemoryCreditCards();
+    private static void buildStubEventBus(Users users, Invoices invoices, CreditCards creditCards) {
         EmailSender emailSender = EmailSender.getInstance();
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(

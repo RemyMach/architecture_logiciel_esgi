@@ -5,11 +5,14 @@ import fr.remy.cc1.domain.payment.CreditCardId;
 import fr.remy.cc1.domain.payment.Invoice;
 import fr.remy.cc1.domain.payment.InvoiceId;
 import fr.remy.cc1.domain.payment.Invoices;
+import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class InMemoryInvoices implements Invoices {
 
@@ -24,5 +27,10 @@ public class InMemoryInvoices implements Invoices {
     @Override
     public InvoiceId nextIdentity()  {
         return InvoiceId.of(counter.incrementAndGet());
+    }
+
+    @Override
+    public List<Invoice> findAll() {
+        return data.values().stream().collect(Collectors.toList());
     }
 }
