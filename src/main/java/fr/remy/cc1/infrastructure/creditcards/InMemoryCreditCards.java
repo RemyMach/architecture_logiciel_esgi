@@ -23,4 +23,9 @@ public class InMemoryCreditCards implements CreditCards {
     public CreditCardId nextIdentity() {
         return CreditCardId.of(counter.incrementAndGet());
     }
+
+    @Override
+    public CreditCard byId(CreditCardId creditCardId) {
+        return data.get(creditCardId);
+    }
 }

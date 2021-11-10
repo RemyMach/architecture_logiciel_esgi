@@ -15,4 +15,9 @@ public class MysqlCreditCards implements CreditCards {
     public CreditCardId nextIdentity() {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
+
+    @Override
+    public CreditCard byId(CreditCardId creditCardId) {
+        throw new UnsupportedOperationException("Not yet implemented.");
+    }
 }

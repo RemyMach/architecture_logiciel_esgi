@@ -7,4 +7,6 @@ public interface CreditCards {
     void save(CreditCard creditCard, User user);
 
     CreditCardId nextIdentity();
+
+    CreditCard byId(CreditCardId creditCardId);
 }

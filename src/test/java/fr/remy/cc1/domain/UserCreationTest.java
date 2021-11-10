@@ -85,6 +85,7 @@ public class UserCreationTest {
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), currencyBuild.getExceptionMessage());
+            assertEquals(this.users.findAll().size(), 0);
         }
     }
 
@@ -104,6 +105,7 @@ public class UserCreationTest {
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), paymentBuild.getExceptionMessage());
+            assertEquals(this.users.findAll().size(), 0);
         }
     }
 
@@ -123,6 +125,7 @@ public class UserCreationTest {
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), "Illegal arguments");
+            assertEquals(this.users.findAll().size(), 0);
         }
     }
 
@@ -142,7 +145,7 @@ public class UserCreationTest {
         assertEquals(this.invoices.findAll().size(), 1);
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
         assertEquals(this.users.byId(myUserIdStub), user);
-
+        assertEquals(this.creditCards.byId(this.creditCardIdStub), creditCard);
     }
 
     private void createUser(
