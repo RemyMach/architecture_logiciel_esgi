@@ -1,9 +1,7 @@
 package fr.remy.cc1.domain;
 
-import fr.remy.cc1.domain.event.Event;
-import fr.remy.cc1.domain.event.EventBus;
+import fr.remy.cc1.domain.payment.CreditCard;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEvent;
 
 public class CreditCardService {
 

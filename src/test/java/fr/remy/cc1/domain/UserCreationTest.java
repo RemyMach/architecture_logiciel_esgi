@@ -1,8 +1,5 @@
 package fr.remy.cc1.domain;
-import fr.remy.cc1.domain.payment.CreditCardId;
-import fr.remy.cc1.domain.payment.Invoices;
-import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.domain.payment.PaymentBuild;
+import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.UserService;
@@ -137,10 +134,11 @@ public class UserCreationTest {
         assertEquals(this.invoices.findAll().size(), 0);
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
+        Payor payor = new Payor(creditCard, null);
 
         User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
         this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-        createUser(user, users, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
@@ -148,15 +146,18 @@ public class UserCreationTest {
         assertEquals(this.creditCards.byId(this.creditCardIdStub), creditCard);
     }
 
+    // mettre un test comme on save pas la credit card
+
     private void createUser(
             User user,
             Users users,
-            CreditCard creditCard, String currency,
+            Payor payor,
+            String currency,
             String paymentMethod,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
-        Payment payment = this.paymentBuild.getPaymentOf(paymentMethod, creditCard);
+        Payment payment = this.paymentBuild.getPaymentOf(paymentMethod, payor);
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
@@ -164,6 +165,6 @@ public class UserCreationTest {
         paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(currency), user);
         userService.create(user);
         if(saveCreditCard)
-            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(creditCard, user));
+            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payor.getCreditCard(), user));
     }
 }

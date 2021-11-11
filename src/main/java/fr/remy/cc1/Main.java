@@ -2,10 +2,7 @@ package fr.remy.cc1;
 
 import fr.remy.cc1.domain.*;
 import fr.remy.cc1.domain.event.Subscriber;
-import fr.remy.cc1.domain.payment.CreditCardId;
-import fr.remy.cc1.domain.payment.Invoices;
-import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.domain.payment.PaymentBuild;
+import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.UserService;
@@ -66,21 +63,23 @@ public class Main {
 
         final CreditCardId creditCardId = creditCards.nextIdentity();
         CreditCard creditCard = CreditCard.of(creditCardId,1234567262, 1203, 321, "POMME");
+        Payor payor = new Payor(creditCard, null);
 
-        createUser(user, users, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
     }
 
     private static void createUser(
             User user,
             Users users,
-            CreditCard creditCard, String currency,
+            Payor payor,
+            String currency,
             String paymentMethod,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
 
         PaymentBuild paymentBuild = new PaymentBuild();
-        Payment payment = paymentBuild.getPaymentOf(paymentMethod, creditCard);
+        Payment payment = paymentBuild.getPaymentOf(paymentMethod, payor);
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
@@ -88,7 +87,7 @@ public class Main {
         paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(currency), user);
         userService.create(user);
         if(saveCreditCard)
-            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(creditCard, user));
+            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payor.getCreditCard(), user));
     }
 
     private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users, CreditCards creditCards) {

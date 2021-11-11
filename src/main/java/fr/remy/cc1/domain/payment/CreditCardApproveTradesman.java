@@ -1,7 +1,5 @@
 package fr.remy.cc1.domain.payment;
 
-import fr.remy.cc1.domain.CreditCard;
-
 public class CreditCardApproveTradesman extends PaymentCreditCardHandler {
 
     @Override

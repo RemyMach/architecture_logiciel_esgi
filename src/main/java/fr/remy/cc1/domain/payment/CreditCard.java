@@ -1,6 +1,4 @@
-package fr.remy.cc1.domain;
-
-import fr.remy.cc1.domain.payment.CreditCardId;
+package fr.remy.cc1.domain.payment;
 
 public class CreditCard {
 

@@ -1,12 +1,8 @@
 package fr.remy.cc1.infrastructure.invoices;
 
-import fr.remy.cc1.domain.CreditCard;
-import fr.remy.cc1.domain.payment.CreditCardId;
 import fr.remy.cc1.domain.payment.Invoice;
 import fr.remy.cc1.domain.payment.InvoiceId;
 import fr.remy.cc1.domain.payment.Invoices;
-import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.UserId;
 
 import java.util.List;
 import java.util.Map;

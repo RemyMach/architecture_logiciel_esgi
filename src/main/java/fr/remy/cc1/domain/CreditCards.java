@@ -1,5 +1,6 @@
 package fr.remy.cc1.domain;
 
+import fr.remy.cc1.domain.payment.CreditCard;
 import fr.remy.cc1.domain.payment.CreditCardId;
 import fr.remy.cc1.domain.user.User;
 
