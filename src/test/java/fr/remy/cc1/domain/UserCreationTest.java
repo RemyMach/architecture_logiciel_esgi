@@ -1,13 +1,18 @@
 package fr.remy.cc1.domain;
+import fr.remy.cc1.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.domain.payment.*;
+import fr.remy.cc1.domain.payment.creditcard.CreditCard;
+import fr.remy.cc1.domain.payment.creditcard.CreditCardId;
+import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.UserCreationEventBus;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEvent;
+import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEvent;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.users.InMemoryUsers;
 import org.junit.jupiter.api.*;
@@ -77,12 +82,12 @@ public class UserCreationTest {
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
-        Payor payor = new Payor(creditCard, null);
+        Payer payer = new Payer(creditCard, null);
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), currencyBuild.getExceptionMessage());
@@ -101,12 +106,12 @@ public class UserCreationTest {
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
-        Payor payor = new Payor(creditCard, null);
+        Payer payer = new Payer(creditCard, null);
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), paymentBuild.getExceptionMessage());
@@ -125,12 +130,12 @@ public class UserCreationTest {
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
-        Payor payor = new Payor(creditCard, null);
+        Payer payer = new Payer(creditCard, null);
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), "Illegal arguments");
@@ -146,11 +151,11 @@ public class UserCreationTest {
         assertEquals(this.invoices.findAll().size(), 0);
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
-        Payor payor = new Payor(creditCard, null);
+        Payer payer = new Payer(creditCard, null);
 
         User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
         this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-        createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
@@ -167,11 +172,11 @@ public class UserCreationTest {
         assertEquals(this.invoices.findAll().size(), 0);
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
-        Payor payor = new Payor(creditCard, null);
+        Payer payer = new Payer(creditCard, null);
 
         User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
         this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-        createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
@@ -184,13 +189,13 @@ public class UserCreationTest {
     private void createUser(
             User user,
             Users users,
-            Payor payor,
+            Payer payer,
             String currency,
             String paymentMethod,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
-        Payment payment = this.paymentBuild.getPaymentOf(paymentMethod, payor);
+        Payment payment = this.paymentBuild.getPaymentOf(paymentMethod, payer);
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
@@ -198,6 +203,6 @@ public class UserCreationTest {
         paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(currency), user);
         userService.create(user);
         if(saveCreditCard)
-            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payor.getCreditCard(), user));
+            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payer.getCreditCard(), user));
     }
 }

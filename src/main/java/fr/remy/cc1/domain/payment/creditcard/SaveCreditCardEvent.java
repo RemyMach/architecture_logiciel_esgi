@@ -1,9 +1,9 @@
-package fr.remy.cc1.infrastructure.creditcards;
+package fr.remy.cc1.domain.payment.creditcard;
 
-import fr.remy.cc1.domain.payment.CreditCard;
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventId;
 import fr.remy.cc1.domain.user.User;
+
 import java.time.ZonedDateTime;
 
 public class SaveCreditCardEvent implements Event {

@@ -1,7 +1,7 @@
 package fr.remy.cc1.infrastructure.creditcards;
-import fr.remy.cc1.domain.payment.CreditCard;
-import fr.remy.cc1.domain.CreditCards;
-import fr.remy.cc1.domain.payment.CreditCardId;
+import fr.remy.cc1.domain.payment.creditcard.CreditCard;
+import fr.remy.cc1.domain.payment.creditcard.CreditCards;
+import fr.remy.cc1.domain.payment.creditcard.CreditCardId;
 import fr.remy.cc1.domain.user.User;
 
 import java.util.Map;

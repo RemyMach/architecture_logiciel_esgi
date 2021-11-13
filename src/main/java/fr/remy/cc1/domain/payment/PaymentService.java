@@ -1,10 +1,8 @@
-package fr.remy.cc1.domain;
+package fr.remy.cc1.domain.payment;
 
-import fr.remy.cc1.domain.event.Event;
-import fr.remy.cc1.domain.event.EventBus;
-import fr.remy.cc1.domain.payment.Payment;
+import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.infrastructure.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.infrastructure.UserCreationEventBus;
 
 public class PaymentService {

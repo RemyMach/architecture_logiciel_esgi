@@ -1,24 +1,20 @@
 package fr.remy.cc1;
 
-import fr.remy.cc1.domain.*;
+import fr.remy.cc1.domain.customer.*;
 import fr.remy.cc1.domain.event.Subscriber;
+import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.*;
-import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.UserService;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.domain.payment.creditcard.*;
+import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEvent;
-import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEventSubscription;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.infrastructure.invoices.SubscriptionSuccessfulEventInvoiceSubscription;
-import fr.remy.cc1.infrastructure.mail.EmailSender;
-import fr.remy.cc1.infrastructure.mail.RegisterUserEventMessengerSubscription;
+import fr.remy.cc1.domain.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
+import fr.remy.cc1.domain.mail.EmailSender;
+import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.infrastructure.mail.SubscriptionSuccessfulEventMessengerSubscription;
+import fr.remy.cc1.domain.mail.SubscriptionSuccessfulEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.users.InMemoryUsers;
-import fr.remy.cc1.infrastructure.users.SubscriptionSuccessfulEventUserSubscription;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -63,15 +59,15 @@ public class Main {
 
         final CreditCardId creditCardId = creditCards.nextIdentity();
         CreditCard creditCard = CreditCard.of(creditCardId,1234567262, 1203, 321, "POMME");
-        Payor payor = new Payor(creditCard, null);
+        Payer payer = new Payer(creditCard, null);
 
-        createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
     }
 
     private static void createUser(
             User user,
             Users users,
-            Payor payor,
+            Payer payer,
             String currency,
             String paymentMethod,
             boolean saveCreditCard,
@@ -79,7 +75,7 @@ public class Main {
     ) {
 
         PaymentBuild paymentBuild = new PaymentBuild();
-        Payment payment = paymentBuild.getPaymentOf(paymentMethod, payor);
+        Payment payment = paymentBuild.getPaymentOf(paymentMethod, payer);
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
@@ -87,14 +83,14 @@ public class Main {
         paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(currency), user);
         userService.create(user);
         if(saveCreditCard)
-            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payor.getCreditCard(), user));
+            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payer.getCreditCard(), user));
     }
 
     private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users, CreditCards creditCards) {
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(emailSender),
                 new SubscriptionSuccessfulEventInvoiceSubscription(invoices),
-                new SubscriptionSuccessfulEventUserSubscription(users)
+                new SubscriptionSuccessfulEventCustomerSubscription(users)
         );
 
         return Map.of(

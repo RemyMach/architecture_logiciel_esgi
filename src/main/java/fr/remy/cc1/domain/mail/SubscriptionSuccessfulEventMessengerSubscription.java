@@ -1,11 +1,8 @@
-package fr.remy.cc1.infrastructure.mail;
+package fr.remy.cc1.domain.mail;
 
 import fr.remy.cc1.domain.event.Subscriber;
-import fr.remy.cc1.domain.mail.Content;
-import fr.remy.cc1.domain.mail.Mail;
-import fr.remy.cc1.domain.mail.Message;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.infrastructure.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
 
 public class SubscriptionSuccessfulEventMessengerSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
 

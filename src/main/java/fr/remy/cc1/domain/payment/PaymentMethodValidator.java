@@ -1,9 +1,5 @@
-package fr.remy.cc1.domain;
+package fr.remy.cc1.domain.payment;
 
-import fr.remy.cc1.domain.payment.PaymentBuild;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class PaymentMethodValidator implements Predicate<String> {
@@ -19,6 +15,6 @@ public class PaymentMethodValidator implements Predicate<String> {
     @Override
     public boolean test(String paymentMethod) {
 
-        return PaymentBuild.PAYMENT_METHOD_SUPPORTED.contains(paymentMethod);
+        return Payer.PAYMENT_METHOD_SUPPORTED.contains(paymentMethod);
     }
 }

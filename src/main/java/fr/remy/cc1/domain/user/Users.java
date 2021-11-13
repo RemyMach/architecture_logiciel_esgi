@@ -1,5 +1,5 @@
 package fr.remy.cc1.domain.user;
-import fr.remy.cc1.domain.SubscriptionOffer;
+import fr.remy.cc1.domain.customer.SubscriptionOffer;
 
 import java.util.List;
 

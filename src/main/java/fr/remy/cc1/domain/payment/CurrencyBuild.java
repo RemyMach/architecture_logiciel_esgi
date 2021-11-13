@@ -1,8 +1,4 @@
-package fr.remy.cc1.domain;
-
-import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
-import fr.remy.cc1.infrastructure.payment.PaypalPayment;
+package fr.remy.cc1.domain.payment;
 
 public class CurrencyBuild {
 

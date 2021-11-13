@@ -1,10 +1,9 @@
-package fr.remy.cc1.infrastructure;
+package fr.remy.cc1.domain.customer;
 
-import fr.remy.cc1.domain.Currency;
-import fr.remy.cc1.domain.SubscriptionOffer;
-import fr.remy.cc1.domain.user.User;
+import fr.remy.cc1.domain.payment.Currency;
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventId;
+import fr.remy.cc1.domain.user.User;
 
 import java.time.ZonedDateTime;
 

@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain.payment;
+package fr.remy.cc1.domain.payment.creditcard;
 
 public final class CreditCardId {
 

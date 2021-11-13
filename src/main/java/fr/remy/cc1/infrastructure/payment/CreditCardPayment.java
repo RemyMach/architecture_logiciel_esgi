@@ -1,7 +1,8 @@
 package fr.remy.cc1.infrastructure.payment;
 
-import fr.remy.cc1.domain.payment.CreditCard;
+import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.*;
+
 import java.math.BigDecimal;
 
 public class CreditCardPayment implements Payment {

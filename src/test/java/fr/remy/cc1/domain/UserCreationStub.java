@@ -2,24 +2,19 @@ package fr.remy.cc1.domain;
 
 import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.mail.MockMail;
-import fr.remy.cc1.domain.mail.TestMail;
-import fr.remy.cc1.domain.payment.Invoices;
+import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.user.Users;
-import fr.remy.cc1.infrastructure.RegisterUserEvent;
-import fr.remy.cc1.infrastructure.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.domain.user.RegisterUserEvent;
+import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.infrastructure.UserCreationEventBus;
-import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEvent;
-import fr.remy.cc1.infrastructure.creditcards.SaveCreditCardEventSubscription;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.infrastructure.invoices.SubscriptionSuccessfulEventInvoiceSubscription;
-import fr.remy.cc1.infrastructure.mail.EmailSender;
-import fr.remy.cc1.infrastructure.mail.RegisterUserEventMessengerSubscription;
+import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEvent;
+import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEventSubscription;
+import fr.remy.cc1.domain.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
+import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.infrastructure.mail.SubscriptionSuccessfulEventMessengerSubscription;
-import fr.remy.cc1.infrastructure.users.InMemoryUsers;
-import fr.remy.cc1.infrastructure.users.SubscriptionSuccessfulEventUserSubscription;
+import fr.remy.cc1.domain.mail.SubscriptionSuccessfulEventMessengerSubscription;
+import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEventCustomerSubscription;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,7 +40,7 @@ public class UserCreationStub {
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(mockEmailSender),
                 new SubscriptionSuccessfulEventInvoiceSubscription(invoices),
-                new SubscriptionSuccessfulEventUserSubscription(users)
+                new SubscriptionSuccessfulEventCustomerSubscription(users)
         );
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(

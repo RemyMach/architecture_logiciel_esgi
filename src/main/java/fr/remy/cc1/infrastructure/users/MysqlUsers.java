@@ -1,6 +1,6 @@
 package fr.remy.cc1.infrastructure.users;
 
-import fr.remy.cc1.domain.SubscriptionOffer;
+import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.Users;

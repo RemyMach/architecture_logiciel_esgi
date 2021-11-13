@@ -3,7 +3,6 @@ package fr.remy.cc1.infrastructure;
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventBus;
 import fr.remy.cc1.domain.event.Subscriber;
-import fr.remy.cc1.infrastructure.mail.EmailSender;
 
 import java.util.List;
 import java.util.Map;

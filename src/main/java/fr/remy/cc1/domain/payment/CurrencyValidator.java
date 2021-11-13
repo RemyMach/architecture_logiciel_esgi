@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain;
+package fr.remy.cc1.domain.payment;
 
 import java.util.function.Predicate;
 

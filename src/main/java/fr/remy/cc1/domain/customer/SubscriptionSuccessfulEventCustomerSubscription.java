@@ -1,14 +1,13 @@
-package fr.remy.cc1.infrastructure.users;
+package fr.remy.cc1.domain.customer;
 
-import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.domain.event.Subscriber;
-import fr.remy.cc1.infrastructure.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.domain.user.Users;
 
-public class SubscriptionSuccessfulEventUserSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
+public class SubscriptionSuccessfulEventCustomerSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
 
     private final Users users;
 
-    public SubscriptionSuccessfulEventUserSubscription(Users users) {
+    public SubscriptionSuccessfulEventCustomerSubscription(Users users) {
         this.users = users;
     }
 

@@ -1,7 +1,5 @@
 package fr.remy.cc1.domain.mail;
 
-import fr.remy.cc1.infrastructure.mail.EmailSender;
-
 public class MockEmailSender extends EmailSender{
 
     private static MockEmailSender mockEmailSender;

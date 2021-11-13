@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain;
+package fr.remy.cc1.domain.customer;
 
 import java.math.BigDecimal;
 

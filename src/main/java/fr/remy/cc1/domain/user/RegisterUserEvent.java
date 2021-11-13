@@ -1,6 +1,5 @@
-package fr.remy.cc1.infrastructure;
+package fr.remy.cc1.domain.user;
 
-import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.event.Event;
 import fr.remy.cc1.domain.event.EventId;
 

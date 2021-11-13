@@ -1,10 +1,7 @@
-package fr.remy.cc1.infrastructure.invoices;
+package fr.remy.cc1.domain.invoice;
 
 import fr.remy.cc1.domain.event.Subscriber;
-import fr.remy.cc1.domain.payment.Invoice;
-import fr.remy.cc1.domain.payment.InvoiceId;
-import fr.remy.cc1.domain.payment.Invoices;
-import fr.remy.cc1.infrastructure.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
 
 public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
 

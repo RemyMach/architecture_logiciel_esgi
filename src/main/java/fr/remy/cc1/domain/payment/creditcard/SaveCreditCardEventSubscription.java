@@ -1,6 +1,5 @@
-package fr.remy.cc1.infrastructure.creditcards;
+package fr.remy.cc1.domain.payment.creditcard;
 
-import fr.remy.cc1.domain.CreditCards;
 import fr.remy.cc1.domain.event.Subscriber;
 
 
