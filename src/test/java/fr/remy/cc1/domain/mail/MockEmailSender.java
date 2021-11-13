@@ -6,7 +6,7 @@ public class MockEmailSender extends EmailSender{
 
     private static MockEmailSender mockEmailSender;
 
-    private MockMail mockMail;
+    private Integer countSendMail = 0;
 
     private void EmailSender() { }
 
@@ -17,17 +17,15 @@ public class MockEmailSender extends EmailSender{
         return mockEmailSender;
     }
 
-    public void setMail(MockMail mockMail) {
-        super.setMail(mockMail);
-        this.mockMail = mockMail;
-    }
-
     public void send(Message message) {
-        super.send(message);
+        this.countSendMail += 1;
     }
-
 
     public Integer getCountMail() {
-        return this.mockMail.getSendMailCount();
+        return this.countSendMail;
+    }
+
+    public void resetMockEmailSenderInstance() {
+        mockEmailSender = null;
     }
 }

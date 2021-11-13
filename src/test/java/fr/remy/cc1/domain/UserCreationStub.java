@@ -34,8 +34,9 @@ public class UserCreationStub {
     }
 
     private static void buildStubMailSender() {
+        MockEmailSender.getInstance().resetMockEmailSenderInstance();
         MockEmailSender mockEmailSender = MockEmailSender.getInstance();
-        mockEmailSender.setMail(new TestMail());
+        mockEmailSender.setMail(new SandboxMail());
     }
 
     private static void buildStubEventBus(Users users, Invoices invoices, CreditCards creditCards) {
