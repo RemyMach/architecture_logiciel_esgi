@@ -1,4 +1,5 @@
 package fr.remy.cc1.domain;
+import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
@@ -70,19 +71,23 @@ public class UserCreationTest {
     @DisplayName("should return an exception because currency is not EUR or USD")
     void userHasNotAValidCurrency() {
 
+        assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
+
         currencyChoiceStub = "GBP";
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
+        Payor payor = new Payor(creditCard, null);
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), currencyBuild.getExceptionMessage());
             assertEquals(this.users.findAll().size(), 0);
+            assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
         }
     }
 
@@ -90,19 +95,23 @@ public class UserCreationTest {
     @DisplayName("should return an exception because payment is not Paypal or CreditCard")
     void userHasNotAValidPaymentMethod() {
 
+        assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
+
         paymentChoiceStub = "Stripe";
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
+        Payor payor = new Payor(creditCard, null);
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), paymentBuild.getExceptionMessage());
             assertEquals(this.users.findAll().size(), 0);
+            assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
         }
     }
 
@@ -110,19 +119,23 @@ public class UserCreationTest {
     @DisplayName("should return an exception because user has a not valid email")
     void userHasNoValidEmail() {
 
+        assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
+
         emailStub = "pomme";
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
+        Payor payor = new Payor(creditCard, null);
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, creditCard, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), "Illegal arguments");
             assertEquals(this.users.findAll().size(), 0);
+            assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
         }
     }
 
@@ -130,7 +143,6 @@ public class UserCreationTest {
     @DisplayName("should register user, credit card and Invoice")
     void userIsValid() {
 
-        System.out.println(this.invoices.findAll().size());
         assertEquals(this.invoices.findAll().size(), 0);
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
@@ -144,6 +156,27 @@ public class UserCreationTest {
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
         assertEquals(this.users.byId(myUserIdStub), user);
         assertEquals(this.creditCards.byId(this.creditCardIdStub), creditCard);
+        assertEquals(MockEmailSender.getInstance().getCountMail(), 2);
+    }
+
+    @Test
+    @DisplayName("should register user, and Invoice but not save credit card")
+    void userIsValidButCreditCardIsNotSave() {
+
+        this.saveCreditCardStub = false;
+        assertEquals(this.invoices.findAll().size(), 0);
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
+        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
+        Payor payor = new Payor(creditCard, null);
+
+        User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
+        this.currencyBuild.getCurrencyOf(currencyChoiceStub);
+        createUser(user, users, payor, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        assertEquals(users.byId(myUserIdStub), user);
+        assertEquals(this.invoices.findAll().size(), 1);
+        assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
+        assertEquals(this.users.byId(myUserIdStub), user);
+        assertEquals(this.creditCards.byId(this.creditCardIdStub), null);
     }
 
     // mettre un test comme on save pas la credit card
