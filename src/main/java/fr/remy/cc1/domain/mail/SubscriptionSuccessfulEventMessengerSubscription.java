@@ -14,7 +14,6 @@ public class SubscriptionSuccessfulEventMessengerSubscription implements Subscri
 
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
-        System.out.println("on se sert du mailing pour dire que la subscription s'est bien éffectué");
         this.sendMail(subscriptionSuccessfulEvent.getUser());
     }
 

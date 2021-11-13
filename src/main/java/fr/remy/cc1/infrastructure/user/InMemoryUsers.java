@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure.users;
+package fr.remy.cc1.infrastructure.user;
 
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.user.User;

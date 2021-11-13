@@ -13,7 +13,6 @@ public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscribe
 
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
-        System.out.println("on enregistre la facture");
         final InvoiceId invoiceId = this.invoices.nextIdentity();
         Invoice invoice = Invoice.of(invoiceId, subscriptionSuccessfulEvent.getSubscriptionOffer().getAmount(), subscriptionSuccessfulEvent.getUser());
         this.invoices.save(invoice);

@@ -7,7 +7,7 @@ import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.domain.user.RegisterUserEvent;
 import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
-import fr.remy.cc1.infrastructure.UserCreationEventBus;
+import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEvent;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEventSubscription;
 import fr.remy.cc1.domain.invoice.SubscriptionSuccessfulEventInvoiceSubscription;

@@ -14,7 +14,6 @@ public class InMemoryCreditCards implements CreditCards {
 
     @Override
     public void save(CreditCard creditCard, User user) {
-        System.out.println("on save une credit card");
         data.put(creditCard.getCreditCardId(), creditCard);
     }
 

@@ -6,7 +6,6 @@ import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.user.*;
-import fr.remy.cc1.infrastructure.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.domain.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
@@ -14,7 +13,8 @@ import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.domain.mail.SubscriptionSuccessfulEventMessengerSubscription;
-import fr.remy.cc1.infrastructure.users.InMemoryUsers;
+import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 
 import java.math.BigDecimal;
 import java.util.Arrays;

@@ -10,11 +10,11 @@ import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
-import fr.remy.cc1.infrastructure.UserCreationEventBus;
+import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEvent;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.infrastructure.users.InMemoryUsers;
+import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
@@ -166,7 +166,7 @@ public class UserCreationTest {
 
     @Test
     @DisplayName("should register user, and Invoice but not save credit card")
-    void userIsValidButCreditCardIsNotSave() {
+    void userIsValidAndCreditCardIsNotSave() {
 
         this.saveCreditCardStub = false;
         assertEquals(this.invoices.findAll().size(), 0);

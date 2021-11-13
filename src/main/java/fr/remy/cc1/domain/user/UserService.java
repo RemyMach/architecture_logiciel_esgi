@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain.user;
 
-import fr.remy.cc1.infrastructure.UserCreationEventBus;
+import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 
 import java.util.List;
 

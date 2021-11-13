@@ -27,4 +27,8 @@ public class CreditCard {
     public CreditCardId getCreditCardId() {
         return creditCardId;
     }
+
+    public int getSecurityCode() {
+        return securityCode;
+    }
 }

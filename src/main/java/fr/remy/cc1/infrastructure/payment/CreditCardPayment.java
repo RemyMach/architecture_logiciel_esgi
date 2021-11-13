@@ -4,6 +4,7 @@ import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class CreditCardPayment implements Payment {
 
@@ -16,19 +17,10 @@ public class CreditCardPayment implements Payment {
     @Override
     public void start(BigDecimal amount) {
 
-        PaymentCreditCardHandler firstPaymentHandler = this.buildPaymentHandlers();
-        firstPaymentHandler.process(this.creditCard);
-    }
-
-    private PaymentCreditCardHandler buildPaymentHandlers() {
-
-        PaymentCreditCardHandler paymentProcess = new CreditCardChecker();
-        PaymentCreditCardHandler approveTradesman = new CreditCardApproveTradesman();
-        PaymentCreditCardHandler contractor = new CreditCardContractor();
-
-        paymentProcess.setNext(approveTradesman);
-        approveTradesman.setNext(contractor);
-
-        return paymentProcess;
+        PaymentCreditCardHandler paymentCreditCardHandler =
+                PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+                        List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
+                );
+        paymentCreditCardHandler.process(this.creditCard, amount);
     }
 }

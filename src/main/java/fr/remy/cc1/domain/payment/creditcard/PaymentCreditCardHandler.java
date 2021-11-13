@@ -1,5 +1,7 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
+import java.math.BigDecimal;
+
 public abstract class PaymentCreditCardHandler {
 
     private PaymentCreditCardHandler nextHandler;
@@ -8,11 +10,11 @@ public abstract class PaymentCreditCardHandler {
         this.nextHandler = handler;
     }
 
-    public abstract void process(CreditCard creditCard);
+    public abstract void process(CreditCard creditCard, BigDecimal amount);
 
-    public void checkNext(CreditCard creditCard) {
+    public void checkNext(CreditCard creditCard, BigDecimal amount) {
         if(this.nextHandler != null) {
-            this.nextHandler.process(creditCard);
+            this.nextHandler.process(creditCard, amount);
         }
     }
 }

@@ -13,7 +13,6 @@ public class SubscriptionSuccessfulEventCustomerSubscription implements Subscrib
 
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
-        System.out.println("on enregistre la subscription");
         this.users.saveSubscriptionOffer(subscriptionSuccessfulEvent.getUser(), subscriptionSuccessfulEvent.getSubscriptionOffer());
     }
 }
