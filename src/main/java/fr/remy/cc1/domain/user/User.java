@@ -21,7 +21,7 @@ public final class User {
         if(ValidationUserEngine.getInstance().test(user)) {
             return user;
         }
-        throw new IllegalArgumentException("Illegal arguments");
+        throw new Error("the user fields are not valid");
     }
 
     public UserId getUserId() {

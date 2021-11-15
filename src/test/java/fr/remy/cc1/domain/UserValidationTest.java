@@ -25,8 +25,8 @@ public class UserValidationTest {
         try {
             User user = User.of(stubUserId, "", "", "", "");
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -36,8 +36,8 @@ public class UserValidationTest {
         try {
             User user = User.of(stubUserId, "", "", "", "azertyuiop");
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -47,8 +47,8 @@ public class UserValidationTest {
         try {
             User user = User.of(stubUserId, "", "", "pomme@", "");
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -59,8 +59,8 @@ public class UserValidationTest {
             String password = "aZert9!";
             User user = User.of(stubUserId, "", "", "pomme@pomme.com", password);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -72,8 +72,8 @@ public class UserValidationTest {
             String password = "aZert9!" + stringRepeated.repeat(14);
             User user = User.of(stubUserId, "", "", "pomme@pomme.com", password);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -84,8 +84,8 @@ public class UserValidationTest {
             String password = "azerty9!";
             User user = User.of(stubUserId, "", "", "pomme@pomme.com", password);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -96,8 +96,8 @@ public class UserValidationTest {
             String password = "AZERTY9!";
             User user = User.of(stubUserId, "", "", "pomme@pomme.com", password);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -108,8 +108,8 @@ public class UserValidationTest {
             String password = "aZertyo!";
             User user = User.of(stubUserId, "", "", "pomme@pomme.com", password);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -120,8 +120,8 @@ public class UserValidationTest {
             String password = "aZerty98";
             User user = User.of(stubUserId, "", "", "pomme@pomme.com", password);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Illegal arguments");
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -131,8 +131,8 @@ public class UserValidationTest {
         try {
             String password = "aZertyo9!";
             User user = User.of(stubUserId, "", "", "pomme@pomme.com", password);
-        }catch (IllegalArgumentException e) {
-            fail( "Should have thrown an exception" );
+        }catch (Error error) {
+            assertEquals(error.getMessage(), "the user fields are not valid");
         }
     }
 
@@ -146,8 +146,8 @@ public class UserValidationTest {
                 password += specialCharacters.charAt(i);
                 User user = User.of(stubUserId, "", "", "pomme@pomme.com", password);
             }
-        }catch (IllegalArgumentException e) {
-            fail( "Should not thrown an exception" );
+        } catch (Error error) {
+            fail( "Should not thrown an error" );
         }
     }
 }
