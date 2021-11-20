@@ -1,12 +1,12 @@
 package fr.remy.cc1.domain.mail;
 
-public class MockEmailSender extends EmailSender{
+import fr.remy.cc1.domain.mock.CountProcess;
+
+public class MockEmailSender extends EmailSender {
 
     private static MockEmailSender mockEmailSender;
 
     private Integer countSendMail = 0;
-
-    private void EmailSender() { }
 
     public static MockEmailSender getInstance() {
         if (mockEmailSender == null) {

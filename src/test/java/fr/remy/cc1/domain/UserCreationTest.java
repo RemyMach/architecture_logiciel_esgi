@@ -137,8 +137,8 @@ public class UserCreationTest {
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
             createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
-        }catch (Error error) {
-            assertEquals(error.getMessage(), "the user fields are not valid");
+        }catch (IllegalArgumentException exception) {
+            assertEquals(exception.getMessage(), "the user fields are not valid");
             assertEquals(this.users.findAll().size(), 0);
             assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
         }

@@ -21,7 +21,7 @@ public final class User {
         if(ValidationUserEngine.getInstance().test(user)) {
             return user;
         }
-        throw new Error("the user fields are not valid");
+        throw new IllegalArgumentException("the user fields are not valid");
     }
 
     public UserId getUserId() {
@@ -31,15 +31,4 @@ public final class User {
     public String getEmail() { return email; }
 
     public String getPassword() { return password; }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", lastname='" + lastname + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

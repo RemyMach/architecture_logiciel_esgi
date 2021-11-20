@@ -1,8 +1,10 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
+import fr.remy.cc1.domain.mock.CountProcess;
+
 import java.math.BigDecimal;
 
-public class MockCreditCardContractor extends CreditCardContractor {
+public class MockCreditCardContractor extends CreditCardContractor implements CountProcess {
 
     private Integer countProcess = 0;
 
@@ -11,6 +13,7 @@ public class MockCreditCardContractor extends CreditCardContractor {
         super.checkNext(creditCard, amount);
     }
 
+    @Override
     public Integer getCountProcess() {
         return this.countProcess;
     }

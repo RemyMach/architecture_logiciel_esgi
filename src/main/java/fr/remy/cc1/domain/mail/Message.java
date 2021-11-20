@@ -2,7 +2,7 @@ package fr.remy.cc1.domain.mail;
 
 import fr.remy.cc1.domain.user.User;
 
-public class Message {
+public final class Message {
 
     private final User recipient;
 
