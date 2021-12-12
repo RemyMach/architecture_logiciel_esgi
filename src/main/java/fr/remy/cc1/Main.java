@@ -83,13 +83,14 @@ public class Main {
         if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
             PaypalPaymentBuilder paypalPaymentBuilder = new PaypalPaymentBuilder();
             paypalPaymentBuilder.withPaypalAccount(payer.getPaypalAccount());
-            payment = paypalPaymentBuilder
+            payment = paypalPaymentBuilder.getPaypalPayment();
         }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
-            PaymentCreditCardHandler paymentCreditCardHandler =
-                    PaymentCreditCardHandlerBuild.buildPaymentHandlers(
-                            List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
-                    );
-            return new CreditCardPayment(payer.getCreditCard(), paymentCreditCardHandler);
+            CreditCardPaymentBuilder creditCardPaymentBuilder  = new CreditCardPaymentBuilder();
+            creditCardPaymentBuilder.withCreditCard(payer.getCreditCard());
+            creditCardPaymentBuilder.withCreditCardHandler(PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+                    List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
+            ));
+            payment = creditCardPaymentBuilder.getCreditCardPayment();
         }
 
 
