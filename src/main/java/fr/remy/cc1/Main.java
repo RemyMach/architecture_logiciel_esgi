@@ -76,26 +76,7 @@ public class Main {
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
-        if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {
-            throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
-        }
-        Payment payment;
-        if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
-            PaypalPaymentBuilder paypalPaymentBuilder = new PaypalPaymentBuilder();
-            paypalPaymentBuilder.withPaypalAccount(payer.getPaypalAccount());
-            payment = paypalPaymentBuilder.getPaypalPayment();
-        }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
-            CreditCardPaymentBuilder creditCardPaymentBuilder  = new CreditCardPaymentBuilder();
-            creditCardPaymentBuilder.withCreditCard(payer.getCreditCard());
-            creditCardPaymentBuilder.withCreditCardHandler(PaymentCreditCardHandlerBuild.buildPaymentHandlers(
-                    List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
-            ));
-            payment = creditCardPaymentBuilder.getCreditCardPayment();
-        }
-
-
-        PaymentBuild paymentBuild = new PaymentBuild();
-        Payment payment = paymentBuild.getPaymentOf(paymentMethod, payer);
+        Payment payment = getPayment(paymentMethod, payer);
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
@@ -118,5 +99,23 @@ public class Main {
                 SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCards)),
                 SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
         );
+    }
+
+    private static Payment getPayment(String paymentMethod, Payer payer,) {
+        if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {
+            throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
+        }
+        if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
+            PaypalPaymentBuilder paypalPaymentBuilder = new PaypalPaymentBuilder();
+            paypalPaymentBuilder.withPaypalAccount(payer.getPaypalAccount());
+            return paypalPaymentBuilder.getPaypalPayment();
+        }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
+            CreditCardPaymentBuilder creditCardPaymentBuilder  = new CreditCardPaymentBuilder();
+            creditCardPaymentBuilder.withCreditCard(payer.getCreditCard());
+            creditCardPaymentBuilder.withCreditCardHandler(PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+                    List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
+            ));
+            return creditCardPaymentBuilder.getCreditCardPayment();
+        }
     }
 }
