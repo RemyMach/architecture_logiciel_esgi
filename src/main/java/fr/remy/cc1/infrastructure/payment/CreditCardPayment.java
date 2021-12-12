@@ -10,17 +10,15 @@ public class CreditCardPayment implements Payment {
 
     private final CreditCard creditCard;
 
-    public CreditCardPayment(CreditCard creditCard) {
+    private final PaymentCreditCardHandler paymentCreditCardHandler;
+
+    public CreditCardPayment(CreditCard creditCard, PaymentCreditCardHandler paymentCreditCardHandler ) {
         this.creditCard = creditCard;
+        this.paymentCreditCardHandler = paymentCreditCardHandler;
     }
 
     @Override
     public void start(BigDecimal amount) {
-
-        PaymentCreditCardHandler paymentCreditCardHandler =
-                PaymentCreditCardHandlerBuild.buildPaymentHandlers(
-                        List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
-                );
-        paymentCreditCardHandler.process(this.creditCard, amount);
+        this.paymentCreditCardHandler.process(this.creditCard, amount);
     }
 }

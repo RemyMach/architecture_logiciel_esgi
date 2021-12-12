@@ -24,5 +24,4 @@ public class PaymentBuild {
     public String getExceptionMessage() {
         return exceptionMessage;
     }
-
 }
