@@ -3,6 +3,8 @@ package fr.remy.cc1.domain.payment.paypal;
 import fr.remy.cc1.domain.payment.PaymentBuilder;
 import fr.remy.cc1.domain.payment.creditcard.CreditCard;
 import fr.remy.cc1.domain.payment.creditcard.PaymentCreditCardHandler;
+import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
+import fr.remy.cc1.infrastructure.payment.PaypalPayment;
 
 public class PaypalPaymentBuilder implements PaymentBuilder {
 
@@ -21,5 +23,9 @@ public class PaypalPaymentBuilder implements PaymentBuilder {
     @Override
     public void withPaypalAccount(PaypalAccount paypalAccount) {
         this.paypalAccount = paypalAccount;
+    }
+
+    public PaypalPayment getPaypalPayment() {
+        return new PaypalPayment(this.paypalAccount);
     }
 }

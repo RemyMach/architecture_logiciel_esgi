@@ -14,7 +14,7 @@ public class PaymentBuild {
         }
 
         if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
-            return new PaypalPayment();
+            return new PaypalPayment(payer.getPaypalAccount());
         }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
             PaymentCreditCardHandler paymentCreditCardHandler =
                     PaymentCreditCardHandlerBuild.buildPaymentHandlers(

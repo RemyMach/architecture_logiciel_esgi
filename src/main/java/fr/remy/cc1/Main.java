@@ -5,6 +5,7 @@ import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
+import fr.remy.cc1.domain.payment.paypal.PaypalPaymentBuilder;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
@@ -75,13 +76,14 @@ public class Main {
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
-
         if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {
-            throw new IllegalArgumentException(PaymentMethodValidatov.);
+            throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
         }
-
+        Payment payment;
         if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
-            return new PaypalPayment();
+            PaypalPaymentBuilder paypalPaymentBuilder = new PaypalPaymentBuilder();
+            paypalPaymentBuilder.withPaypalAccount(payer.getPaypalAccount());
+            payment = paypalPaymentBuilder
         }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
             PaymentCreditCardHandler paymentCreditCardHandler =
                     PaymentCreditCardHandlerBuild.buildPaymentHandlers(
@@ -90,7 +92,6 @@ public class Main {
             return new CreditCardPayment(payer.getCreditCard(), paymentCreditCardHandler);
         }
 
-        throw new IllegalArgumentException(exceptionMessage);
 
         PaymentBuild paymentBuild = new PaymentBuild();
         Payment payment = paymentBuild.getPaymentOf(paymentMethod, payer);
