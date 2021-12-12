@@ -1,11 +1,12 @@
-package fr.remy.cc1.domain.payment;
+package fr.remy.cc1.domain.payment.creditcard;
 
+import fr.remy.cc1.domain.payment.PaymentBuilder;
 import fr.remy.cc1.domain.payment.creditcard.CreditCard;
 import fr.remy.cc1.domain.payment.creditcard.PaymentCreditCardHandler;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 
-public class CreditCardPaymentBuilder implements PaymentBuilder{
+public class CreditCardPaymentBuilder implements PaymentBuilder {
 
     private CreditCard creditCard;
     private PaymentCreditCardHandler paymentCreditCardHandler;

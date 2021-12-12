@@ -14,7 +14,7 @@ public class StubCreditCardPayment extends CreditCardPayment {
             CreditCard creditCard,
             PaymentCreditCardHandler paymentCreditCardHandler
     ) {
-        super(creditCard);
+        super(creditCard, paymentCreditCardHandler);
         this.creditCard = creditCard;
         this.paymentCreditCardHandler = paymentCreditCardHandler;
     }

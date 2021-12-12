@@ -95,10 +95,12 @@ public class PaymentCreditCardProcessTest {
     public void securityCodeIsNotValidTest() {
 
         this.creditCard = CreditCard.of(this.creditCardIdStub, 1234567262, 1203, 420, "POMME");
-        PaymentCreditCardHandler paymentCreditCardHandler =
-                PaymentCreditCardHandlerBuild.buildPaymentHandlers(
-                        List.of(this.mockCreditCardChecker, this.mockCreditCardApproveTradesman, this.mockCreditCardContractor));
-        this.payment = new CreditCardPayment(this.creditCard);
+        CreditCardPaymentBuilder creditCardPaymentBuilder  = new CreditCardPaymentBuilder();
+        creditCardPaymentBuilder.withCreditCard(this.creditCard);
+        creditCardPaymentBuilder.withCreditCardHandler(PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+                List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
+        ));
+        this.payment = creditCardPaymentBuilder.getCreditCardPayment();
 
         try {
 

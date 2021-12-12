@@ -114,7 +114,7 @@ public class UserCreationTest {
             createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), paymentBuild.getExceptionMessage());
+            assertEquals(e.getMessage(), PaymentMethodValidator.exceptionMessage);
             assertEquals(this.users.findAll().size(), 0);
             assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
         }

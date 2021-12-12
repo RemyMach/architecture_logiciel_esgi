@@ -14,8 +14,6 @@ import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.domain.mail.SubscriptionSuccessfulEventMessengerSubscription;
-import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
-import fr.remy.cc1.infrastructure.payment.PaypalPayment;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 
@@ -101,7 +99,7 @@ public class Main {
         );
     }
 
-    private static Payment getPayment(String paymentMethod, Payer payer,) {
+    private static Payment getPayment(String paymentMethod, Payer payer) {
         if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {
             throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
         }
@@ -117,5 +115,7 @@ public class Main {
             ));
             return creditCardPaymentBuilder.getCreditCardPayment();
         }
+
+        throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
     }
 }
