@@ -24,4 +24,8 @@ public class CreditCardPaymentBuilder implements PaymentBuilder{
     public void withPaypalAccount(PaypalAccount paypalAccount) {
         throw new Error("You don't have to use this construction for this object");
     }
+
+    public CreditCardPayment getCreditCardPayment() {
+        return new CreditCardPayment(this.creditCard, this.paymentCreditCardHandler);
+    }
 }

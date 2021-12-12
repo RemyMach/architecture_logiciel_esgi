@@ -6,6 +6,8 @@ public class PaymentMethodValidator implements Predicate<String> {
 
     private static final PaymentMethodValidator INSTANCE = new PaymentMethodValidator();
 
+    public static String exceptionMessage = "You can choose uniquely " + Payer.PAYMENT_METHOD_SUPPORTED.toString() + " to pay";
+
     private PaymentMethodValidator() { }
 
     public static PaymentMethodValidator getInstance() {

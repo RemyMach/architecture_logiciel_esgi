@@ -8,11 +8,9 @@ import java.util.List;
 
 public class PaymentBuild {
 
-    private String exceptionMessage = "You can choose uniquely " + Payer.PAYMENT_METHOD_SUPPORTED.toString() + " to pay";
-
     public Payment getPaymentOf(String paymentMethod, Payer payer) {
         if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {
-            throw new IllegalArgumentException(exceptionMessage);
+            throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
         }
 
         if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
@@ -25,10 +23,6 @@ public class PaymentBuild {
             return new CreditCardPayment(payer.getCreditCard(), paymentCreditCardHandler);
         }
 
-        throw new IllegalArgumentException(exceptionMessage);
-    }
-
-    public String getExceptionMessage() {
-        return exceptionMessage;
+        throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
     }
 }

@@ -13,6 +13,8 @@ import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.domain.mail.SubscriptionSuccessfulEventMessengerSubscription;
+import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
+import fr.remy.cc1.infrastructure.payment.PaypalPayment;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 
@@ -73,6 +75,22 @@ public class Main {
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
+
+        if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {
+            throw new IllegalArgumentException(PaymentMethodValidatov.);
+        }
+
+        if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
+            return new PaypalPayment();
+        }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
+            PaymentCreditCardHandler paymentCreditCardHandler =
+                    PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+                            List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
+                    );
+            return new CreditCardPayment(payer.getCreditCard(), paymentCreditCardHandler);
+        }
+
+        throw new IllegalArgumentException(exceptionMessage);
 
         PaymentBuild paymentBuild = new PaymentBuild();
         Payment payment = paymentBuild.getPaymentOf(paymentMethod, payer);
