@@ -48,12 +48,14 @@ public class Main {
 
         String currencyChoiceStub = "EUR";
         String paymentChoiceStub = "CreditCard";
+        String userCategoryChoiceStub = "Trademan";
+        UserCategoryCreator userCategoryCreator = new UserCategoryCreator();
         boolean saveCreditCardStub = true;
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(priceSubscriptionOfferStub,discountPercentageStub);
 
         final UserId myUserId = users.nextIdentity();
-        User user = User.of(myUserId, lastnameStub, firstnameStub, emailStub, passwordStub);
+        User user = User.of(myUserId, lastnameStub, firstnameStub, emailStub, passwordStub, userCategoryCreator.getValueOf(userCategoryChoiceStub));
 
         CurrencyValidator.getInstance().test(currencyChoiceStub);
 

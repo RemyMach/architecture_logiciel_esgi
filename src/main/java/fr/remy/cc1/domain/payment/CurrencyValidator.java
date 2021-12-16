@@ -1,5 +1,8 @@
 package fr.remy.cc1.domain.payment;
 
+
+import fr.remy.cc1.kernel.EnumValidator;
+
 import java.util.function.Predicate;
 
 public class CurrencyValidator implements Predicate<String> {
@@ -13,12 +16,9 @@ public class CurrencyValidator implements Predicate<String> {
     }
 
     @Override
-    public boolean test(String CurrencyCode) {
-        try {
-            Currency.valueOf(CurrencyCode);
-            return true;
-        }catch(IllegalArgumentException illegalArgumentException) {
-            return false;
-        }
+    public boolean test(String currencyCode) {
+        EnumValidator<Currency> enumValidator = new EnumValidator(Currency.class);
+        return enumValidator.test(currencyCode);
     }
+
 }

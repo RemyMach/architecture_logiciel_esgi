@@ -13,13 +13,16 @@ public class CurrencyCreator {
         this.exceptionMessage += " to pay";
     }
 
-    public Currency getCurrencyOf(String currencyCode) {
+    public Currency getValueOf(String currencyCode) {
+
         if(!CurrencyValidator.getInstance().test(currencyCode)) {
             throw new IllegalArgumentException(exceptionMessage);
         }
 
         return Currency.valueOf(currencyCode);
     }
+
+
 
     public String getExceptionMessage() {
         return exceptionMessage;
