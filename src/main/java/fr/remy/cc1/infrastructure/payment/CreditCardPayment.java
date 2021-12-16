@@ -4,7 +4,6 @@ import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class CreditCardPayment implements Payment {
 

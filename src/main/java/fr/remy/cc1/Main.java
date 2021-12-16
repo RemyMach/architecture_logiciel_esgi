@@ -5,7 +5,6 @@ import fr.remy.cc1.domain.event.Subscriber;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
-import fr.remy.cc1.domain.payment.paypal.PaypalPaymentBuilder;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
@@ -104,16 +103,11 @@ public class Main {
             throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
         }
         if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
-            PaypalPaymentBuilder paypalPaymentBuilder = new PaypalPaymentBuilder();
-            paypalPaymentBuilder.withPaypalAccount(payer.getPaypalAccount());
-            return paypalPaymentBuilder.getPaypalPayment();
+            return PaymentCreator.withPaypal(payer.getPaypalAccount());
         }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
-            CreditCardPaymentBuilder creditCardPaymentBuilder  = new CreditCardPaymentBuilder();
-            creditCardPaymentBuilder.withCreditCard(payer.getCreditCard());
-            creditCardPaymentBuilder.withCreditCardHandler(PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+            return PaymentCreator.withCreditCard(payer.getCreditCard(), PaymentCreditCardHandlerBuild.buildPaymentHandlers(
                     List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
             ));
-            return creditCardPaymentBuilder.getCreditCardPayment();
         }
 
         throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);

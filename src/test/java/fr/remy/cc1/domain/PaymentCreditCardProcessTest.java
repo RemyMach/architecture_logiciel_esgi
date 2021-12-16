@@ -3,9 +3,9 @@ package fr.remy.cc1.domain;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.payment.Payer;
 import fr.remy.cc1.domain.payment.Payment;
+import fr.remy.cc1.domain.payment.PaymentCreator;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -95,12 +95,9 @@ public class PaymentCreditCardProcessTest {
     public void securityCodeIsNotValidTest() {
 
         this.creditCard = CreditCard.of(this.creditCardIdStub, 1234567262, 1203, 420, "POMME");
-        CreditCardPaymentBuilder creditCardPaymentBuilder  = new CreditCardPaymentBuilder();
-        creditCardPaymentBuilder.withCreditCard(this.creditCard);
-        creditCardPaymentBuilder.withCreditCardHandler(PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+        this.payment = PaymentCreator.withCreditCard(this.creditCard, PaymentCreditCardHandlerBuild.buildPaymentHandlers(
                 List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
         ));
-        this.payment = creditCardPaymentBuilder.getCreditCardPayment();
 
         try {
 
