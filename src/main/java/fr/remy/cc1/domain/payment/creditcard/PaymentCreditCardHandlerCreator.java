@@ -3,7 +3,7 @@ package fr.remy.cc1.domain.payment.creditcard;
 
 import java.util.List;
 
-public class PaymentCreditCardHandlerBuild {
+public class PaymentCreditCardHandlerCreator {
 
     public static PaymentCreditCardHandler buildPaymentHandlers(List<PaymentCreditCardHandler> paymentCreditCardHandlers) {
 

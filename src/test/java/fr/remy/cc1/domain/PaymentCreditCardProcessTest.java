@@ -46,7 +46,7 @@ public class PaymentCreditCardProcessTest {
     public void threePaymentHandlerAreCalled() {
 
         PaymentCreditCardHandler paymentCreditCardHandler =
-                PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+                PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                         List.of(this.mockCreditCardChecker, this.mockCreditCardApproveTradesman, this.mockCreditCardContractor));
         this.payment = new StubCreditCardPayment(this.creditCard, paymentCreditCardHandler);
 
@@ -70,7 +70,7 @@ public class PaymentCreditCardProcessTest {
     @DisplayName("should work with only creditCardChecker called")
     public void everyPaymentHandlerAreCalled() {
         PaymentCreditCardHandler paymentCreditCardHandler =
-                PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+                PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                         List.of(this.mockCreditCardChecker));
         this.payment = new StubCreditCardPayment(this.creditCard, paymentCreditCardHandler);
 
@@ -95,7 +95,7 @@ public class PaymentCreditCardProcessTest {
     public void securityCodeIsNotValidTest() {
 
         this.creditCard = CreditCard.of(this.creditCardIdStub, 1234567262, 1203, 420, "POMME");
-        this.payment = PaymentCreator.withCreditCard(this.creditCard, PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+        this.payment = PaymentCreator.withCreditCard(this.creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                 List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
         ));
 

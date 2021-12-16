@@ -105,7 +105,7 @@ public class Main {
         if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
             return PaymentCreator.withPaypal(payer.getPaypalAccount());
         }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
-            return PaymentCreator.withCreditCard(payer.getCreditCard(), PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+            return PaymentCreator.withCreditCard(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                     List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
             ));
         }

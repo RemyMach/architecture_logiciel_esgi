@@ -1,10 +1,10 @@
 package fr.remy.cc1.domain.payment;
 
-public class CurrencyBuild {
+public class CurrencyCreator {
 
     private String exceptionMessage;
 
-    public CurrencyBuild() {
+    public CurrencyCreator() {
         this.exceptionMessage = "You can choose uniquely";
         for (Currency currency: Currency.values()) {
             this.exceptionMessage += ", " + currency.name();
