@@ -3,21 +3,19 @@ import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.domain.payment.*;
-import fr.remy.cc1.domain.payment.creditcard.CreditCard;
-import fr.remy.cc1.domain.payment.creditcard.CreditCardId;
-import fr.remy.cc1.domain.payment.creditcard.CreditCards;
+import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEvent;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -43,7 +41,6 @@ public class UserCreationTest {
     int discountPercentageStub;
 
     String currencyChoiceStub;
-    String paymentChoiceStub;
     boolean saveCreditCardStub;
 
 
@@ -58,7 +55,6 @@ public class UserCreationTest {
         this.discountPercentageStub = 10;
 
         this.currencyChoiceStub = "EUR";
-        this.paymentChoiceStub = "CreditCard";
         this.saveCreditCardStub = true;
 
         this.users = new InMemoryUsers();
@@ -87,34 +83,10 @@ public class UserCreationTest {
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), currencyBuild.getExceptionMessage());
-            assertEquals(this.users.findAll().size(), 0);
-            assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-        }
-    }
-
-    @Test
-    @DisplayName("should return an exception because payment is not Paypal or CreditCard")
-    void userHasNotAValidPaymentMethod() {
-
-        assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-
-        paymentChoiceStub = "Stripe";
-
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
-        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,1234567262, 1203, 321, "POMME");
-        Payer payer = new Payer(creditCard, null);
-
-        try {
-            User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
-            this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
-            fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), PaymentMethodValidator.exceptionMessage);
             assertEquals(this.users.findAll().size(), 0);
             assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
         }
@@ -135,7 +107,7 @@ public class UserCreationTest {
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
             this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-            createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException exception) {
             assertEquals(exception.getMessage(), "the user fields are not valid");
@@ -155,7 +127,7 @@ public class UserCreationTest {
 
         User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
         this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-        createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
@@ -176,7 +148,7 @@ public class UserCreationTest {
 
         User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub);
         this.currencyBuild.getCurrencyOf(currencyChoiceStub);
-        createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
@@ -184,18 +156,16 @@ public class UserCreationTest {
         assertEquals(this.creditCards.byId(this.creditCardIdStub), null);
     }
 
-    // mettre un test comme on save pas la credit card
-
     private void createUser(
             User user,
             Users users,
             Payer payer,
             String currency,
-            String paymentMethod,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
-        Payment payment = this.paymentBuild.getPaymentOf(paymentMethod, payer);
+        Payment payment = PaymentCreator.withCreditCard(payer.getCreditCard(), PaymentCreditCardHandlerBuild.buildPaymentHandlers(
+                List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())));
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
