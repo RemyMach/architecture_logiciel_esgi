@@ -1,10 +1,10 @@
 package fr.remy.cc1.domain.user;
 
-import fr.remy.cc1.domain.payment.Currency;
-
 public class UserCategoryCreator {
 
         private String exceptionMessage;
+
+        private static final UserCategoryCreator INSTANCE = new UserCategoryCreator();
 
         public UserCategoryCreator() {
             this.exceptionMessage = "You can choose uniquely";
@@ -14,6 +14,10 @@ public class UserCategoryCreator {
 
             this.exceptionMessage += " to pay";
         }
+
+        public static UserCategoryCreator getInstance() {
+        return INSTANCE;
+    }
 
         public UserCategory getValueOf(String aspirant) {
 
