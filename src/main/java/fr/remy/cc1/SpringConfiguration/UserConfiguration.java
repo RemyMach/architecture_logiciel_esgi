@@ -1,5 +1,6 @@
 package fr.remy.cc1.SpringConfiguration;
 
+import fr.remy.cc1.application.CreateUserCommandHandler;
 import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEventCustomerSubscription;
 import fr.remy.cc1.domain.invoice.Invoices;
@@ -11,6 +12,7 @@ import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEvent;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEventSubscription;
 import fr.remy.cc1.domain.user.RegisterUserEvent;
+import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
@@ -43,13 +45,8 @@ public class UserConfiguration {
         return new InMemoryCreditCards();
     }
 
-
     @Bean
     public EventBus<Event> userCreationEventBus() {
-        /*final Map<Class<? extends Event>, List<EventListener<? extends Event>>> listenerMap = new HashMap<>();
-        listenerMap.put(ModifyUserAddressEvent.class, List.of(new ModifyUserAddressEventListener()));
-        listenerMap.put(CreateUserEvent.class, List.of(new CreateUserEventListener()));
-        return new DefaultEventDispatcher(listenerMap);*/
 
         EmailSender emailSender = EmailSender.getInstance();
         emailSender.setMail(new SandboxMail());
@@ -70,6 +67,16 @@ public class UserConfiguration {
         userCreationEventBus.setSubscribers(subscriptionMap);
 
         return userCreationEventBus;
+    }
+
+    @Bean
+    public UserService userService() {
+        return new UserService(users());
+    }
+
+    @Bean
+    public CreateUserCommandHandler createUserCommandHandler() {
+        return new CreateUserCommandHandler(users(),userService(), userCreationEventBus());
     }
 
 }
