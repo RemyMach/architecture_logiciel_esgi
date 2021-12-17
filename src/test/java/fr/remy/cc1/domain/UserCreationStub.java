@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain;
 
-import fr.remy.cc1.domain.event.Subscriber;
+import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;

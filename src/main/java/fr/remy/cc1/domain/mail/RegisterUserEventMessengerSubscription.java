@@ -1,7 +1,7 @@
 package fr.remy.cc1.domain.mail;
 
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.event.Subscriber;
+import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.user.RegisterUserEvent;
 
 public class RegisterUserEventMessengerSubscription implements Subscriber<RegisterUserEvent> {

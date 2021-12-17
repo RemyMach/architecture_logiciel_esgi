@@ -1,11 +1,12 @@
 package fr.remy.cc1.domain.user;
 
-import fr.remy.cc1.domain.event.Event;
-import fr.remy.cc1.domain.event.EventId;
+import fr.remy.cc1.kernel.event.ApplicationEvent;
+import fr.remy.cc1.kernel.event.Event;
+import fr.remy.cc1.kernel.event.EventId;
 
 import java.time.ZonedDateTime;
 
-public class RegisterUserEvent implements Event {
+public class RegisterUserEvent implements Event, ApplicationEvent {
 
     private final EventId eventId;
     private final ZonedDateTime occurredDate;

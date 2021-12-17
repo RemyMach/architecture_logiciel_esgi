@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain.event;
+package fr.remy.cc1.kernel.event;
 
 import java.util.List;
 

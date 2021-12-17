@@ -1,7 +1,7 @@
 package fr.remy.cc1;
 
 import fr.remy.cc1.domain.customer.*;
-import fr.remy.cc1.domain.event.Subscriber;
+import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;

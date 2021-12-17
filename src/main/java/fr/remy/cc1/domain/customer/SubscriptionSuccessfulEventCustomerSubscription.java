@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain.customer;
 
-import fr.remy.cc1.domain.event.Subscriber;
+import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.user.Users;
 
 public class SubscriptionSuccessfulEventCustomerSubscription implements Subscriber<SubscriptionSuccessfulEvent> {

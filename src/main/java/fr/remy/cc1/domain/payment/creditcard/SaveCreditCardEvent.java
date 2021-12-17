@@ -1,12 +1,13 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
-import fr.remy.cc1.domain.event.Event;
-import fr.remy.cc1.domain.event.EventId;
+import fr.remy.cc1.kernel.event.ApplicationEvent;
+import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.domain.user.User;
+import fr.remy.cc1.kernel.event.EventId;
 
 import java.time.ZonedDateTime;
 
-public class SaveCreditCardEvent implements Event {
+public class SaveCreditCardEvent implements Event, ApplicationEvent {
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
     private final CreditCard creditCard;

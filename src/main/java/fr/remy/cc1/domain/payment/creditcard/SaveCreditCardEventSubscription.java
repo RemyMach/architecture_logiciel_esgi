@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
-import fr.remy.cc1.domain.event.Subscriber;
+import fr.remy.cc1.kernel.event.Subscriber;
 
 
 public class SaveCreditCardEventSubscription implements Subscriber<SaveCreditCardEvent> {
