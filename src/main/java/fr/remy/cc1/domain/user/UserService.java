@@ -14,7 +14,7 @@ public final class UserService {
 
     public void create(User user) {
         this.users.save(user);
-        UserCreationEventBus.getInstance().send(RegisterUserEvent.withUser(user));
+        //UserCreationEventBus.getInstance().send(RegisterUserEvent.withUser(user));
     }
 
     public List<User> all() {
