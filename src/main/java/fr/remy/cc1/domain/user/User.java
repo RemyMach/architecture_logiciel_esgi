@@ -23,7 +23,7 @@ public final class User {
         if(ValidationUserEngine.getInstance().test(user)) {
             return user;
         }
-        throw new IllegalArgumentException("the user fields are not valid");
+        return null;
     }
 
     public UserId getUserId() {

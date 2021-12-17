@@ -1,7 +1,6 @@
 package fr.remy.cc1.application;
 
 import fr.remy.cc1.domain.user.*;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;

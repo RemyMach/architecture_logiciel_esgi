@@ -28,11 +28,17 @@ public final class ValidationUserEngine implements Predicate<User> {
 
     private boolean validateEmail(String email) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-        return matcher.find();
+        if(matcher.find()) {
+            return true;
+        }
+        throw new Error("the email is not valid");
     }
 
     private boolean validatePassword(String password) {
         Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
-        return matcher.find();
+        if(matcher.find()) {
+            return true;
+        }
+        throw new Error("the password is not valid");
     }
 }
