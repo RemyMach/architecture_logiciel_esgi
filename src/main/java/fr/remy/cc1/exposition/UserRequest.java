@@ -1,7 +1,5 @@
 package fr.remy.cc1.exposition;
 
-import fr.remy.cc1.domain.user.UserCategory;
-
 import javax.validation.constraints.*;
 
 public class UserRequest {
@@ -16,7 +14,6 @@ public class UserRequest {
 
     @NotNull
     @NotBlank
-    @Email
     public String email;
 
     @NotNull

@@ -1,5 +1,7 @@
 package fr.remy.cc1.domain.user;
 
+import fr.remy.cc1.kernel.error.BasicException;
+
 public final class User {
 
     private final UserId userId;
@@ -18,7 +20,7 @@ public final class User {
         this.userCategory = userCategory;
     }
 
-    public static User of(UserId userId, String lastname, String firstname, String email, String password, UserCategory userCategory) {
+    public static User of(UserId userId, String lastname, String firstname, String email, String password, UserCategory userCategory) throws BasicException {
         User user = new User(userId, lastname, firstname, email,  password, userCategory);
         if(ValidationUserEngine.getInstance().test(user)) {
             return user;
