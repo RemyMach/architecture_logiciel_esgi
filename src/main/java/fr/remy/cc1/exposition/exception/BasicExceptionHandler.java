@@ -4,18 +4,29 @@ import fr.remy.cc1.exposition.CustomErrorResponse;
 import fr.remy.cc1.kernel.error.BasicException;
 import fr.remy.cc1.kernel.error.EmailValidatorException;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.ValidationException;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+
+import javax.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class BasicExceptionHandler {
 
-    @ExceptionHandler(BasicException.class)
-    public ResponseEntity<CustomErrorResponse> handleTypeMismatchException(EmailValidatorException e) {
-        System.out.println("on passe dans le handler");
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<CustomErrorResponse> handleValidationException(ValidationException e) {
         CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getErrorCode(), e.getMessage());
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    //TODO mappage d'un code d'excpetion dans le message du validator vers un objet exeption dans la partie exposition
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<CustomErrorResponse> handleTypeMismatchException(MethodArgumentNotValidException e) {
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(10, e.getMessage());
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
 

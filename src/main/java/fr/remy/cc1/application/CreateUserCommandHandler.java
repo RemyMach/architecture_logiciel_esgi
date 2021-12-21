@@ -3,6 +3,7 @@ package fr.remy.cc1.application;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.BasicException;
+import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 
@@ -19,7 +20,7 @@ public final class CreateUserCommandHandler implements CommandHandler<CreateUser
         this.eventBus = eventBus;
     }
 
-    public UserId handle(CreateUser createUser) throws BasicException {
+    public UserId handle(CreateUser createUser) throws ValidationException {
         final UserId userId = users.nextIdentity();
         User user = User.of(userId, createUser.lastname, createUser.firstname, createUser.email, createUser.password, createUser.userCategory);
         this.userService.create(user);

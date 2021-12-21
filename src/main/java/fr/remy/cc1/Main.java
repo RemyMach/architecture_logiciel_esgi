@@ -2,6 +2,7 @@ package fr.remy.cc1;
 
 import fr.remy.cc1.domain.customer.*;
 import fr.remy.cc1.kernel.error.BasicException;
+import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.*;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args) throws BasicException {
+    public static void main(String[] args) throws ValidationException {
 
         EmailSender emailSender = EmailSender.getInstance();
         emailSender.setMail(new SandboxMail());

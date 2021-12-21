@@ -1,9 +1,6 @@
 package fr.remy.cc1.domain.user;
 
-import fr.remy.cc1.kernel.error.BasicException;
-import fr.remy.cc1.kernel.error.EmailValidatorException;
-import fr.remy.cc1.kernel.error.ExceptionsDictionary;
-import fr.remy.cc1.kernel.error.PasswordValidatorException;
+import fr.remy.cc1.kernel.error.*;
 
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
@@ -25,7 +22,7 @@ public final class ValidationUserEngine {
         return INSTANCE;
     }
 
-    public boolean test(User user) throws BasicException {
+    public boolean test(User user) throws ValidationException {
         return this.validateEmail(user.getEmail()) &&
                 this.validatePassword(user.getPassword());
     }

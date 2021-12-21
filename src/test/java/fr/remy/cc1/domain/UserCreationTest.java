@@ -10,6 +10,7 @@ import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.kernel.error.BasicException;
+import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
@@ -84,7 +85,7 @@ public class UserCreationTest {
             this.currencyCreator.getValueOf(currencyChoiceStub);
             createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | BasicException e) {
+        }catch (IllegalArgumentException | ValidationException e) {
             assertEquals(e.getMessage(), currencyCreator.getExceptionMessage());
             assertEquals(this.users.findAll().size(), 0);
             assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
@@ -108,7 +109,7 @@ public class UserCreationTest {
             this.currencyCreator.getValueOf(currencyChoiceStub);
             createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | BasicException exception) {
+        }catch (IllegalArgumentException | ValidationException exception) {
             assertEquals(exception.getMessage(), "the user fields are not valid");
             assertEquals(this.users.findAll().size(), 0);
             assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
@@ -117,7 +118,7 @@ public class UserCreationTest {
 
     @Test
     @DisplayName("should register user, credit card and Invoice")
-    void userIsValid() throws BasicException {
+    void userIsValid() throws ValidationException {
 
         assertEquals(this.invoices.findAll().size(), 0);
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
@@ -137,7 +138,7 @@ public class UserCreationTest {
 
     @Test
     @DisplayName("should register user, and Invoice but not save credit card")
-    void userIsValidAndCreditCardIsNotSave() throws BasicException {
+    void userIsValidAndCreditCardIsNotSave() throws ValidationException {
 
         this.saveCreditCardStub = false;
         assertEquals(this.invoices.findAll().size(), 0);
