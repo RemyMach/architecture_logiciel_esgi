@@ -16,6 +16,6 @@ public class ExceptionsDictionary {
             8, "firstname field don't have to be null or blank",
             9, "lastname field don't have to be null or blank",
             10, "Email field don't have to be null or blank",
-            11, "UserCategory field don't have to be null or blank",
+            11, "UserCategory field don't have to be null or blank"
     );
 }
