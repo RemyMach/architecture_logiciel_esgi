@@ -7,11 +7,14 @@ import fr.remy.cc1.kernel.error.ValidationException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.validation.ConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @RestControllerAdvice
 public class BasicExceptionHandler {
@@ -22,11 +25,21 @@ public class BasicExceptionHandler {
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    //TODO mappage d'un code d'excpetion dans le message du validator vers un objet exeption dans la partie exposition
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<CustomErrorResponse> handleTypeMismatchException(MethodArgumentNotValidException e) {
-        CustomErrorResponse customErrorResponse = CustomErrorResponse.from(Integer.parseInt(e.getMessage()));
-        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<List<CustomErrorResponse>> handleTypeMismatchException(MethodArgumentNotValidException e) {
+        List<CustomErrorResponse> errors = new ArrayList<>();
+        e.getBindingResult().getAllErrors().forEach(error -> {
+            System.out.println(error);
+            String errorMessage = error.getDefaultMessage();
+            System.out.println(errorMessage);
+            if(errorMessage != null) {
+                System.out.println(Integer.parseInt(errorMessage));
+                CustomErrorResponse customErrorResponse = CustomErrorResponse.from(Integer.parseInt(errorMessage));
+                errors.add(customErrorResponse);
+            }
+        });
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
