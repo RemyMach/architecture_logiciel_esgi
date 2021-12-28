@@ -6,19 +6,19 @@ import java.math.BigDecimal;
 
 public class SubscriptionRequest {
 
-    @NotBlank(message="13")
-    @NotNull(message="13")
+    @NotBlank(message="discountPercentage_empty_null")
+    @NotNull(message="discountPercentage_empty_null")
     public int discountPercentage;
 
-    @NotBlank(message="12")
-    @NotNull(message="12")
+    @NotBlank(message="amount_empty_null")
+    @NotNull(message="amount_empty_null")
     public BigDecimal amount;
 
-    @NotNull(message="15")
-    @NotBlank(message="15")
+    @NotNull(message="userId_empty_null")
+    @NotBlank(message="userId_empty_null")
     public int userId;
 
-    @NotBlank(message="14")
-    @NotNull(message="14")
+    @NotBlank(message="payment_empty_null")
+    @NotNull(message="payment_empty_null")
     public PaymentRequest payment;
 }

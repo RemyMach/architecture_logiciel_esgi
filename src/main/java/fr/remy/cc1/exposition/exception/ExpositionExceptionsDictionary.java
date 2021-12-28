@@ -17,7 +17,6 @@ public class ExpositionExceptionsDictionary {
             Map.entry( "payment_empty_null", "payment can't be null or blank"),
             Map.entry( "userId_empty_null", "UserId can't be null or blank"),
             Map.entry( "payment_currency_empty_null", "payment Currency can't be null or blank"),
-            Map.entry( "payment_name_empty_null", "payment name can't be null or blank"),
-            Map.entry( "user_category_empty_null", "userCategory have to be TRADESMAN or CONTRACTOR")
+            Map.entry( "payment_name_empty_null", "payment name can't be null or blank")
     );
 }

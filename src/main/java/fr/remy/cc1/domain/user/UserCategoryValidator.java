@@ -2,6 +2,11 @@ package fr.remy.cc1.domain.user;
 
 import fr.remy.cc1.kernel.EnumValidator;
 import fr.remy.cc1.kernel.Validator;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.UserCategoryValidatorException;
+import fr.remy.cc1.kernel.error.ValidationException;
+
+import javax.validation.Valid;
 
 public class UserCategoryValidator implements Validator<String> {
 
@@ -14,8 +19,11 @@ public class UserCategoryValidator implements Validator<String> {
     }
 
     @Override
-    public boolean test(String categoryAspirant) {
+    public boolean test(String categoryAspirant) throws ValidationException {
         EnumValidator<UserCategory> enumValidator = new EnumValidator(UserCategory.class);
-        return enumValidator.test(categoryAspirant);
+        if(enumValidator.test(categoryAspirant)) {
+            return true;
+        }
+        throw new UserCategoryValidatorException(ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getErrorCode(), ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getMessage());
     }
 }

@@ -1,15 +1,15 @@
 package fr.remy.cc1.kernel.error;
 
 public class ValidationException extends Exception implements BasicException{
-    private int errorCode;
+    private String errorCode;
 
-    public ValidationException(int errorCode, String message) {
+    public ValidationException(String errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }
 
     @Override
-    public int getErrorCode() {
+    public String getErrorCode() {
         return this.errorCode;
     }
 }

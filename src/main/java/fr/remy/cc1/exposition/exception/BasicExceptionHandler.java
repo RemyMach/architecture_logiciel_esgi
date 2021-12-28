@@ -1,6 +1,7 @@
 package fr.remy.cc1.exposition.exception;
 
 import fr.remy.cc1.exposition.CustomErrorResponse;
+import fr.remy.cc1.exposition.CustomErrorResponseCreator;
 import fr.remy.cc1.kernel.error.BasicException;
 import fr.remy.cc1.kernel.error.EmailValidatorException;
 import fr.remy.cc1.kernel.error.ValidationException;
@@ -21,21 +22,22 @@ public class BasicExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<CustomErrorResponse> handleValidationException(ValidationException e) {
-        CustomErrorResponse customErrorResponse = CustomErrorResponse.from(e.getErrorCode());
+        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionary.codeToExpositionErrors);
+        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
+        System.out.println(e.getErrorCode());
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<CustomErrorResponse>> handleTypeMismatchException(MethodArgumentNotValidException e) {
+        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(ExpositionExceptionsDictionary.codeToExpositionErrors);
         List<CustomErrorResponse> errors = new ArrayList<>();
+        System.out.println(e.getBindingResult().getAllErrors());
         e.getBindingResult().getAllErrors().forEach(error -> {
-            System.out.println(error);
             String errorMessage = error.getDefaultMessage();
-            System.out.println(errorMessage);
             if(errorMessage != null) {
-                System.out.println(Integer.parseInt(errorMessage));
-                CustomErrorResponse customErrorResponse = CustomErrorResponse.from(Integer.parseInt(errorMessage));
+                CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(errorMessage);
                 errors.add(customErrorResponse);
             }
         });
@@ -45,9 +47,8 @@ public class BasicExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<CustomErrorResponse> globalExceptionHandler(Exception e, WebRequest request) {
-        System.out.println(e.getMessage());
-        System.out.println(e);
-        CustomErrorResponse customErrorResponse = CustomErrorResponse.from(0);
+        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionary.codeToExpositionErrors);
+        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(customErrorResponse);
     }
 

@@ -4,23 +4,23 @@ import javax.validation.constraints.*;
 
 public class UserRequest {
 
-    @NotNull(message = "9")
-    @NotBlank(message = "9")
+    @NotNull(message = "lastname_empty_null")
+    @NotBlank(message = "lastname_empty_null")
     public String lastname;
 
-    @NotNull(message = "8")
-    @NotBlank(message = "8")
+    @NotNull(message = "firstname_empty_null")
+    @NotBlank(message = "firstname_empty_null")
     public String firstname;
 
-    @NotNull(message = "10")
-    @NotBlank(message = "10")
+    @NotNull(message = "email_empty_null")
+    @NotBlank(message = "email_empty_null")
     public String email;
 
-    @NotNull(message = "7")
-    @NotBlank(message = "7")
+    @NotNull(message = "password_empty_null")
+    @NotBlank(message = "password_empty_null")
     public String password;
 
-    @NotNull(message = "11")
-    @NotBlank(message = "11")
+    @NotNull(message = "user_category_empty_null")
+    @NotBlank(message = "user_category_empty_null")
     public String userCategory;
 }

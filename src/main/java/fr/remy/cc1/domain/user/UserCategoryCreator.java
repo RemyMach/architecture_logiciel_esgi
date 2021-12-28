@@ -14,13 +14,13 @@ public class UserCategoryCreator {
         return INSTANCE;
     }
 
-        public UserCategory getValueOf(String aspirant) {
+        public UserCategory getValueOf(String aspirant) throws ValidationException {
 
-            if(!UserCategoryValidator.getInstance().test(aspirant)) {
-                throw new IllegalArgumentException(validationException);
+            if(UserCategoryValidator.getInstance().test(aspirant)) {
+                return UserCategory.valueOf(aspirant);
             }
 
-            return UserCategory.valueOf(aspirant);
+            return null;
         }
 
         public ValidationException getValidationException() {
