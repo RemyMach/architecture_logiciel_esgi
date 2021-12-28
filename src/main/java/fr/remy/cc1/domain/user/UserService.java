@@ -17,6 +17,10 @@ public final class UserService {
         //UserCreationEventBus.getInstance().send(RegisterUserEvent.withUser(user));
     }
 
+    public User getUser(UserId userId) {
+        return this.users.byId(userId);
+    }
+
     public List<User> all() {
         return this.users.findAll();
     }

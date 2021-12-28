@@ -4,7 +4,7 @@ public class CreditCard {
 
     private final CreditCardId creditCardId;
 
-    private final int number;
+    private final String number;
 
     private final int expiryDate;
 
@@ -12,7 +12,7 @@ public class CreditCard {
 
     private final String name;
 
-    private CreditCard(CreditCardId creditCardId, int number, int expiryDate, int securityCode, String name) {
+    private CreditCard(CreditCardId creditCardId, String number, int expiryDate, int securityCode, String name) {
         this.creditCardId = creditCardId;
         this.number = number;
         this.expiryDate = expiryDate;
@@ -20,7 +20,7 @@ public class CreditCard {
         this.name = name;
     }
 
-    public static CreditCard of(CreditCardId creditCardId, int number, int expiryDate, int securityCode, String name) {
+    public static CreditCard of(CreditCardId creditCardId, String number, int expiryDate, int securityCode, String name) {
         return new CreditCard(creditCardId, number, expiryDate, securityCode, name);
     }
 

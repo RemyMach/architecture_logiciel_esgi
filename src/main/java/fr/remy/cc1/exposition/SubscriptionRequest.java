@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 
 public class SubscriptionRequest {
 
-    public String discountPercentage;
+    public int discountPercentage;
 
     public BigDecimal amount;
 
     public int userId;
+
+    public PaymentRequest payment;
 }
