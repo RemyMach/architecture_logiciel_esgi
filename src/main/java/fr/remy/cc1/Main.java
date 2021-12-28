@@ -62,7 +62,7 @@ public class Main {
         CurrencyValidator.getInstance().test(currencyChoiceStub);
 
         final CreditCardId creditCardId = creditCards.nextIdentity();
-        CreditCard creditCard = CreditCard.of(creditCardId,1234567262, 1203, 321, "POMME");
+        CreditCard creditCard = CreditCard.of(creditCardId,"1234567262", 1203, 321, "POMME");
         Payer payer = new Payer(creditCard, null);
 
         createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);

@@ -1,5 +1,6 @@
 package fr.remy.cc1.SpringConfiguration;
 
+import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.application.CreateUserCommandHandler;
 import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEventCustomerSubscription;
@@ -76,7 +77,12 @@ public class UserConfiguration {
 
     @Bean
     public CreateUserCommandHandler createUserCommandHandler() {
-        return new CreateUserCommandHandler(users(),userService(), userCreationEventBus());
+        return new CreateUserCommandHandler(users(), userService(), userCreationEventBus());
+    }
+
+    @Bean
+    public CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler() {
+        return new CreateSubscriptionOfferCommandHandler(creditCards(),userService(), userCreationEventBus());
     }
 
 }

@@ -33,7 +33,7 @@ public class PaymentCreditCardProcessTest {
     void initStubValues() {
         this.creditCards = new InMemoryCreditCards();
         this.creditCardIdStub = creditCards.nextIdentity();
-        this.creditCard = CreditCard.of(this.creditCardIdStub, 1234567262, 1203, 321, "POMME");
+        this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 321, "POMME");
         this.mockCreditCardChecker = new MockCreditCardChecker();
         this.mockCreditCardApproveTradesman = new MockCreditCardApproveTradesman();
         this.mockCreditCardContractor = new MockCreditCardContractor();
@@ -94,7 +94,7 @@ public class PaymentCreditCardProcessTest {
     @DisplayName("should fail because security code is 420")
     public void securityCodeIsNotValidTest() {
 
-        this.creditCard = CreditCard.of(this.creditCardIdStub, 1234567262, 1203, 420, "POMME");
+        this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 420, "POMME");
         this.payment = PaymentCreator.withCreditCard(this.creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                 List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
         ));

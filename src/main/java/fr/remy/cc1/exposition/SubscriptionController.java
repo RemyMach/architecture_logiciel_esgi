@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/subscription")
+@RequestMapping("/subscriptions")
 public class SubscriptionController {
     private final CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler;
 
@@ -26,14 +26,15 @@ public class SubscriptionController {
         this.createSubscriptionOfferCommandHandler = createSubscriptionOfferCommandHandler;
     }
 
+    //TODO le if pour le moyen de paiement on peut le mettre ici je pense
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@RequestBody @Valid SubscriptionRequest request) throws ValidationException {
+    public ResponseEntity<Void> create(@RequestBody @Valid SubscriptionRequest request) {
         CreateSubscriptionOffer createSubscriptionOffer = new CreateSubscriptionOffer(
                 request.discountPercentage,
                 request.amount,
                 request.userId,
                 request.payment.currency,
-                request.payment.payment,
+                request.payment.name,
                 request.payment.saveCreditCard,
                 request.payment.creditCardNumber,
                 request.payment.creditCardExpiryDate,

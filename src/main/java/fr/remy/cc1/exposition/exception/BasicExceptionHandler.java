@@ -45,6 +45,8 @@ public class BasicExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<CustomErrorResponse> globalExceptionHandler(Exception e, WebRequest request) {
+        System.out.println(e.getMessage());
+        System.out.println(e);
         CustomErrorResponse customErrorResponse = CustomErrorResponse.from(0);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(customErrorResponse);
     }
