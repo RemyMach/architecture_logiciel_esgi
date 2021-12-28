@@ -20,6 +20,7 @@ public final class CreateUserCommandHandler implements CommandHandler<CreateUser
         this.eventBus = eventBus;
     }
 
+    @Override
     public UserId handle(CreateUser createUser) throws ValidationException {
         final UserId userId = users.nextIdentity();
         User user = User.of(userId, createUser.lastname, createUser.firstname, createUser.email, createUser.password, createUser.userCategory);
