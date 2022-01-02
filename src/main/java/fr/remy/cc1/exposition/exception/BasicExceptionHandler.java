@@ -31,9 +31,10 @@ public class BasicExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<CustomErrorResponse>> handleTypeMismatchException(MethodArgumentNotValidException e) {
+        System.out.println("on passe bien là");
+        System.out.println(e);
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(ExpositionExceptionsDictionary.codeToExpositionErrors);
         List<CustomErrorResponse> errors = new ArrayList<>();
-        System.out.println(e.getBindingResult().getAllErrors());
         e.getBindingResult().getAllErrors().forEach(error -> {
             String errorMessage = error.getDefaultMessage();
             if(errorMessage != null) {
@@ -47,6 +48,8 @@ public class BasicExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<CustomErrorResponse> globalExceptionHandler(Exception e, WebRequest request) {
+        System.out.println("on passe par la default en faite");
+        System.out.println(e);
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionary.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(customErrorResponse);

@@ -19,9 +19,9 @@ public class PaymentRequest {
 
     public String creditCardNumber;
 
-    public int creditCardExpiryDate;
+    public Integer creditCardExpiryDate;
 
-    public int creditCardSecurityCode;
+    public Integer creditCardSecurityCode;
 
     public String creditCardName;
 

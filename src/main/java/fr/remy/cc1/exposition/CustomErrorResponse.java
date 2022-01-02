@@ -1,7 +1,5 @@
 package fr.remy.cc1.exposition;
 
-import fr.remy.cc1.exposition.exception.ExpositionExceptionsDictionary;
-
 public class CustomErrorResponse{
     public String errorCode;
     public String message;

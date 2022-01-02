@@ -1,4 +1,4 @@
-package fr.remy.cc1.exposition;
+package fr.remy.cc1.exposition.user;
 
 import javax.validation.constraints.*;
 
