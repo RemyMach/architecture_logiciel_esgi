@@ -37,7 +37,6 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
             throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
         }
         Payment payment = null;
-        CreditCard creditCard = null;
         if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
             payment = PaymentDirector.createPaypalPayment(paypalAccounts.byUserId(user.getUserId()));
         }else if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {

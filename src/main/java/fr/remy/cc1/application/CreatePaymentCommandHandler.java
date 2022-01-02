@@ -37,10 +37,18 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
 
         if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
             final PayPalAccountId payPalAccountId = paypalAccounts.nextIdentity();
+            try {
+                PaypalAccount paypalAccount = this.paypalAccounts.byUserId(user.getUserId());
+                this.paypalAccounts.delete(paypalAccount.getPayPalAccountId());
+            }catch(Exception e) {}
             PaypalAccount paypalAccount = new PaypalAccount(payPalAccountId, user.getUserId());
             this.paypalAccounts.save(paypalAccount);
         }else if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
             final CreditCardId creditCardId = creditCards.nextIdentity();
+            try {
+                CreditCard creditCard = this.creditCards.byUserId(user.getUserId());
+                this.creditCards.delete(creditCard.getCreditCardId());
+            }catch(Exception e) {}
             CreditCard creditCard = CreditCard.of(creditCardId, command.creditCardNumber, command.creditCardExpiryDate, command.creditCardSecurityCode, command.creditCardName, user.getUserId());
             this.creditCards.save(creditCard, user);
         }

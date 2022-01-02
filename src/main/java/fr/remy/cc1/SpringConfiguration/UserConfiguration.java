@@ -14,12 +14,14 @@ import fr.remy.cc1.domain.payment.creditcard.CreditCardService;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEvent;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEventSubscription;
+import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.RegisterUserEvent;
 import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
+import fr.remy.cc1.infrastructure.paypalAccounts.InMemoryPaypalAccounts;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Event;
@@ -83,18 +85,23 @@ public class UserConfiguration {
     }
 
     @Bean
+    public PaypalAccounts paypalAccounts() {
+        return new InMemoryPaypalAccounts();
+    }
+
+    @Bean
     public CreateUserCommandHandler createUserCommandHandler() {
         return new CreateUserCommandHandler(users(), userService(), userCreationEventBus());
     }
 
     @Bean
     public CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler() {
-        return new CreateSubscriptionOfferCommandHandler(creditCards(),userService(), userCreationEventBus());
+        return new CreateSubscriptionOfferCommandHandler(creditCards(), paypalAccounts(), userService(), userCreationEventBus());
     }
 
     @Bean
     public CreatePaymentCommandHandler createPaymentCommandHandler() {
-        return new CreatePaymentCommandHandler(creditCards(),userService(), userCreationEventBus());
+        return new CreatePaymentCommandHandler(creditCards(), paypalAccounts(), users(), userCreationEventBus());
     }
 
 }

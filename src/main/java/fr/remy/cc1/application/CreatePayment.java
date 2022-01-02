@@ -1,6 +1,5 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.kernel.Command;
 
 public class CreatePayment implements Command {
