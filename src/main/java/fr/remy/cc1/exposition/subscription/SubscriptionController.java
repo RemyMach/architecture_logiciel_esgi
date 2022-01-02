@@ -9,6 +9,7 @@ import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.payment.PaymentDirector;
 import fr.remy.cc1.domain.payment.PaymentMethodValidator;
 import fr.remy.cc1.domain.payment.creditcard.*;
+import fr.remy.cc1.domain.user.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +40,14 @@ public class SubscriptionController {
                 request.payment.creditCardExpiryDate,
                 request.payment.creditCardSecurityCode,
                 request.payment.creditCardName,
-                request.userId
+                UserId.of(request.userId)
         );
         createPaymentCommandHandler.handle(createPayment);
-
+        System.out.println(createPayment);
         CreateSubscriptionOffer createSubscriptionOffer = new CreateSubscriptionOffer(
                 request.discountPercentage,
                 request.amount,
-                request.userId,
+                UserId.of(request.userId),
                 request.payment.currency,
                 request.payment.name
         );

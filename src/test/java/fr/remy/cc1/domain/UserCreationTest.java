@@ -78,12 +78,12 @@ public class UserCreationTest {
         currencyChoiceStub = "GBP";
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
-        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME");
-        Payer payer = new Payer(creditCard, null);
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
+            CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
             this.currencyCreator.getValueOf(currencyChoiceStub);
+            Payer payer = new Payer(creditCard, null);
             createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException | ValidationException e) {
@@ -102,12 +102,12 @@ public class UserCreationTest {
         emailStub = "pomme";
 
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
-        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME");
-        Payer payer = new Payer(creditCard, null);
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
             this.currencyCreator.getValueOf(currencyChoiceStub);
+            CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
+            Payer payer = new Payer(creditCard, null);
             createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException | ValidationException exception) {
@@ -123,11 +123,12 @@ public class UserCreationTest {
 
         assertEquals(this.invoices.findAll().size(), 0);
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
-        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME");
-        Payer payer = new Payer(creditCard, null);
+
 
         User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
         this.currencyCreator.getValueOf(currencyChoiceStub);
+        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
+        Payer payer = new Payer(creditCard, null);
         createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);
@@ -144,11 +145,12 @@ public class UserCreationTest {
         this.saveCreditCardStub = false;
         assertEquals(this.invoices.findAll().size(), 0);
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new BigDecimal(priceSubscriptionOfferStub), discountPercentageStub);
-        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME");
-        Payer payer = new Payer(creditCard, null);
+
 
         User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
         this.currencyCreator.getValueOf(currencyChoiceStub);
+        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
+        Payer payer = new Payer(creditCard, null);
         createUser(user, users, payer, currencyChoiceStub, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);

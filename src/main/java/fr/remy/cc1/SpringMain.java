@@ -9,6 +9,5 @@ public class SpringMain {
 
     public static void main(String[] args) {
         final ConfigurableApplicationContext applicationContext = SpringApplication.run(SpringMain.class, args);
-
     }
 }

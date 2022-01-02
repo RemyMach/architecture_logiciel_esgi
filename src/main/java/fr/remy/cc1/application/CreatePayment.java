@@ -1,5 +1,6 @@
 package fr.remy.cc1.application;
 
+import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.kernel.Command;
 
 public class CreatePayment implements Command {
@@ -14,9 +15,9 @@ public class CreatePayment implements Command {
 
     public final String creditCardName;
 
-    public final int userId;
+    public final UserId userId;
 
-    public CreatePayment(String payment, String creditCardNumber, int creditCardExpiryDate, int creditCardSecurityCode, String creditCardName, int userId) {
+    public CreatePayment(String payment, String creditCardNumber, int creditCardExpiryDate, int creditCardSecurityCode, String creditCardName, UserId userId) {
         this.payment = payment;
         this.creditCardNumber = creditCardNumber;
         this.creditCardExpiryDate = creditCardExpiryDate;

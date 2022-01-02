@@ -5,7 +5,12 @@ import fr.remy.cc1.domain.payment.Payer;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.payment.PaymentDirector;
 import fr.remy.cc1.domain.payment.creditcard.*;
+import fr.remy.cc1.domain.user.User;
+import fr.remy.cc1.domain.user.UserCategoryCreator;
+import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
+import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,11 +34,15 @@ public class PaymentCreditCardProcessTest {
     MockCreditCardApproveTradesman mockCreditCardApproveTradesman;
     MockCreditCardContractor mockCreditCardContractor;
 
+    User user;
+
     @BeforeEach
-    void initStubValues() {
+    void initStubValues() throws ValidationException {
         this.creditCards = new InMemoryCreditCards();
         this.creditCardIdStub = creditCards.nextIdentity();
-        this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 321, "POMME");
+        Users users = new InMemoryUsers();
+        this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", "pomme@pomme.fr", "aZertyu9?", UserCategoryCreator.getInstance().getValueOf("TRADESMAN"));
+        this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 321, "POMME", user.getUserId());
         this.mockCreditCardChecker = new MockCreditCardChecker();
         this.mockCreditCardApproveTradesman = new MockCreditCardApproveTradesman();
         this.mockCreditCardContractor = new MockCreditCardContractor();
@@ -94,7 +103,7 @@ public class PaymentCreditCardProcessTest {
     @DisplayName("should fail because security code is 420")
     public void securityCodeIsNotValidTest() {
 
-        this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 420, "POMME");
+        this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 420, "POMME", this.user.getUserId());
         this.payment = PaymentDirector.createCreditCardPayment(this.creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                 List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
         ));

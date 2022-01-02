@@ -1,6 +1,10 @@
 package fr.remy.cc1.domain.user;
 
-public final class UserId {
+import fr.remy.cc1.kernel.ValueObjectId;
+
+import java.util.Objects;
+
+public final class UserId implements ValueObjectId {
 
     private final int value;
 
@@ -14,5 +18,18 @@ public final class UserId {
 
     public String getValue() {
         return String.valueOf(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserId userId = (UserId) o;
+        return value == userId.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

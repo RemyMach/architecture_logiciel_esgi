@@ -30,7 +30,7 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
     @Override
     public Void handle(CreatePayment command) {
 
-        User user = this.users.byId(UserId.of(command.userId));
+        User user = this.users.byId(command.userId);
         if(!PaymentMethodValidator.getInstance().test(command.payment)) {
             throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
         }
