@@ -24,7 +24,7 @@ public final class CreateUserCommandHandler implements CommandHandler<CreateUser
     public UserId handle(CreateUser createUser) throws ValidationException {
         final UserId userId = users.nextIdentity();
         User user = User.of(userId, createUser.lastname, createUser.firstname, createUser.email, createUser.password, createUser.userCategory);
-        this.userService.create(user);
+        this.users.save(user);
         this.eventBus.send(RegisterUserEvent.withUser(user));
         return userId;
     }

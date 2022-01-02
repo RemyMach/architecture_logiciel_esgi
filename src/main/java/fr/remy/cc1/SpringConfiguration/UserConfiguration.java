@@ -1,5 +1,6 @@
 package fr.remy.cc1.SpringConfiguration;
 
+import fr.remy.cc1.application.CreatePaymentCommandHandler;
 import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.application.CreateUserCommandHandler;
 import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
@@ -9,6 +10,7 @@ import fr.remy.cc1.domain.invoice.SubscriptionSuccessfulEventInvoiceSubscription
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.domain.mail.SubscriptionSuccessfulEventMessengerSubscription;
+import fr.remy.cc1.domain.payment.creditcard.CreditCardService;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEvent;
 import fr.remy.cc1.domain.payment.creditcard.SaveCreditCardEventSubscription;
@@ -60,7 +62,7 @@ public class UserConfiguration {
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(emailSender)),
-                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCards())),
+                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCardService())),
                 SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
         );
 
@@ -76,6 +78,11 @@ public class UserConfiguration {
     }
 
     @Bean
+    public CreditCardService creditCardService() {
+        return new CreditCardService(creditCards());
+    }
+
+    @Bean
     public CreateUserCommandHandler createUserCommandHandler() {
         return new CreateUserCommandHandler(users(), userService(), userCreationEventBus());
     }
@@ -83,6 +90,11 @@ public class UserConfiguration {
     @Bean
     public CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler() {
         return new CreateSubscriptionOfferCommandHandler(creditCards(),userService(), userCreationEventBus());
+    }
+
+    @Bean
+    public CreatePaymentCommandHandler createPaymentCommandHandler() {
+        return new CreatePaymentCommandHandler(creditCards(),userService(), userCreationEventBus());
     }
 
 }

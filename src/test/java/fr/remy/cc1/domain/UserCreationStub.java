@@ -1,5 +1,6 @@
 package fr.remy.cc1.domain;
 
+import fr.remy.cc1.domain.payment.creditcard.CreditCardService;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.domain.invoice.Invoices;
@@ -23,9 +24,9 @@ import java.util.Map;
 
 public class UserCreationStub {
 
-    public static void initUserCreationTest(Users users, Invoices invoices, CreditCards creditCards) {
+    public static void initUserCreationTest(Users users, Invoices invoices, CreditCardService creditCardService) {
         buildStubMailSender();
-        buildStubEventBus(users, invoices, creditCards);
+        buildStubEventBus(users, invoices, creditCardService);
     }
 
     private static void buildStubMailSender() {
@@ -34,7 +35,7 @@ public class UserCreationStub {
         mockEmailSender.setMail(new SandboxMail());
     }
 
-    private static void buildStubEventBus(Users users, Invoices invoices, CreditCards creditCards) {
+    private static void buildStubEventBus(Users users, Invoices invoices, CreditCardService creditCardService) {
         MockEmailSender mockEmailSender = MockEmailSender.getInstance();
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
@@ -45,7 +46,7 @@ public class UserCreationStub {
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(mockEmailSender)),
-                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCards)),
+                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCardService)),
                 SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
         );
 

@@ -3,7 +3,7 @@ package fr.remy.cc1.domain;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.payment.Payer;
 import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.domain.payment.PaymentCreator;
+import fr.remy.cc1.domain.payment.PaymentDirector;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import org.junit.jupiter.api.BeforeEach;
@@ -95,7 +95,7 @@ public class PaymentCreditCardProcessTest {
     public void securityCodeIsNotValidTest() {
 
         this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 420, "POMME");
-        this.payment = PaymentCreator.withCreditCard(this.creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
+        this.payment = PaymentDirector.createCreditCardPayment(this.creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                 List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
         ));
 

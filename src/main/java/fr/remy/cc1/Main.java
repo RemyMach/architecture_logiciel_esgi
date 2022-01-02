@@ -1,7 +1,6 @@
 package fr.remy.cc1;
 
 import fr.remy.cc1.domain.customer.*;
-import fr.remy.cc1.kernel.error.BasicException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.invoice.Invoices;
@@ -34,8 +33,9 @@ public class Main {
         Users users = new InMemoryUsers();
         Invoices invoices = new InMemoryInvoices();
         CreditCards creditCards = new InMemoryCreditCards();
+        CreditCardService creditCardService = new CreditCardService(creditCards);
 
-        Map<Class, List<Subscriber>> subscriptionMap = initSubscriptionMap(emailSender, invoices, users, creditCards);
+        Map<Class, List<Subscriber>> subscriptionMap = initSubscriptionMap(emailSender, invoices, users, creditCardService);
         UserCreationEventBus userCreationEventBus = UserCreationEventBus.getInstance();
         userCreationEventBus.setSubscribers(subscriptionMap);
 
@@ -88,7 +88,7 @@ public class Main {
             UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payer.getCreditCard(), user));
     }
 
-    private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users, CreditCards creditCards) {
+    private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users, CreditCardService creditCardService) {
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(emailSender),
                 new SubscriptionSuccessfulEventInvoiceSubscription(invoices),
@@ -97,7 +97,7 @@ public class Main {
 
         return Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(emailSender)),
-                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCards)),
+                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCardService)),
                 SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
         );
     }
@@ -107,9 +107,9 @@ public class Main {
             throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
         }
         if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
-            return PaymentCreator.withPaypal(payer.getPaypalAccount());
+            return PaymentDirector.createPaypalPayment(payer.getPaypalAccount());
         }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
-            return PaymentCreator.withCreditCard(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
+            return PaymentDirector.createCreditCardPayment(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                     List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
             ));
         }

@@ -5,14 +5,14 @@ import fr.remy.cc1.kernel.event.Subscriber;
 
 public class SaveCreditCardEventSubscription implements Subscriber<SaveCreditCardEvent> {
 
-    private final CreditCards creditCards;
+    private final CreditCardService creditCardService;
 
-    public SaveCreditCardEventSubscription(CreditCards creditCards) {
-        this.creditCards = creditCards;
+    public SaveCreditCardEventSubscription(CreditCardService creditCardService) {
+        this.creditCardService = creditCardService;
     }
 
     @Override
     public void accept(SaveCreditCardEvent saveCreditCardEvent) {
-        this.creditCards.save(saveCreditCardEvent.getCreditCard(), saveCreditCardEvent.getUser());
+        this.creditCardService.save(saveCreditCardEvent.getCreditCard(), saveCreditCardEvent.getUser());
     }
 }

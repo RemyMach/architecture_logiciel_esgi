@@ -6,13 +6,14 @@ import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 import fr.remy.cc1.infrastructure.payment.PaypalPayment;
 
-public class PaymentCreator {
+public class PaymentDirector {
 
-    public static Payment withCreditCard(CreditCard creditCard, PaymentCreditCardHandler paymentCreditCardHandler) {
+    //TODO replace by factory maybe
+    public static Payment createCreditCardPayment(CreditCard creditCard, PaymentCreditCardHandler paymentCreditCardHandler) {
         return new CreditCardPayment(creditCard, paymentCreditCardHandler);
     }
 
-    public static Payment withPaypal(PaypalAccount paypalAccount) {
+    public static Payment createPaypalPayment(PaypalAccount paypalAccount) {
         return new PaypalPayment(paypalAccount);
     }
 }

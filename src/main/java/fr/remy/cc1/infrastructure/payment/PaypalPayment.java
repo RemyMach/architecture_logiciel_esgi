@@ -1,7 +1,6 @@
 package fr.remy.cc1.infrastructure.payment;
 
 import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.domain.payment.PaymentCreator;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 
 import java.math.BigDecimal;

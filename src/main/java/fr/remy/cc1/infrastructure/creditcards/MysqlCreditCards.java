@@ -3,7 +3,9 @@ package fr.remy.cc1.infrastructure.creditcards;
 import fr.remy.cc1.domain.payment.creditcard.CreditCard;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.creditcard.CreditCardId;
+import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.domain.user.User;
+import fr.remy.cc1.domain.user.UserId;
 
 public class MysqlCreditCards implements CreditCards {
     @Override
@@ -18,6 +20,11 @@ public class MysqlCreditCards implements CreditCards {
 
     @Override
     public CreditCard byId(CreditCardId creditCardId) {
+        throw new UnsupportedOperationException("Not yet implemented.");
+    }
+
+    @Override
+    public CreditCard byUserId(UserId userId) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 }

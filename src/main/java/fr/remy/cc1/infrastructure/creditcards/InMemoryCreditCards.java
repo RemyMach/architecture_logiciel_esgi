@@ -2,7 +2,9 @@ package fr.remy.cc1.infrastructure.creditcards;
 import fr.remy.cc1.domain.payment.creditcard.CreditCard;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.creditcard.CreditCardId;
+import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.domain.user.User;
+import fr.remy.cc1.domain.user.UserId;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,5 +27,10 @@ public class InMemoryCreditCards implements CreditCards {
     @Override
     public CreditCard byId(CreditCardId creditCardId) {
         return data.get(creditCardId);
+    }
+
+    @Override
+    public CreditCard byUserId(UserId userId) {
+        return data.values().stream().filter(entry -> entry.getUserId().equals(userId)).findFirst().orElseThrow();
     }
 }

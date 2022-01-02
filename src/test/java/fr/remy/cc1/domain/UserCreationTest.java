@@ -9,7 +9,6 @@ import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
-import fr.remy.cc1.kernel.error.BasicException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.*;
 
@@ -25,6 +24,7 @@ public class UserCreationTest {
     Users users;
     UserId myUserIdStub;
     CreditCards creditCards;
+    CreditCardService creditCardService;
     CreditCardId creditCardIdStub;
     Invoices invoices;
 
@@ -62,7 +62,8 @@ public class UserCreationTest {
         this.creditCards = new InMemoryCreditCards();
         this.creditCardIdStub = creditCards.nextIdentity();
         this.invoices = new InMemoryInvoices();
-        UserCreationStub.initUserCreationTest(this.users, this.invoices, this.creditCards);
+        this.creditCardService = new CreditCardService(this.creditCards);
+        UserCreationStub.initUserCreationTest(this.users, this.invoices, this.creditCardService);
 
         this.currencyCreator = new CurrencyCreator();
         this.userCategoryCreator = new UserCategoryCreator();
@@ -164,7 +165,7 @@ public class UserCreationTest {
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
-        Payment payment = PaymentCreator.withCreditCard(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
+        Payment payment = PaymentDirector.createCreditCardPayment(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                 List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())));
 
         UserService userService = new UserService(users);
