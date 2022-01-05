@@ -1,8 +1,9 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
+import fr.remy.cc1.domain.payment.Card;
 import fr.remy.cc1.domain.user.UserId;
 
-public class CreditCard {
+public class CreditCard implements Card {
 
     private final CreditCardId creditCardId;
 
@@ -28,13 +29,29 @@ public class CreditCard {
     public static CreditCard of(CreditCardId creditCardId, String number, int expiryDate, int securityCode, String name,  UserId userId) {
         return new CreditCard(creditCardId, number, expiryDate, securityCode, name, userId);
     }
-
+    @Override
     public CreditCardId getCreditCardId() {
         return creditCardId;
     }
 
+    @Override
     public int getSecurityCode() {
         return securityCode;
+    }
+
+    @Override
+    public String getNumber() {
+        return number;
+    }
+
+    @Override
+    public int getExpiryDate() {
+        return 0;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     public UserId getUserId() {
