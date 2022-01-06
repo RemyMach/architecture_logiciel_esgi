@@ -44,11 +44,11 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
                     List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor()))
             );
         }
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(command.amount, command.discountPercentage);
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, Currency.valueOf(command.currency)), command.discountPercentage);
         CurrencyValidator.getInstance().test(command.currency);
 
         PaymentService paymentService = new PaymentService(payment);
-        paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(command.currency), user);
+        paymentService.paySubscription(subscriptionOffer, user);
         this.userService.create(user);
 
         return null;
