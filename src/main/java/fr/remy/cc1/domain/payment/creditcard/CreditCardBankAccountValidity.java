@@ -2,7 +2,7 @@ package fr.remy.cc1.domain.payment.creditcard;
 
 import fr.remy.cc1.domain.payment.Money;
 
-public class CreditCardApproveTradesman implements PaymentCardMiddleware {
+public class CreditCardBankAccountValidity implements PaymentCardMiddleware {
 
     private PaymentCardMiddleware nextMiddleware;
 

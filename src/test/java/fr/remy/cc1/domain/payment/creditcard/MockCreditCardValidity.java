@@ -3,9 +3,7 @@ package fr.remy.cc1.domain.payment.creditcard;
 import fr.remy.cc1.domain.mock.CountProcess;
 import fr.remy.cc1.domain.payment.Money;
 
-import java.math.BigDecimal;
-
-public class MockCreditCardContractor extends CreditCardContractor implements CountProcess {
+public class MockCreditCardValidity extends CreditCardValidity implements CountProcess {
 
     private Integer countProcess = 0;
 

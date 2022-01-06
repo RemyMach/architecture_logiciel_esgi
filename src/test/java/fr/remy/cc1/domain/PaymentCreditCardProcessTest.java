@@ -28,9 +28,9 @@ public class PaymentCreditCardProcessTest {
 
     SubscriptionOffer subscriptionOffer;
     Payer payer;
-    MockCreditCardChecker mockCreditCardChecker;
-    MockCreditCardApproveTradesman mockCreditCardApproveTradesman;
-    MockCreditCardContractor mockCreditCardContractor;
+    MockCreditCardValidity mockCreditCardChecker;
+    MockCreditCardValidityTrade mockCreditCardApproveTradesman;
+    MockCreditCardBankAccountValidity mockCreditCardContractor;
 
     User user;
 
@@ -41,9 +41,9 @@ public class PaymentCreditCardProcessTest {
         Users users = new InMemoryUsers();
         this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", "pomme@pomme.fr", "aZertyu9?", UserCategoryCreator.getInstance().getValueOf("TRADESMAN"));
         this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 321, "POMME", user.getUserId());
-        this.mockCreditCardChecker = new MockCreditCardChecker();
-        this.mockCreditCardApproveTradesman = new MockCreditCardApproveTradesman();
-        this.mockCreditCardContractor = new MockCreditCardContractor();
+        this.mockCreditCardChecker = new MockCreditCardValidity();
+        this.mockCreditCardApproveTradesman = new MockCreditCardValidityTrade();
+        this.mockCreditCardContractor = new MockCreditCardBankAccountValidity();
         this.subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal("10"), Currency.EUR), 10);
         this.payer = new Payer(creditCard, null);
     }
@@ -103,7 +103,7 @@ public class PaymentCreditCardProcessTest {
 
         this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 420, "POMME", this.user.getUserId());
         this.payment = PaymentDirector.createCreditCardPayment(this.creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
-                List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
+                List.of(new CreditCardValidity(), new CreditCardValidityTrade(), new CreditCardBankAccountValidity())
         ));
 
         try {

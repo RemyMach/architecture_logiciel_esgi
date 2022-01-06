@@ -4,12 +4,9 @@ import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
-import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.UserService;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
@@ -43,7 +40,7 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
             payment = PaymentDirector.createPaypalPayment(paypalAccounts.byUserId(user.getUserId()));
         }else if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
             payment = PaymentDirector.createCreditCardPayment(creditCards.byUserId(user.getUserId()), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
-                    List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor()))
+                    List.of(new CreditCardValidity(), new CreditCardValidityTrade(), new CreditCardBankAccountValidity()))
             );
         }
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, Currency.valueOf(command.currency)), command.discountPercentage, new ArrayList<Invoice>());

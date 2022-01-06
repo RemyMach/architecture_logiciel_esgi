@@ -165,7 +165,7 @@ public class UserCreationTest {
             SubscriptionOffer subscriptionOffer
     ) {
         Payment payment = PaymentDirector.createCreditCardPayment(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
-                List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())));
+                List.of(new CreditCardValidity(), new CreditCardValidityTrade(), new CreditCardBankAccountValidity())));
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);

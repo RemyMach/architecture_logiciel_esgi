@@ -113,7 +113,7 @@ public class Main {
             return PaymentDirector.createPaypalPayment(payer.getPaypalAccount());
         }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
             return PaymentDirector.createCreditCardPayment(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
-                    List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor())
+                    List.of(new CreditCardValidity(), new CreditCardValidityTrade(), new CreditCardBankAccountValidity())
             ));
         }
 
