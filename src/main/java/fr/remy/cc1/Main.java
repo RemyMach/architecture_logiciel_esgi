@@ -17,9 +17,9 @@ import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
 import fr.remy.cc1.domain.mail.EmailSender;
-import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
+import fr.remy.cc1.application.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.domain.mail.SubscriptionSuccessfulEventMessengerSubscription;
+import fr.remy.cc1.application.mail.SubscriptionSuccessfulEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 

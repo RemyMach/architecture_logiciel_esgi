@@ -1,6 +1,9 @@
-package fr.remy.cc1.domain.mail;
+package fr.remy.cc1.application.mail;
 
 import fr.remy.cc1.application.UserDTO;
+import fr.remy.cc1.domain.mail.Content;
+import fr.remy.cc1.domain.mail.EmailSender;
+import fr.remy.cc1.domain.mail.Message;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.application.user.RegisterUserEvent;

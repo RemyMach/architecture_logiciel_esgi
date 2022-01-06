@@ -11,9 +11,9 @@ import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.application.payment.SaveCreditCardEvent;
 import fr.remy.cc1.application.payment.SaveCreditCardEventSubscription;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
-import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
+import fr.remy.cc1.application.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.domain.mail.SubscriptionSuccessfulEventMessengerSubscription;
+import fr.remy.cc1.application.mail.SubscriptionSuccessfulEventMessengerSubscription;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEventCustomerSubscription;
 
 import java.util.Arrays;
