@@ -1,5 +1,6 @@
-package fr.remy.cc1.domain.payment.creditcard;
+package fr.remy.cc1.application.payment;
 
+import fr.remy.cc1.domain.payment.creditcard.CreditCard;
 import fr.remy.cc1.kernel.event.ApplicationEvent;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.domain.user.User;

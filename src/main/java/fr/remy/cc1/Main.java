@@ -1,5 +1,10 @@
 package fr.remy.cc1;
 
+import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.customer.SubscriptionSuccessfulEventCustomerSubscription;
+import fr.remy.cc1.application.payment.SaveCreditCardEvent;
+import fr.remy.cc1.application.payment.SaveCreditCardEventSubscription;
+import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.customer.*;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Subscriber;
@@ -9,7 +14,7 @@ import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.domain.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
+import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
@@ -54,25 +59,25 @@ public class Main {
         UserCategoryCreator userCategoryCreator = new UserCategoryCreator();
         boolean saveCreditCardStub = true;
 
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(priceSubscriptionOfferStub,discountPercentageStub);
+        CurrencyValidator.getInstance().test(currencyChoiceStub);
+
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(priceSubscriptionOfferStub, Currency.valueOf(currencyChoiceStub)),discountPercentageStub);
 
         final UserId myUserId = users.nextIdentity();
         User user = User.of(myUserId, lastnameStub, firstnameStub, emailStub, passwordStub, userCategoryCreator.getValueOf(userCategoryChoiceStub));
 
-        CurrencyValidator.getInstance().test(currencyChoiceStub);
 
         final CreditCardId creditCardId = creditCards.nextIdentity();
         CreditCard creditCard = CreditCard.of(creditCardId,"1234567262", 1203, 321, "POMME", user.getUserId());
         Payer payer = new Payer(creditCard, null);
 
-        createUser(user, users, payer, currencyChoiceStub, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, payer, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
     }
 
     private static void createUser(
             User user,
             Users users,
             Payer payer,
-            String currency,
             String paymentMethod,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
@@ -82,7 +87,7 @@ public class Main {
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
 
-        paymentService.paySubscription(subscriptionOffer,  Currency.valueOf(currency), user);
+        paymentService.paySubscription(subscriptionOffer, user);
         userService.create(user);
         if(saveCreditCard)
             UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payer.getCreditCard(), user));

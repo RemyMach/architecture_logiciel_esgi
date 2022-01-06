@@ -6,8 +6,6 @@ import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.UserCategoryValidatorException;
 import fr.remy.cc1.kernel.error.ValidationException;
 
-import javax.validation.Valid;
-
 public class UserCategoryValidator implements Validator<String> {
 
     private static final UserCategoryValidator INSTANCE = new UserCategoryValidator();

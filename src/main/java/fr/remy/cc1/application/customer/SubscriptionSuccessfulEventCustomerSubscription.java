@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain.customer;
+package fr.remy.cc1.application.customer;
 
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.user.Users;
@@ -13,6 +13,6 @@ public class SubscriptionSuccessfulEventCustomerSubscription implements Subscrib
 
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
-        this.users.saveSubscriptionOffer(subscriptionSuccessfulEvent.getUser(), subscriptionSuccessfulEvent.getSubscriptionOffer());
+        this.users.saveSubscriptionOffer(subscriptionSuccessfulEvent.getUserId(), subscriptionSuccessfulEvent.getSubscriptionOffer());
     }
 }

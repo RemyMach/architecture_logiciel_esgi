@@ -1,24 +1,24 @@
 package fr.remy.cc1.domain.customer;
 
-import java.math.BigDecimal;
+import fr.remy.cc1.domain.payment.Money;
 
 public class SubscriptionOffer {
 
-    private final BigDecimal amount;
+    private final Money money;
 
     private final int discountPercentage;
 
-    private SubscriptionOffer(BigDecimal amount, int discountPercentage) {
-        this.amount = amount;
+    private SubscriptionOffer(Money money, int discountPercentage) {
+        this.money = money;
         this.discountPercentage = discountPercentage;
     }
 
-    public static SubscriptionOffer of(BigDecimal amount, int discountPercentage) {
-       return new SubscriptionOffer(amount, discountPercentage);
+    public static SubscriptionOffer of(Money money, int discountPercentage) {
+       return new SubscriptionOffer(money, discountPercentage);
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public Money getMoney() {
+        return money;
     }
 
     public int getDiscountPercentage() {

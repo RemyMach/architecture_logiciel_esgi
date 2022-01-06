@@ -1,9 +1,7 @@
 package fr.remy.cc1.domain;
 
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.domain.payment.Payer;
-import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.domain.payment.PaymentDirector;
+import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserCategoryCreator;
@@ -46,7 +44,7 @@ public class PaymentCreditCardProcessTest {
         this.mockCreditCardChecker = new MockCreditCardChecker();
         this.mockCreditCardApproveTradesman = new MockCreditCardApproveTradesman();
         this.mockCreditCardContractor = new MockCreditCardContractor();
-        this.subscriptionOffer = SubscriptionOffer.of(new BigDecimal("10"), 10);
+        this.subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal("10"), Currency.EUR), 10);
         this.payer = new Payer(creditCard, null);
     }
 
@@ -65,7 +63,7 @@ public class PaymentCreditCardProcessTest {
 
         try {
 
-            this.payment.start(subscriptionOffer.getAmount());
+            this.payment.start(subscriptionOffer.getMoney());
         }catch(Exception exception) {
             fail( "Should not thrown an exception" );
         }
@@ -89,7 +87,7 @@ public class PaymentCreditCardProcessTest {
 
         try {
 
-            this.payment.start(subscriptionOffer.getAmount());
+            this.payment.start(subscriptionOffer.getMoney());
         }catch(Exception exception) {
             fail( "Should not thrown an exception" );
         }
@@ -110,7 +108,7 @@ public class PaymentCreditCardProcessTest {
 
         try {
 
-            this.payment.start(subscriptionOffer.getAmount());
+            this.payment.start(subscriptionOffer.getMoney());
             fail( "Should throw an exception" );
         }catch(IllegalArgumentException illegalArgumentException) {
             assertEquals(illegalArgumentException.getMessage(), "The security code is not valid");

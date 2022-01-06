@@ -1,7 +1,12 @@
-package fr.remy.cc1.domain.invoice;
+package fr.remy.cc1.application.invoice;
 
+import fr.remy.cc1.domain.invoice.Invoice;
+import fr.remy.cc1.domain.invoice.InvoiceId;
+import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.kernel.event.Subscriber;
-import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
+
+import java.time.ZonedDateTime;
 
 public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
 
@@ -14,7 +19,7 @@ public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscribe
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
         final InvoiceId invoiceId = this.invoices.nextIdentity();
-        Invoice invoice = Invoice.of(invoiceId, subscriptionSuccessfulEvent.getSubscriptionOffer().getAmount(), subscriptionSuccessfulEvent.getUser());
+        Invoice invoice = Invoice.of(invoiceId, subscriptionSuccessfulEvent.getMoney(), subscriptionSuccessfulEvent.getUserId(), ZonedDateTime.now());
         this.invoices.save(invoice);
     }
 }

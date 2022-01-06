@@ -1,6 +1,10 @@
-package fr.remy.cc1.domain.customer;
+package fr.remy.cc1.application.customer;
 
+import fr.remy.cc1.application.UserDTO;
+import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.payment.Currency;
+import fr.remy.cc1.domain.payment.Money;
+import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.kernel.event.ApplicationEvent;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventId;
@@ -12,20 +16,20 @@ public class SubscriptionSuccessfulEvent implements Event, ApplicationEvent {
 
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
-    private final User user;
+    private final UserId userId;
     private final SubscriptionOffer subscriptionOffer;
-    private final Currency currency;
+    private final Money money;
 
-    private SubscriptionSuccessfulEvent(EventId eventId, ZonedDateTime occurredDate, User user, SubscriptionOffer subscriptionOffer, Currency currency) {
+    private SubscriptionSuccessfulEvent(EventId eventId, ZonedDateTime occurredDate, UserId userId, SubscriptionOffer subscriptionOffer, Money money) {
         this.eventId = eventId;
         this.occurredDate = occurredDate;
-        this.user = user;
+        this.userId = userId;
         this.subscriptionOffer = subscriptionOffer;
-        this.currency = currency;
+        this.money = money;
     }
 
-    public static SubscriptionSuccessfulEvent of(User user, SubscriptionOffer subscriptionOffer, Currency currency) {
-        return new SubscriptionSuccessfulEvent(EventId.create(), ZonedDateTime.now(), user, subscriptionOffer, currency);
+    public static SubscriptionSuccessfulEvent of(UserId userId, SubscriptionOffer subscriptionOffer, Money money) {
+        return new SubscriptionSuccessfulEvent(EventId.create(), ZonedDateTime.now(), userId, subscriptionOffer, money);
     }
 
     @Override
@@ -42,15 +46,15 @@ public class SubscriptionSuccessfulEvent implements Event, ApplicationEvent {
         return eventId;
     }
 
-    public User getUser() {
-        return user;
+    public UserId getUserId() {
+        return userId;
     }
 
     public SubscriptionOffer getSubscriptionOffer() {
         return subscriptionOffer;
     }
 
-    public Currency getCurrency() {
-        return currency;
+    public Money getMoney() {
+        return money;
     }
 }

@@ -14,7 +14,7 @@ public class MysqlUsers implements Users {
     }
 
     @Override
-    public void saveSubscriptionOffer(User user, SubscriptionOffer subscriptionOffer) {
+    public void saveSubscriptionOffer(UserId userId, SubscriptionOffer subscriptionOffer) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 

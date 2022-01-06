@@ -1,5 +1,6 @@
 package fr.remy.cc1.infrastructure.user;
 
+import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
@@ -23,8 +24,8 @@ public class InMemoryUsers implements Users {
     }
 
     @Override
-    public void saveSubscriptionOffer(User user, SubscriptionOffer subscriptionOffer) {
-        this.userSubscriptionData.put(user.getUserId(), subscriptionOffer);
+    public void saveSubscriptionOffer(UserId userId, SubscriptionOffer subscriptionOffer) {
+        this.userSubscriptionData.put(userId, subscriptionOffer);
     }
 
     @Override

@@ -2,7 +2,7 @@ package fr.remy.cc1.domain.payment;
 
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 
 public class PaymentService {
@@ -14,9 +14,9 @@ public class PaymentService {
         this.payment = payment;
     }
 
-    public void paySubscription(SubscriptionOffer subscriptionOffer, Currency currency, User user) {
+    public void paySubscription(SubscriptionOffer subscriptionOffer, User user) {
 
-        this.payment.start(subscriptionOffer.getAmount());
-        UserCreationEventBus.getInstance().send(SubscriptionSuccessfulEvent.of(user, subscriptionOffer, currency));
+        this.payment.start(subscriptionOffer.getMoney());
+        UserCreationEventBus.getInstance().send(SubscriptionSuccessfulEvent.of(user.getUserId(), subscriptionOffer, subscriptionOffer.getMoney()));
     }
 }

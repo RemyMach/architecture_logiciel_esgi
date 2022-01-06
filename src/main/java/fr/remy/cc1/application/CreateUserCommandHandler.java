@@ -1,8 +1,8 @@
 package fr.remy.cc1.application;
 
+import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.kernel.CommandHandler;
-import fr.remy.cc1.kernel.error.BasicException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
