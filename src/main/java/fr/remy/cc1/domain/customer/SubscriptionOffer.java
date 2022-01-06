@@ -29,7 +29,7 @@ public class SubscriptionOffer {
     }
 
     public SubscriptionOffer addInvoice(Invoice invoice) {
-        List<Invoice> invoiceListCopy = List.copyOf(this.invoiceList);
+        List<Invoice> invoiceListCopy = new ArrayList<>(List.copyOf(this.invoiceList));
         invoiceListCopy.add(invoice);
         return new SubscriptionOffer(this.money, this.discountPercentage, invoiceListCopy);
     }
