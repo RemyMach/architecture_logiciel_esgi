@@ -52,7 +52,7 @@ public class PaymentCreditCardProcessTest {
     @DisplayName("should work with all the payment handler called")
     public void threePaymentHandlerAreCalled() {
 
-        PaymentCreditCardHandler paymentCreditCardHandler =
+        PaymentCardMiddleware paymentCreditCardHandler =
                 PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                         List.of(this.mockCreditCardChecker, this.mockCreditCardApproveTradesman, this.mockCreditCardContractor));
         this.payment = new StubCreditCardPayment(this.creditCard, paymentCreditCardHandler);
@@ -76,7 +76,7 @@ public class PaymentCreditCardProcessTest {
     @Test
     @DisplayName("should work with only creditCardChecker called")
     public void everyPaymentHandlerAreCalled() {
-        PaymentCreditCardHandler paymentCreditCardHandler =
+        PaymentCardMiddleware paymentCreditCardHandler =
                 PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                         List.of(this.mockCreditCardChecker));
         this.payment = new StubCreditCardPayment(this.creditCard, paymentCreditCardHandler);

@@ -5,11 +5,11 @@ import java.util.List;
 
 public class PaymentCreditCardHandlerCreator {
 
-    public static PaymentCreditCardHandler buildPaymentHandlers(List<PaymentCreditCardHandler> paymentCreditCardHandlers) {
+    public static PaymentCardMiddleware buildPaymentHandlers(List<PaymentCardMiddleware> paymentCreditCardHandlers) {
 
-        PaymentCreditCardHandler firstPaymentCreditCardHandler = null;
-        PaymentCreditCardHandler previousPaymentCreditCardHandler = null;
-        for(PaymentCreditCardHandler paymentCreditCardHandler: paymentCreditCardHandlers) {
+        PaymentCardMiddleware firstPaymentCreditCardHandler = null;
+        PaymentCardMiddleware previousPaymentCreditCardHandler = null;
+        for(PaymentCardMiddleware paymentCreditCardHandler: paymentCreditCardHandlers) {
             if(firstPaymentCreditCardHandler != null && previousPaymentCreditCardHandler != null) {
                 previousPaymentCreditCardHandler.setNext(paymentCreditCardHandler);
                 previousPaymentCreditCardHandler = paymentCreditCardHandler;
