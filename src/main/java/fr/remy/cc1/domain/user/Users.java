@@ -15,5 +15,7 @@ public interface Users {
 
     List<User> findAll();
 
+    List<User> findAllByPaidSinceMoreThanCertainMonthAgo(int months);
+
     SubscriptionOffer getSubscriptionOffer(UserId userId);
 }

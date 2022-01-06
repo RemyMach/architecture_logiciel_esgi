@@ -19,7 +19,8 @@ public class PaymentScheduler {
 
     @Scheduled(cron = "*/10 * * * * *")
     public void PayUserSubscriptionOffer() {
-        List<User> userList = users.findAll();
+        List<User> userList = users.findAllByPaidSinceMoreThanCertainMonthAgo(1);
+
         //TODO récupérer le dernier paiement
         // si il date de moins d'un mois alors il n'a pas à payer
         // essayer le paiement 10 fois, si fonctionne pas envoi de mail suivant l'étape pour dire erreur de paiement

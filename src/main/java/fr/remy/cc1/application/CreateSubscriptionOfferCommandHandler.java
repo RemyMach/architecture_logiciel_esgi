@@ -1,6 +1,7 @@
 package fr.remy.cc1.application;
 
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
@@ -13,6 +14,7 @@ import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateSubscriptionOfferCommandHandler implements CommandHandler<CreateSubscriptionOffer, Void> {
@@ -44,7 +46,7 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
                     List.of(new CreditCardChecker(), new CreditCardApproveTradesman(), new CreditCardContractor()))
             );
         }
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, Currency.valueOf(command.currency)), command.discountPercentage);
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, Currency.valueOf(command.currency)), command.discountPercentage, new ArrayList<Invoice>());
         CurrencyValidator.getInstance().test(command.currency);
 
         PaymentService paymentService = new PaymentService(payment);

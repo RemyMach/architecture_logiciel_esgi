@@ -34,5 +34,10 @@ public class MysqlUsers implements Users {
     }
 
     @Override
+    public List<User> findAllByPaidSinceMoreThanCertainMonthAgo(int months) {
+        return null;
+    }
+
+    @Override
     public SubscriptionOffer getSubscriptionOffer(UserId userId) { throw new UnsupportedOperationException("Not yet implemented."); }
 }

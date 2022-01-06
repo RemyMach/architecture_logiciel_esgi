@@ -58,7 +58,7 @@ public class UserConfiguration {
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(emailSender),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices()),
+                new SubscriptionSuccessfulEventInvoiceSubscription(invoices(), users()),
                 new SubscriptionSuccessfulEventCustomerSubscription(users())
         );
 

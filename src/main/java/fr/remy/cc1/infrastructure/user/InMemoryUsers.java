@@ -6,6 +6,7 @@ import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.Users;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,6 +46,12 @@ public class InMemoryUsers implements Users {
     @Override
     public List<User> findAll() {
         return usersData.values().stream().collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> findAllByPaidSinceMoreThanCertainMonthAgo(int months) {
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+        return null;
     }
 
     @Override
