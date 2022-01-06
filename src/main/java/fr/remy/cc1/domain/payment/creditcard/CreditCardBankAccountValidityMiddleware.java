@@ -1,8 +1,9 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
 import fr.remy.cc1.domain.payment.Money;
+import fr.remy.cc1.domain.payment.PaymentCardMiddleware;
 
-public class CreditCardBankAccountValidity implements PaymentCardMiddleware {
+public class CreditCardBankAccountValidityMiddleware implements PaymentCardMiddleware {
 
     private PaymentCardMiddleware nextMiddleware;
 

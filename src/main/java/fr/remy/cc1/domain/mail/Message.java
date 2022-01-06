@@ -1,29 +1,30 @@
 package fr.remy.cc1.domain.mail;
 
+import fr.remy.cc1.domain.user.Email;
 import fr.remy.cc1.domain.user.User;
 
 public final class Message {
 
-    private final String recipient;
+    private final Email recipient;
 
-    private final String sender;
+    private final Email sender;
 
     private final String subject;
 
     private final Content content;
 
-    public Message(String recipient, String sender, String subject, Content content) {
+    public Message(Email recipient, Email sender, String subject, Content content) {
         this.recipient = recipient;
         this.sender = sender;
         this.subject = subject;
         this.content = content;
     }
 
-    public String getRecipient() {
+    public Email getRecipient() {
         return recipient;
     }
 
-    public String getSender() {
+    public Email getSender() {
         return sender;
     }
 

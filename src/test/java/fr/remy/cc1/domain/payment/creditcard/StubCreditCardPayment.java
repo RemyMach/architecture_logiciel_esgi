@@ -1,6 +1,7 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
 import fr.remy.cc1.domain.payment.Money;
+import fr.remy.cc1.domain.payment.PaymentCardMiddleware;
 import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 
 public class StubCreditCardPayment extends CreditCardPayment {

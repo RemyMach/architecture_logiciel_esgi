@@ -33,8 +33,8 @@ public class UserCreationTest {
     UserCategoryCreator userCategoryCreator;
     String lastnameStub;
     String firstnameStub;
-    String emailStub;
-    String passwordStub;
+    Email emailStub;
+    Password passwordStub;
 
     String priceSubscriptionOfferStub;
     int discountPercentageStub;
@@ -48,8 +48,8 @@ public class UserCreationTest {
     void initStubValues() {
         this.lastnameStub = "Machavoine";
         this.firstnameStub = "Rémy";
-        this.emailStub = "pomme@pomme.fr";
-        this.passwordStub = "aZertyu9?";
+        this.emailStub = new Email("pomme@pomme.fr");
+        this.passwordStub = new Password("aZertyu9?");
 
         this.priceSubscriptionOfferStub = "12.05";
         this.discountPercentageStub = 10;
@@ -99,7 +99,7 @@ public class UserCreationTest {
 
         assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
 
-        emailStub = "pomme";
+        emailStub = new Email("pomme");
 
         try {
             User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
@@ -165,7 +165,7 @@ public class UserCreationTest {
             SubscriptionOffer subscriptionOffer
     ) {
         Payment payment = PaymentDirector.createCreditCardPayment(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
-                List.of(new CreditCardValidity(), new CreditCardValidityTrade(), new CreditCardBankAccountValidity())));
+                List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware())));
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);

@@ -8,11 +8,11 @@ public final class User {
     private final UserId userId;
     private final String lastname;
     private final String firstname;
-    private final String email;
-    private final String password;
+    private final Email email;
+    private final Password password;
     private final UserCategory userCategory;
 
-    private User(UserId userId, String lastname, String firstname, String email, String password, UserCategory userCategory) {
+    private User(UserId userId, String lastname, String firstname, Email email, Password password, UserCategory userCategory) {
         this.userId = userId;
         this.lastname = lastname;
         this.firstname = firstname;
@@ -21,7 +21,7 @@ public final class User {
         this.userCategory = userCategory;
     }
 
-    public static User of(UserId userId, String lastname, String firstname, String email, String password, UserCategory userCategory) throws ValidationException {
+    public static User of(UserId userId, String lastname, String firstname, Email email, Password password, UserCategory userCategory) throws ValidationException {
         User user = new User(userId, lastname, firstname, email,  password, userCategory);
         if(ValidationUserEngine.getInstance().test(user)) {
             return user;
@@ -33,7 +33,7 @@ public final class User {
         return userId;
     }
 
-    public String getEmail() { return email; }
+    public Email getEmail() { return email; }
 
     public String getLastname() {
         return lastname;
@@ -43,5 +43,5 @@ public final class User {
         return firstname;
     }
 
-    public String getPassword() { return password; }
+    public Password getPassword() { return password; }
 }

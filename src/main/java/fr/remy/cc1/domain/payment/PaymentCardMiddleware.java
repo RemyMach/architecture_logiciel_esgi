@@ -1,6 +1,6 @@
-package fr.remy.cc1.domain.payment.creditcard;
+package fr.remy.cc1.domain.payment;
 
-import fr.remy.cc1.domain.payment.Money;
+import fr.remy.cc1.domain.payment.creditcard.CreditCard;
 
 public interface PaymentCardMiddleware {
     

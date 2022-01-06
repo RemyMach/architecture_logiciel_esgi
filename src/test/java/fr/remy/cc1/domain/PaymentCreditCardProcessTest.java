@@ -3,9 +3,7 @@ package fr.remy.cc1.domain;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
-import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.UserCategoryCreator;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.kernel.error.ValidationException;
@@ -28,9 +26,9 @@ public class PaymentCreditCardProcessTest {
 
     SubscriptionOffer subscriptionOffer;
     Payer payer;
-    MockCreditCardValidity mockCreditCardChecker;
-    MockCreditCardValidityTrade mockCreditCardApproveTradesman;
-    MockCreditCardBankAccountValidity mockCreditCardContractor;
+    MockCreditCardValidityMiddleware mockCreditCardChecker;
+    MockCreditCardValidityTradeMiddleware mockCreditCardApproveTradesman;
+    MockCreditCardBankAccountValidityMiddleware mockCreditCardContractor;
 
     User user;
 
@@ -39,11 +37,11 @@ public class PaymentCreditCardProcessTest {
         this.creditCards = new InMemoryCreditCards();
         this.creditCardIdStub = creditCards.nextIdentity();
         Users users = new InMemoryUsers();
-        this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", "pomme@pomme.fr", "aZertyu9?", UserCategoryCreator.getInstance().getValueOf("TRADESMAN"));
+        this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", new Email("pomme@pomme.fr"), new Password("aZertyu9?"), UserCategoryCreator.getInstance().getValueOf("TRADESMAN"));
         this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 321, "POMME", user.getUserId());
-        this.mockCreditCardChecker = new MockCreditCardValidity();
-        this.mockCreditCardApproveTradesman = new MockCreditCardValidityTrade();
-        this.mockCreditCardContractor = new MockCreditCardBankAccountValidity();
+        this.mockCreditCardChecker = new MockCreditCardValidityMiddleware();
+        this.mockCreditCardApproveTradesman = new MockCreditCardValidityTradeMiddleware();
+        this.mockCreditCardContractor = new MockCreditCardBankAccountValidityMiddleware();
         this.subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal("10"), Currency.EUR), 10);
         this.payer = new Payer(creditCard, null);
     }
@@ -103,7 +101,7 @@ public class PaymentCreditCardProcessTest {
 
         this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 420, "POMME", this.user.getUserId());
         this.payment = PaymentDirector.createCreditCardPayment(this.creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
-                List.of(new CreditCardValidity(), new CreditCardValidityTrade(), new CreditCardBankAccountValidity())
+                List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware())
         ));
 
         try {

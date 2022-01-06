@@ -27,16 +27,16 @@ public final class ValidationUserEngine {
                 this.validatePassword(user.getPassword());
     }
 
-    private boolean validateEmail(String email) throws EmailValidatorException {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+    private boolean validateEmail(Email email) throws EmailValidatorException {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email.email);
         if(matcher.find()) {
             return true;
         }
         throw new EmailValidatorException(ExceptionsDictionary.EMAIL_NOT_VALID.getErrorCode(), ExceptionsDictionary.EMAIL_NOT_VALID.getMessage());
     }
 
-    private boolean validatePassword(String password) throws PasswordValidatorException {
-        Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
+    private boolean validatePassword(Password password) throws PasswordValidatorException {
+        Matcher matcher = VALID_PASSWORD_REGEX.matcher(password.password);
         if(matcher.find()) {
             return true;
         }

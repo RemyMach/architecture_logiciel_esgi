@@ -3,7 +3,7 @@ package fr.remy.cc1.domain.payment.creditcard;
 import fr.remy.cc1.domain.mock.CountProcess;
 import fr.remy.cc1.domain.payment.Money;
 
-public class MockCreditCardValidity extends CreditCardValidity implements CountProcess {
+public class MockCreditCardBankAccountValidityMiddleware extends CreditCardBankAccountValidityMiddleware implements CountProcess {
 
     private Integer countProcess = 0;
 

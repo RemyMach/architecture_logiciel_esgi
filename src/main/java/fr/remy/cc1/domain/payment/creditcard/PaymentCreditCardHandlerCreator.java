@@ -1,6 +1,8 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
 
+import fr.remy.cc1.domain.payment.PaymentCardMiddleware;
+
 import java.util.List;
 
 public class PaymentCreditCardHandlerCreator {

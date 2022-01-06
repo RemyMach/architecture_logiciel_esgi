@@ -45,8 +45,8 @@ public class Main {
 
         String lastnameStub = "Machavoine";
         String firstnameStub = "Rémy";
-        String emailStub = "pomme@pomme.fr";
-        String passwordStub = "aZertyu9?";
+        Email emailStub = new Email("pomme@pomme.fr");
+        Password passwordStub = new Password("aZertyu9?");
 
         BigDecimal priceSubscriptionOfferStub = new BigDecimal("12.05");
         int discountPercentageStub = 10;
@@ -113,7 +113,7 @@ public class Main {
             return PaymentDirector.createPaypalPayment(payer.getPaypalAccount());
         }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
             return PaymentDirector.createCreditCardPayment(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
-                    List.of(new CreditCardValidity(), new CreditCardValidityTrade(), new CreditCardBankAccountValidity())
+                    List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware())
             ));
         }
 

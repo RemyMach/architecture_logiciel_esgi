@@ -1,7 +1,6 @@
 package fr.remy.cc1.domain.payment;
 
 import fr.remy.cc1.domain.payment.creditcard.CreditCard;
-import fr.remy.cc1.domain.payment.creditcard.PaymentCardMiddleware;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 import fr.remy.cc1.infrastructure.payment.PaypalPayment;
