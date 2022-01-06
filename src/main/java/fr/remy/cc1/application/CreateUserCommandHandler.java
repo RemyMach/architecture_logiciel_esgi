@@ -25,7 +25,7 @@ public final class CreateUserCommandHandler implements CommandHandler<CreateUser
         final UserId userId = users.nextIdentity();
         User user = User.of(userId, createUser.lastname, createUser.firstname, createUser.email, createUser.password, createUser.userCategory);
         this.users.save(user);
-        this.eventBus.send(RegisterUserEvent.withUser(user));
+        this.eventBus.send(RegisterUserEvent.withUser(new UserDTO(userId, createUser.lastname, createUser.firstname, createUser.email)));
         return userId;
     }
 }

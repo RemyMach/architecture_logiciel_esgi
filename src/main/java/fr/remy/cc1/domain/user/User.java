@@ -35,5 +35,13 @@ public final class User {
 
     public String getEmail() { return email; }
 
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
     public String getPassword() { return password; }
 }

@@ -39,7 +39,7 @@ public class UserCreationStub {
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(mockEmailSender),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices),
+                new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users),
                 new SubscriptionSuccessfulEventCustomerSubscription(users)
         );
 

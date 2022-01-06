@@ -17,19 +17,22 @@ public class SubscriptionSuccessfulEvent implements Event, ApplicationEvent {
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
     private final UserId userId;
+    private final UserDTO userDTO;
     private final SubscriptionOffer subscriptionOffer;
     private final Money money;
 
-    private SubscriptionSuccessfulEvent(EventId eventId, ZonedDateTime occurredDate, UserId userId, SubscriptionOffer subscriptionOffer, Money money) {
+    private SubscriptionSuccessfulEvent(EventId eventId, ZonedDateTime occurredDate, UserId userId, SubscriptionOffer subscriptionOffer, Money money, UserDTO userDTO) {
         this.eventId = eventId;
         this.occurredDate = occurredDate;
         this.userId = userId;
         this.subscriptionOffer = subscriptionOffer;
         this.money = money;
+        this.userDTO = userDTO;
     }
 
-    public static SubscriptionSuccessfulEvent of(UserId userId, SubscriptionOffer subscriptionOffer, Money money) {
-        return new SubscriptionSuccessfulEvent(EventId.create(), ZonedDateTime.now(), userId, subscriptionOffer, money);
+
+    public static SubscriptionSuccessfulEvent of(UserId userId, SubscriptionOffer subscriptionOffer, Money money, UserDTO userDTO) {
+        return new SubscriptionSuccessfulEvent(EventId.create(), ZonedDateTime.now(), userId, subscriptionOffer, money, userDTO);
     }
 
     @Override
@@ -56,5 +59,9 @@ public class SubscriptionSuccessfulEvent implements Event, ApplicationEvent {
 
     public Money getMoney() {
         return money;
+    }
+
+    public UserDTO getUserDTO() {
+        return userDTO;
     }
 }

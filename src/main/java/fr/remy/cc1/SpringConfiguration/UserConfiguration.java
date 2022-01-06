@@ -5,6 +5,7 @@ import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.application.CreateUserCommandHandler;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEventCustomerSubscription;
+import fr.remy.cc1.application.scheduler.PaymentScheduler;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
 import fr.remy.cc1.domain.mail.EmailSender;
@@ -29,10 +30,12 @@ import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.*;
 
 @Configuration
+@EnableScheduling
 public class UserConfiguration {
 
     @Bean
@@ -102,6 +105,11 @@ public class UserConfiguration {
     @Bean
     public CreatePaymentCommandHandler createPaymentCommandHandler() {
         return new CreatePaymentCommandHandler(creditCards(), paypalAccounts(), users(), userCreationEventBus());
+    }
+
+    @Bean
+    PaymentScheduler paymentScheduler() {
+        return new PaymentScheduler(users());
     }
 
 }

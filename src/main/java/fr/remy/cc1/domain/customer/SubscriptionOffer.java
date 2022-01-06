@@ -3,6 +3,7 @@ package fr.remy.cc1.domain.customer;
 import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.payment.Money;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubscriptionOffer {
@@ -23,6 +24,10 @@ public class SubscriptionOffer {
        return new SubscriptionOffer(money, discountPercentage, invoiceList);
     }
 
+    public static SubscriptionOffer of(Money money, int discountPercentage) {
+        return new SubscriptionOffer(money, discountPercentage, new ArrayList<>());
+    }
+
     public SubscriptionOffer addInvoice(Invoice invoice) {
         List<Invoice> invoiceListCopy = List.copyOf(this.invoiceList);
         invoiceListCopy.add(invoice);
@@ -35,5 +40,9 @@ public class SubscriptionOffer {
 
     public int getDiscountPercentage() {
         return discountPercentage;
+    }
+
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
     }
 }

@@ -6,6 +6,7 @@ import fr.remy.cc1.application.payment.SaveCreditCardEvent;
 import fr.remy.cc1.application.payment.SaveCreditCardEventSubscription;
 import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.customer.*;
+import fr.remy.cc1.domain.payment.Currency;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.invoice.Invoices;
@@ -23,10 +24,7 @@ import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
 
@@ -96,7 +94,7 @@ public class Main {
     private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users, CreditCardService creditCardService) {
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(emailSender),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices),
+                new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users),
                 new SubscriptionSuccessfulEventCustomerSubscription(users)
         );
 

@@ -1,5 +1,6 @@
 package fr.remy.cc1.application.user;
 
+import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.kernel.event.ApplicationEvent;
 import fr.remy.cc1.kernel.event.Event;
@@ -11,16 +12,16 @@ public class RegisterUserEvent implements Event, ApplicationEvent {
 
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
-    private final User user;
+    private final UserDTO userDTO;
 
-    private RegisterUserEvent(EventId eventId, ZonedDateTime occurredDate, User user) {
+    private RegisterUserEvent(EventId eventId, ZonedDateTime occurredDate,UserDTO userDTO) {
         this.eventId = eventId;
         this.occurredDate = occurredDate;
-        this.user = user;
+        this.userDTO = userDTO;
     }
 
-    public static RegisterUserEvent withUser(User user) {
-        return new RegisterUserEvent(EventId.create(), ZonedDateTime.now(), user);
+    public static RegisterUserEvent withUser(UserDTO userDTO) {
+        return new RegisterUserEvent(EventId.create(), ZonedDateTime.now(), userDTO);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class RegisterUserEvent implements Event, ApplicationEvent {
         return eventId;
     }
 
-    public User getUser() {
-        return user;
+    public UserDTO getUserDTO() {
+        return userDTO;
     }
 }

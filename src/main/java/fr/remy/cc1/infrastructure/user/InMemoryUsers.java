@@ -2,6 +2,7 @@ package fr.remy.cc1.infrastructure.user;
 
 import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.Users;
@@ -51,7 +52,19 @@ public class InMemoryUsers implements Users {
     @Override
     public List<User> findAllByPaidSinceMoreThanCertainMonthAgo(int months) {
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        return null;
+        ZonedDateTime thresholdZoneDateTime = zonedDateTime.minusMonths(months);
+        return List.copyOf(usersData.values().stream().filter( user -> {
+            SubscriptionOffer subscriptionOffer = this.getSubscriptionOffer(user.getUserId());
+            if(subscriptionOffer == null) return false;
+            List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
+            if(InvoiceList.size() > 0) {
+                Invoice invoice = InvoiceList.get(InvoiceList.size() - 1);
+                if(invoice.getCreateAt().toInstant().isBefore(thresholdZoneDateTime.toInstant()) || invoice.getCreateAt().toInstant().equals(thresholdZoneDateTime.toInstant())) {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList()));
     }
 
     @Override

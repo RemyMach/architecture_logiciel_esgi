@@ -32,4 +32,8 @@ public final class Invoice {
     public InvoiceId getInvoiceId() {
         return invoiceId;
     }
+
+    public ZonedDateTime getCreateAt() {
+        return createAt;
+    }
 }

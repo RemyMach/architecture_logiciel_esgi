@@ -1,5 +1,6 @@
 package fr.remy.cc1.domain.mail;
 
+import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
@@ -14,15 +15,15 @@ public class SubscriptionSuccessfulEventMessengerSubscription implements Subscri
 
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
-        this.sendMail(subscriptionSuccessfulEvent.getUser());
+        this.sendMail(subscriptionSuccessfulEvent.getUserDTO());
     }
 
-    private void sendMail(User user) {
+    private void sendMail(UserDTO userDTO) {
         Message message = new Message(
-                user,
+                userDTO.email,
                 "pomme@pomme.fr",
                 "Subscription Payment validate",
-                Content.withText("Hello " + user.getEmail() + ", this mail is here to confirm the validation of your payment"));
+                Content.withText("Hello " + userDTO.email + ", this mail is here to confirm the validation of your payment"));
         this.emailSender.send(message);
     }
 }

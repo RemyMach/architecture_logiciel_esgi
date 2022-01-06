@@ -88,7 +88,7 @@ public class UserValidationTest {
             User user = User.of(stubUserId, "", "", "pomme@pomme.com", password, UserCategory.TRADESMAN);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+            assertEquals(exception.getMessage(), "the password is not valid");
         }
     }
 

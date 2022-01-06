@@ -17,7 +17,7 @@ public class CreditCardPayment implements Payment {
     }
 
     @Override
-    public void start(BigDecimal amount) {
-        this.paymentCreditCardHandler.process(this.creditCard, amount);
+    public void start(Money money) {
+        this.paymentCreditCardHandler.process(this.creditCard, money);
     }
 }

@@ -4,7 +4,7 @@ import fr.remy.cc1.domain.user.User;
 
 public final class Message {
 
-    private final User recipient;
+    private final String recipient;
 
     private final String sender;
 
@@ -12,14 +12,14 @@ public final class Message {
 
     private final Content content;
 
-    public Message(User recipient, String sender, String subject, Content content) {
+    public Message(String recipient, String sender, String subject, Content content) {
         this.recipient = recipient;
         this.sender = sender;
         this.subject = subject;
         this.content = content;
     }
 
-    public User getRecipient() {
+    public String getRecipient() {
         return recipient;
     }
 
