@@ -5,6 +5,8 @@ import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
+import fr.remy.cc1.domain.payment.currency.Currency;
+import fr.remy.cc1.domain.payment.currency.CurrencyCreator;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;

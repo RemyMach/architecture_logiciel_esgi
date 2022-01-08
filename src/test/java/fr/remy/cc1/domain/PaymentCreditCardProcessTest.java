@@ -3,6 +3,7 @@ package fr.remy.cc1.domain;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
+import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
@@ -37,7 +38,7 @@ public class PaymentCreditCardProcessTest {
         this.creditCards = new InMemoryCreditCards();
         this.creditCardIdStub = creditCards.nextIdentity();
         Users users = new InMemoryUsers();
-        this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", new Email("pomme@pomme.fr"), new Password("aZertyu9?"), UserCategoryCreator.getInstance().getValueOf("TRADESMAN"));
+        this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", new Email("pomme@pomme.fr"), new Password("aZertyu9?"), UserCategoryCreator.getValueOf("TRADESMAN"));
         this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 321, "POMME", user.getUserId());
         this.mockCreditCardChecker = new MockCreditCardValidityMiddleware();
         this.mockCreditCardApproveTradesman = new MockCreditCardValidityTradeMiddleware();

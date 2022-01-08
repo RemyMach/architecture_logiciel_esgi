@@ -2,13 +2,11 @@ package fr.remy.cc1.application.customer;
 
 import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.domain.payment.Currency;
 import fr.remy.cc1.domain.payment.Money;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.kernel.event.ApplicationEvent;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventId;
-import fr.remy.cc1.domain.user.User;
 
 import java.time.ZonedDateTime;
 

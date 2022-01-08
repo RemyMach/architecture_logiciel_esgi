@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain.payment;
+package fr.remy.cc1.domain.payment.currency;
 
 
 import fr.remy.cc1.kernel.EnumValidator;

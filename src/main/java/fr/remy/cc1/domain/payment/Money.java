@@ -1,9 +1,8 @@
 package fr.remy.cc1.domain.payment;
 
+import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.kernel.error.CurrencyValidationException;
-import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 

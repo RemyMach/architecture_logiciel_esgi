@@ -4,6 +4,8 @@ import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.creditcard.*;
+import fr.remy.cc1.domain.payment.currency.Currency;
+import fr.remy.cc1.domain.payment.currency.CurrencyValidator;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserService;
