@@ -1,5 +1,8 @@
 package fr.remy.cc1.domain.payment;
 
+import fr.remy.cc1.kernel.error.CurrencyValidationException;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,6 +14,10 @@ public class Money {
     public Money(BigDecimal amount, Currency currency) {
         this.amount = Objects.requireNonNull(amount);
         this.currency = Objects.requireNonNull(currency);
+    }
+
+    public static Money of(BigDecimal amount, Currency currency) throws CurrencyValidationException {
+        return new Money(amount, currency);
     }
 
     @Override

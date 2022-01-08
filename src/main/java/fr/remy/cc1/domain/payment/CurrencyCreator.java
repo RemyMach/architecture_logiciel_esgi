@@ -1,30 +1,18 @@
 package fr.remy.cc1.domain.payment;
 
+import fr.remy.cc1.kernel.error.CurrencyValidationException;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+
 public class CurrencyCreator {
 
-    private String exceptionMessage;
+    public CurrencyCreator() {}
 
-    public CurrencyCreator() {
-        this.exceptionMessage = "You can choose uniquely";
-        for (Currency currency: Currency.values()) {
-            this.exceptionMessage += ", " + currency.name();
-        }
-
-        this.exceptionMessage += " to pay";
-    }
-
-    public Currency getValueOf(String currencyCode) {
+    public static Currency getValueOf(String currencyCode) throws CurrencyValidationException {
 
         if(!CurrencyValidator.getInstance().test(currencyCode)) {
-            throw new IllegalArgumentException(exceptionMessage);
+            throw new CurrencyValidationException(ExceptionsDictionary.CURRENCY_NOT_PRESENT.getErrorCode(), ExceptionsDictionary.CURRENCY_NOT_PRESENT.getMessage());
         }
 
         return Currency.valueOf(currencyCode);
-    }
-
-
-
-    public String getExceptionMessage() {
-        return exceptionMessage;
     }
 }
