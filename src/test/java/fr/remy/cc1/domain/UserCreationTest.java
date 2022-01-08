@@ -169,7 +169,7 @@ public class UserCreationTest {
                 List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware())));
 
         UserService userService = new UserService(users);
-        PaymentService paymentService = new PaymentService(payment);
+        PaymentService paymentService = new PaymentService(payment, UserCreationEventBus.getInstance());
 
         paymentService.paySubscription(subscriptionOffer, user);
         userService.create(user);

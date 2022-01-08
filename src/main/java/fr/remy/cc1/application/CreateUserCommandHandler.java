@@ -10,13 +10,11 @@ import fr.remy.cc1.kernel.event.EventBus;
 public final class CreateUserCommandHandler implements CommandHandler<CreateUser, UserId> {
 
     private final Users users;
-    private final UserService userService;
     private final EventBus<Event> eventBus;
 
 
-    public CreateUserCommandHandler(Users users, UserService userService, EventBus<Event> eventBus) {
+    public CreateUserCommandHandler(Users users, EventBus<Event> eventBus) {
         this.users = users;
-        this.userService = userService;
         this.eventBus = eventBus;
     }
 

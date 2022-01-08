@@ -21,13 +21,11 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
     private final CreditCards creditCards;
     private final PaypalAccounts paypalAccounts;
     private final Users users;
-    private final EventBus<Event> eventBus;
 
-    public CreatePaymentCommandHandler(CreditCards creditCards, PaypalAccounts paypalAccounts, Users users, EventBus<Event> eventBus) {
+    public CreatePaymentCommandHandler(CreditCards creditCards, PaypalAccounts paypalAccounts, Users users) {
         this.creditCards = creditCards;
         this.paypalAccounts = paypalAccounts;
         this.users = users;
-        this.eventBus = eventBus;
     }
 
     @Override
@@ -54,7 +52,6 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
             }catch(Exception e) {}
             CreditCard creditCard = CreditCard.of(creditCardId, command.creditCardNumber, command.creditCardExpiryDate, command.creditCardSecurityCode, command.creditCardName, user.getUserId());
             this.creditCards.save(creditCard, user);
-
         }
 
         return null;

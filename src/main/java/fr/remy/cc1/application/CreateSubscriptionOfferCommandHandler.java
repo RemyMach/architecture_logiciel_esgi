@@ -50,7 +50,7 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, CurrencyCreator.getValueOf(command.currency)), command.discountPercentage, new ArrayList<Invoice>());
         CurrencyValidator.getInstance().test(command.currency);
 
-        PaymentService paymentService = new PaymentService(payment);
+        PaymentService paymentService = new PaymentService(payment, this.eventBus);
         paymentService.paySubscription(subscriptionOffer, user);
         this.userService.create(user);
 

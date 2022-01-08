@@ -3,6 +3,7 @@ package fr.remy.cc1.exposition.exception;
 import fr.remy.cc1.exposition.CustomErrorResponse;
 import fr.remy.cc1.exposition.CustomErrorResponseCreator;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.kernel.error.BasicException;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,9 @@ import java.util.Map;
 @RestControllerAdvice
 public class BasicExceptionHandler {
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<CustomErrorResponse> handleValidationException(ValidationException e) {
+    @ExceptionHandler({ValidationException.class, PaymentProcessValidationException.class})
+    public ResponseEntity<CustomErrorResponse> handleValidationException(BasicException e) {
+        System.out.println("je passe bien là après l'erreur PaymentProcessValidationException");
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionary.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
@@ -27,13 +29,6 @@ public class BasicExceptionHandler {
     @ExceptionHandler(NoSuchEntityException.class)
     public ResponseEntity<CustomErrorResponse> handleNoSuchEntityException(NoSuchEntityException e) {
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(InfrastructureExceptionsDictionary.codeToExpositionErrors);
-        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
-        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(PaymentProcessValidationException.class)
-    public ResponseEntity<CustomErrorResponse> handlePaymentProcessValidationException(PaymentProcessValidationException e) {
-        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionary.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }

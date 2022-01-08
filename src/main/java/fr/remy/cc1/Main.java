@@ -90,7 +90,7 @@ public class Main {
         Payment payment = getPayment(paymentMethod, creditCard, paypalAccount);
 
         UserService userService = new UserService(users);
-        PaymentService paymentService = new PaymentService(payment);
+        PaymentService paymentService = new PaymentService(payment, UserCreationEventBus.getInstance());
 
         paymentService.paySubscription(subscriptionOffer, user);
         userService.create(user);

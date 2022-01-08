@@ -12,6 +12,8 @@ import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
+import fr.remy.cc1.kernel.event.Event;
+import fr.remy.cc1.kernel.event.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -23,13 +25,14 @@ public class PaymentScheduler {
     private final Users users;
     private final CreditCards creditCards;
     private final PaypalAccounts paypalAccounts;
-
+    private final EventBus<Event> eventBus;
 
     @Autowired
-    public PaymentScheduler(Users users, CreditCards creditCards, PaypalAccounts paypalAccounts) {
+    public PaymentScheduler(Users users, CreditCards creditCards, PaypalAccounts paypalAccounts, EventBus<Event> eventBus) {
         this.users = users;
         this.creditCards = creditCards;
         this.paypalAccounts = paypalAccounts;
+        this.eventBus = eventBus;
     }
 
     @Scheduled(cron = "*/10 * * * * *")
@@ -62,7 +65,7 @@ public class PaymentScheduler {
             }
         }
         assert payment != null;
-        PaymentService paymentService = new PaymentService(payment);
+        PaymentService paymentService = new PaymentService(payment, this.eventBus);
         paymentService.paySubscription(subscriptionOffer, user);
     }
 }

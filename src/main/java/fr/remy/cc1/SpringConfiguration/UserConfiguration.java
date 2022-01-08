@@ -94,7 +94,7 @@ public class UserConfiguration {
 
     @Bean
     public CreateUserCommandHandler createUserCommandHandler() {
-        return new CreateUserCommandHandler(users(), userService(), userCreationEventBus());
+        return new CreateUserCommandHandler(users(), userCreationEventBus());
     }
 
     @Bean
@@ -104,12 +104,12 @@ public class UserConfiguration {
 
     @Bean
     public CreatePaymentCommandHandler createPaymentCommandHandler() {
-        return new CreatePaymentCommandHandler(creditCards(), paypalAccounts(), users(), userCreationEventBus());
+        return new CreatePaymentCommandHandler(creditCards(), paypalAccounts(), users());
     }
 
     @Bean
     PaymentScheduler paymentScheduler() {
-        return new PaymentScheduler(users(), creditCards(), paypalAccounts());
+        return new PaymentScheduler(users(), creditCards(), paypalAccounts(), userCreationEventBus());
     }
 
 }
