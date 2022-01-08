@@ -27,6 +27,7 @@ public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscribe
         final InvoiceId invoiceId = this.invoices.nextIdentity();
         Invoice invoice = Invoice.of(invoiceId, subscriptionSuccessfulEvent.getMoney(), subscriptionSuccessfulEvent.getUserId(), ZonedDateTime.now());
         this.invoices.save(invoice);
+        //TODO peut-être mettre un autre event ici
         SubscriptionOffer subscriptionOffer = subscriptionSuccessfulEvent.getSubscriptionOffer().addInvoice(invoice);
         this.users.saveSubscriptionOffer(subscriptionSuccessfulEvent.getUserId(), subscriptionOffer);
     }

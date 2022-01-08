@@ -67,5 +67,6 @@ public class PaymentScheduler {
         assert payment != null;
         PaymentService paymentService = new PaymentService(payment, this.eventBus);
         paymentService.paySubscription(subscriptionOffer, user);
+        System.out.println("félicitations vous avez payé");
     }
 }

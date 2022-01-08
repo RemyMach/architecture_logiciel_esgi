@@ -9,7 +9,9 @@ import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,11 +59,18 @@ public class InMemoryUsers implements Users {
         ZonedDateTime thresholdZoneDateTime = zonedDateTime.minusMonths(months);
         return List.copyOf(usersData.values().stream().filter( user -> {
             SubscriptionOffer subscriptionOffer = this.getSubscriptionOffer(user.getUserId());
+            System.out.println(subscriptionOffer);
             if(subscriptionOffer == null) return false;
+            System.out.println(subscriptionOffer.toString());
             List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
+            System.out.println(InvoiceList);
             if(InvoiceList.size() > 0) {
                 Invoice invoice = InvoiceList.get(InvoiceList.size() - 1);
-                if(invoice.getCreateAt().toInstant().isBefore(thresholdZoneDateTime.toInstant()) || invoice.getCreateAt().toInstant().equals(thresholdZoneDateTime.toInstant())) {
+                Instant thresholdInstantTime = thresholdZoneDateTime.toInstant().truncatedTo( ChronoUnit.DAYS );
+                Instant lastInvoiceInstantTime = invoice.getCreateAt().toInstant().truncatedTo( ChronoUnit.DAYS );
+                System.out.println(thresholdInstantTime);
+                System.out.println(lastInvoiceInstantTime);
+                if(lastInvoiceInstantTime.isBefore(thresholdInstantTime) || lastInvoiceInstantTime.equals(thresholdInstantTime)) {
                     return true;
                 }
             }

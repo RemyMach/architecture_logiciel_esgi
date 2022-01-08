@@ -61,8 +61,7 @@ public class UserConfiguration {
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(emailSender),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices(), users()),
-                new SubscriptionSuccessfulEventCustomerSubscription(users())
+                new SubscriptionSuccessfulEventInvoiceSubscription(invoices(), users())
         );
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
