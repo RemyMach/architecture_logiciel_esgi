@@ -18,6 +18,17 @@ public class PaymentService {
     public void paySubscription(SubscriptionOffer subscriptionOffer, User user) {
 
         this.payment.start(subscriptionOffer.getMoney());
-        UserCreationEventBus.getInstance().send(SubscriptionSuccessfulEvent.of(user.getUserId(), subscriptionOffer, subscriptionOffer.getMoney(), new UserDTO(user.getUserId(), user.getLastname(), user.getLastname(), user.getEmail())));
+        UserCreationEventBus.getInstance().send(
+                SubscriptionSuccessfulEvent.of(
+                        user.getUserId(),
+                        subscriptionOffer,
+                        subscriptionOffer.getMoney(),
+                        new UserDTO(user.getUserId(),
+                                user.getLastname(),
+                                user.getLastname(),
+                                user.getEmail()
+                        )
+                )
+        );
     }
 }

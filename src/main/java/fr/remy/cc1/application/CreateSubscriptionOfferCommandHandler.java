@@ -8,6 +8,7 @@ import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodValidator;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.currency.Currency;
+import fr.remy.cc1.domain.payment.currency.CurrencyCreator;
 import fr.remy.cc1.domain.payment.currency.CurrencyValidator;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.User;
@@ -46,7 +47,7 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
                     List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware()))
             );
         }
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, Currency.valueOf(command.currency)), command.discountPercentage, new ArrayList<Invoice>());
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, CurrencyCreator.getValueOf(command.currency)), command.discountPercentage, new ArrayList<Invoice>());
         CurrencyValidator.getInstance().test(command.currency);
 
         PaymentService paymentService = new PaymentService(payment);
