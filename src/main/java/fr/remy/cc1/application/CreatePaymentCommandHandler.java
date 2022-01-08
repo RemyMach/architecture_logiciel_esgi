@@ -1,7 +1,9 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.domain.payment.Payer;
-import fr.remy.cc1.domain.payment.PaymentMethodValidator;
+import fr.remy.cc1.domain.payment.PaymentDirector;
+import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethod;
+import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
+import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodValidator;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.paypal.PayPalAccountId;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
@@ -11,6 +13,8 @@ import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
+
+import java.util.List;
 
 public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment, Void> {
 
@@ -30,11 +34,9 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
     public Void handle(CreatePayment command) throws Exception {
 
         User user = this.users.byId(command.userId);
-        if(!PaymentMethodValidator.getInstance().test(command.payment)) {
-            throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
-        }
+        PaymentMethod paymentMethodEnum = PaymentMethodCreator.getValueOf(command.payment);
+        if(paymentMethodEnum == PaymentMethod.Paypal) {
 
-        if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
             final PayPalAccountId payPalAccountId = paypalAccounts.nextIdentity();
             try {
                 PaypalAccount paypalAccount = this.paypalAccounts.findByUserId(user.getUserId());
@@ -42,7 +44,9 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
             }catch(Exception e) {}
             PaypalAccount paypalAccount = new PaypalAccount(payPalAccountId, user.getUserId());
             this.paypalAccounts.save(paypalAccount);
-        }else if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
+
+        }else if(paymentMethodEnum == PaymentMethod.CreditCard) {
+
             final CreditCardId creditCardId = creditCards.nextIdentity();
             try {
                 CreditCard creditCard = this.creditCards.findByUserId(user.getUserId());
@@ -50,7 +54,9 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
             }catch(Exception e) {}
             CreditCard creditCard = CreditCard.of(creditCardId, command.creditCardNumber, command.creditCardExpiryDate, command.creditCardSecurityCode, command.creditCardName, user.getUserId());
             this.creditCards.save(creditCard, user);
+
         }
+
         return null;
     }
 }

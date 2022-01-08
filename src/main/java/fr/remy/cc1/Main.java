@@ -6,8 +6,13 @@ import fr.remy.cc1.application.payment.SaveCreditCardEvent;
 import fr.remy.cc1.application.payment.SaveCreditCardEventSubscription;
 import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.customer.*;
+import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethod;
+import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
+import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodValidator;
 import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.payment.currency.CurrencyValidator;
+import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
+import fr.remy.cc1.kernel.error.PaymentMethodValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.invoice.Invoices;
@@ -68,20 +73,20 @@ public class Main {
 
         final CreditCardId creditCardId = creditCards.nextIdentity();
         CreditCard creditCard = CreditCard.of(creditCardId,"1234567262", 1203, 321, "POMME", user.getUserId());
-        Payer payer = new Payer(creditCard, null);
 
-        createUser(user, users, payer, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, creditCard, null, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
     }
 
     private static void createUser(
             User user,
             Users users,
-            Payer payer,
+            CreditCard creditCard,
+            PaypalAccount paypalAccount,
             String paymentMethod,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
-    ) {
-        Payment payment = getPayment(paymentMethod, payer);
+    ) throws PaymentMethodValidationException {
+        Payment payment = getPayment(paymentMethod, creditCard, paypalAccount);
 
         UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment);
@@ -89,7 +94,7 @@ public class Main {
         paymentService.paySubscription(subscriptionOffer, user);
         userService.create(user);
         if(saveCreditCard)
-            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payer.getCreditCard(), user));
+            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(creditCard, user));
     }
 
     private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users, CreditCardService creditCardService) {
@@ -106,18 +111,18 @@ public class Main {
         );
     }
 
-    private static Payment getPayment(String paymentMethod, Payer payer) {
-        if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {
-            throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
+    private static Payment getPayment(String paymentMethod, CreditCard creditCard, PaypalAccount paypalAccount) throws PaymentMethodValidationException {
+        PaymentMethod paymentMethodEnum = PaymentMethodCreator.getValueOf(paymentMethod);
+        if(paymentMethodEnum == PaymentMethod.Paypal) {
+            return PaymentDirector.createPaypalPayment(paypalAccount);
         }
-        if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
-            return PaymentDirector.createPaypalPayment(payer.getPaypalAccount());
-        }else if(paymentMethod.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
-            return PaymentDirector.createCreditCardPayment(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
+
+        if(paymentMethodEnum == PaymentMethod. CreditCard) {
+            return PaymentDirector.createCreditCardPayment(creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                     List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware())
             ));
         }
 
-        throw new IllegalArgumentException(PaymentMethodValidator.exceptionMessage);
+        return null;
     }
 }

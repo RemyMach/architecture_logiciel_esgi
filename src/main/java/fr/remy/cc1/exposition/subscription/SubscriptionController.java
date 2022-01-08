@@ -4,11 +4,6 @@ import fr.remy.cc1.application.CreatePayment;
 import fr.remy.cc1.application.CreatePaymentCommandHandler;
 import fr.remy.cc1.application.CreateSubscriptionOffer;
 import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
-import fr.remy.cc1.domain.payment.Payer;
-import fr.remy.cc1.domain.payment.Payment;
-import fr.remy.cc1.domain.payment.PaymentDirector;
-import fr.remy.cc1.domain.payment.PaymentMethodValidator;
-import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.user.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @SuppressWarnings("unused")
 @RestController
