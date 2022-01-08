@@ -27,7 +27,7 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
     }
 
     @Override
-    public Void handle(CreatePayment command) {
+    public Void handle(CreatePayment command) throws Exception {
 
         User user = this.users.byId(command.userId);
         if(!PaymentMethodValidator.getInstance().test(command.payment)) {

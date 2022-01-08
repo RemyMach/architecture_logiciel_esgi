@@ -8,10 +8,12 @@ import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.payment.currency.CurrencyCreator;
 import fr.remy.cc1.domain.user.*;
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.*;
 
@@ -89,7 +91,7 @@ public class UserCreationTest {
             createUser(user, users, payer, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException | ValidationException e) {
-            assertEquals(e.getMessage(), currencyCreator.getExceptionMessage());
+            assertEquals(e.getMessage(), ExceptionsDictionary.CURRENCY_NOT_PRESENT.getErrorCode());
             assertEquals(this.users.findAll().size(), 0);
             assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
         }
@@ -120,7 +122,7 @@ public class UserCreationTest {
 
     @Test
     @DisplayName("should register user, credit card and Invoice")
-    void userIsValid() throws ValidationException {
+    void userIsValid() throws ValidationException, NoSuchEntityException {
 
         assertEquals(this.invoices.findAll().size(), 0);
 
@@ -140,7 +142,7 @@ public class UserCreationTest {
 
     @Test
     @DisplayName("should register user, and Invoice but not save credit card")
-    void userIsValidAndCreditCardIsNotSave() throws ValidationException {
+    void userIsValidAndCreditCardIsNotSave() throws ValidationException, NoSuchEntityException {
 
         this.saveCreditCardStub = false;
         assertEquals(this.invoices.findAll().size(), 0);

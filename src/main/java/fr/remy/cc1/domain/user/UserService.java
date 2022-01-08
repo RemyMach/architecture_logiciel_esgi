@@ -1,5 +1,6 @@
 package fr.remy.cc1.domain.user;
 
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public final class UserService {
         this.users.save(user);
     }
 
-    public User getUser(UserId userId) {
+    public User getUser(UserId userId) throws NoSuchEntityException {
         return this.users.byId(userId);
     }
 

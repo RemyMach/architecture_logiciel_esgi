@@ -1,6 +1,7 @@
 package fr.remy.cc1.domain.user;
 import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface Users {
 
     void saveSubscriptionOffer(UserId userId, SubscriptionOffer subscriptionOffer);
 
-    User byId(UserId userId);
+    User byId(UserId userId) throws NoSuchEntityException;
 
     UserId nextIdentity();
 

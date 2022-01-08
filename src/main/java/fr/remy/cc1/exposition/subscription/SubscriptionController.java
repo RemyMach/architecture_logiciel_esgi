@@ -32,7 +32,7 @@ public class SubscriptionController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@RequestBody @Valid SubscriptionRequest request) {
+    public ResponseEntity<Void> create(@RequestBody @Valid SubscriptionRequest request) throws Exception {
 
         CreatePayment createPayment = new CreatePayment(
                 request.payment.name,

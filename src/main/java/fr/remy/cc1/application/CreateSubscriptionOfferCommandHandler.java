@@ -31,7 +31,7 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
     }
 
     @Override
-    public Void handle(CreateSubscriptionOffer command) {
+    public Void handle(CreateSubscriptionOffer command) throws Exception {
         User user = this.userService.getUser(command.userId);
 
         if(!PaymentMethodValidator.getInstance().test(command.payment)) {

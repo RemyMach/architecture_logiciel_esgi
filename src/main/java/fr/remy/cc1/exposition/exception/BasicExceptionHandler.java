@@ -2,6 +2,7 @@ package fr.remy.cc1.exposition.exception;
 
 import fr.remy.cc1.exposition.CustomErrorResponse;
 import fr.remy.cc1.exposition.CustomErrorResponseCreator;
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class BasicExceptionHandler {
@@ -22,16 +23,24 @@ public class BasicExceptionHandler {
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NoSuchEntityException.class)
+    public ResponseEntity<CustomErrorResponse> handleValidationException(NoSuchEntityException e) {
+        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(InfrastructureExceptionsDictionary.codeToExpositionErrors);
+        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<CustomErrorResponse>> handleTypeMismatchException(MethodArgumentNotValidException e) {
+    public ResponseEntity<Map<String, String>> handleTypeMismatchException(MethodArgumentNotValidException e) {
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(ExpositionExceptionsDictionary.codeToExpositionErrors);
-        List<CustomErrorResponse> errors = new ArrayList<>();
+        Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors().forEach(error -> {
             String errorMessage = error.getDefaultMessage();
             if(errorMessage != null) {
                 CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(errorMessage);
-                errors.add(customErrorResponse);
+                errors.put("errorCode", customErrorResponse.errorCode);
+                errors.put("message", customErrorResponse.message);
             }
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);

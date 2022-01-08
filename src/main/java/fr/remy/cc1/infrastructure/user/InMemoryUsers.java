@@ -6,6 +6,8 @@ import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -31,10 +33,10 @@ public class InMemoryUsers implements Users {
     }
 
     @Override
-    public User byId(UserId userId) {
+    public User byId(UserId userId) throws NoSuchEntityException {
         final User user = usersData.get(userId);
         if (user == null) {
-            throw new RuntimeException("No user for " + userId.getValue());
+            throw new NoSuchEntityException(InfrastructureExceptionsDictionary.USER_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.USER_NOT_FOUND.getMessage());
         }
         return user;
     }
