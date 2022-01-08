@@ -29,7 +29,6 @@ public class UserController {
     public ResponseEntity<Void> create(@RequestBody @Valid UserRequest request) throws ValidationException {
         CreateUser createUser = new CreateUser(request.lastname, request.firstname, request.email, request.password, UserCategoryCreator.getValueOf(request.userCategory));
         UserId userId = createUserCommandHandler.handle(createUser);
-        System.out.println(userId.getValue());
         return ResponseEntity.ok(null);
     }
 }

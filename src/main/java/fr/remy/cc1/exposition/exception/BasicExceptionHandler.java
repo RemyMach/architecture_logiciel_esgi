@@ -20,7 +20,6 @@ public class BasicExceptionHandler {
 
     @ExceptionHandler({ValidationException.class, PaymentProcessValidationException.class})
     public ResponseEntity<CustomErrorResponse> handleValidationException(BasicException e) {
-        System.out.println("je passe bien là après l'erreur PaymentProcessValidationException");
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionary.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
@@ -51,10 +50,9 @@ public class BasicExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<CustomErrorResponse> globalExceptionHandler(Exception e, WebRequest request) {
-        System.out.println(e);
+    public ResponseEntity<CustomErrorResponse> globalExceptionHandler(Exception e) {
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionary.codeToExpositionErrors);
-        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getMessage());
+        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create("");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(customErrorResponse);
     }
 

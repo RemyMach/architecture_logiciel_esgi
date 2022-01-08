@@ -51,12 +51,7 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
         CurrencyValidator.getInstance().test(command.currency);
 
         PaymentService paymentService = new PaymentService(payment, this.eventBus);
-        System.out.println(subscriptionOffer);
-        System.out.println(user);
         paymentService.paySubscription(subscriptionOffer, user);
-        System.out.println("invoice list");
-        System.out.println(subscriptionOffer.getInvoiceList());
-
         return null;
     }
 }

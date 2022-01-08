@@ -30,14 +30,13 @@ public class SubscriptionController {
 
         CreatePayment createPayment = new CreatePayment(
                 request.payment.name,
-                request.payment.creditCardNumber,
-                request.payment.creditCardExpiryDate,
-                request.payment.creditCardSecurityCode,
-                request.payment.creditCardName,
+                request.payment.cardRequest.creditCardNumber,
+                request.payment.cardRequest.creditCardExpiryDate,
+                request.payment.cardRequest.creditCardSecurityCode,
+                request.payment.cardRequest.creditCardName,
                 UserId.of(request.userId)
         );
         createPaymentCommandHandler.handle(createPayment);
-        System.out.println(createPayment);
         CreateSubscriptionOffer createSubscriptionOffer = new CreateSubscriptionOffer(
                 request.discountPercentage,
                 request.amount,
