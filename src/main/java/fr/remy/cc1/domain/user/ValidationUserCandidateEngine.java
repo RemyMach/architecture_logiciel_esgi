@@ -2,11 +2,10 @@ package fr.remy.cc1.domain.user;
 
 import fr.remy.cc1.kernel.error.*;
 
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class ValidationUserEngine {
+public final class ValidationUserCandidateEngine {
 
     private final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$");
@@ -14,17 +13,17 @@ public final class ValidationUserEngine {
     private final Pattern VALID_PASSWORD_REGEX =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$");
 
-    private static final ValidationUserEngine INSTANCE = new ValidationUserEngine();
+    private static final ValidationUserCandidateEngine INSTANCE = new ValidationUserCandidateEngine();
 
-    private ValidationUserEngine() { }
+    private ValidationUserCandidateEngine() { }
 
-    public static ValidationUserEngine getInstance() {
+    public static ValidationUserCandidateEngine getInstance() {
         return INSTANCE;
     }
 
-    public boolean test(User user) throws ValidationException {
-        return this.validateEmail(user.getEmail()) &&
-                this.validatePassword(user.getPassword());
+    public boolean test(UserCandidate userCandidate) throws ValidationException {
+        return this.validateEmail(userCandidate.email) &&
+                this.validatePassword(userCandidate.password);
     }
 
     private boolean validateEmail(Email email) throws EmailValidatorException {
