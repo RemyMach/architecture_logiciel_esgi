@@ -26,7 +26,6 @@ public class PaymentCreditCardProcessTest {
     CreditCard creditCard;
 
     SubscriptionOffer subscriptionOffer;
-    Payer payer;
     MockCreditCardValidityMiddleware mockCreditCardChecker;
     MockCreditCardValidityTradeMiddleware mockCreditCardApproveTradesman;
     MockCreditCardBankAccountValidityMiddleware mockCreditCardContractor;
@@ -44,7 +43,6 @@ public class PaymentCreditCardProcessTest {
         this.mockCreditCardApproveTradesman = new MockCreditCardValidityTradeMiddleware();
         this.mockCreditCardContractor = new MockCreditCardBankAccountValidityMiddleware();
         this.subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal("10"), Currency.EUR), 10);
-        this.payer = new Payer(creditCard, null);
     }
 
     @Test

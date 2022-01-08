@@ -87,8 +87,7 @@ public class UserCreationTest {
             CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
             this.currencyCreator.getValueOf(currencyChoiceStub);
             SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal(priceSubscriptionOfferStub), Currency.valueOf(currencyChoiceStub)) , discountPercentageStub);
-            Payer payer = new Payer(creditCard, null);
-            createUser(user, users, payer, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, creditCard, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException | ValidationException e) {
             assertEquals(e.getMessage(), ExceptionsDictionary.CURRENCY_NOT_PRESENT.getErrorCode());
@@ -110,8 +109,7 @@ public class UserCreationTest {
             this.currencyCreator.getValueOf(currencyChoiceStub);
             SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal(priceSubscriptionOfferStub), Currency.valueOf(currencyChoiceStub)), discountPercentageStub);
             CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
-            Payer payer = new Payer(creditCard, null);
-            createUser(user, users, payer, saveCreditCardStub, subscriptionOffer);
+            createUser(user, users, creditCard, saveCreditCardStub, subscriptionOffer);
             fail( "Should have thrown an exception" );
         }catch (IllegalArgumentException | ValidationException exception) {
             assertEquals(exception.getMessage(), "the user fields are not valid");
@@ -130,8 +128,7 @@ public class UserCreationTest {
         this.currencyCreator.getValueOf(currencyChoiceStub);
         SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal(priceSubscriptionOfferStub), Currency.valueOf(currencyChoiceStub)), discountPercentageStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
-        Payer payer = new Payer(creditCard, null);
-        createUser(user, users, payer, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, creditCard, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
@@ -152,8 +149,7 @@ public class UserCreationTest {
         User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
         this.currencyCreator.getValueOf(currencyChoiceStub);
         CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
-        Payer payer = new Payer(creditCard, null);
-        createUser(user, users, payer, saveCreditCardStub, subscriptionOffer);
+        createUser(user, users, creditCard, saveCreditCardStub, subscriptionOffer);
         assertEquals(users.byId(myUserIdStub), user);
         assertEquals(this.invoices.findAll().size(), 1);
         assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
@@ -164,11 +160,11 @@ public class UserCreationTest {
     private void createUser(
             User user,
             Users users,
-            Payer payer,
+            CreditCard creditCard,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
     ) {
-        Payment payment = PaymentDirector.createCreditCardPayment(payer.getCreditCard(), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
+        Payment payment = PaymentDirector.createCreditCardPayment(creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                 List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware())));
 
         UserService userService = new UserService(users);
@@ -177,6 +173,6 @@ public class UserCreationTest {
         paymentService.paySubscription(subscriptionOffer, user);
         userService.create(user);
         if(saveCreditCard)
-            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(payer.getCreditCard(), user));
+            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(creditCard, user));
     }
 }
