@@ -12,6 +12,8 @@ public interface Users {
 
     User byId(UserId userId) throws NoSuchEntityException;
 
+    User byEmailAndPassword(Email email, Password password) throws NoSuchEntityException;
+
     UserId nextIdentity();
 
     List<User> findAll();

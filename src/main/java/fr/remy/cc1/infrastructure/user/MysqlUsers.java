@@ -1,9 +1,8 @@
 package fr.remy.cc1.infrastructure.user;
 
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.domain.user.*;
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 
 import java.util.List;
 
@@ -20,6 +19,11 @@ public class MysqlUsers implements Users {
 
     @Override
     public User byId(UserId userId) {
+        throw new UnsupportedOperationException("Not yet implemented.");
+    }
+
+    @Override
+    public User byEmailAndPassword(Email email, Password password) throws NoSuchEntityException {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 

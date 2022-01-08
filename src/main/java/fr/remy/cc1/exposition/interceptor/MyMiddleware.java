@@ -15,9 +15,8 @@ public class MyMiddleware extends OncePerRequestFilter {
 
         if ("POST".equalsIgnoreCase(request.getMethod()))
         {
-            Scanner s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
-            String pomm = s.hasNext() ? s.next() : "";
-            System.out.println(pomm);
+            String s = request.getHeader("Authorization");
+            System.out.println(s);
             System.out.println(request.getParameter("discountPercentage"));
             System.out.println("on passe dans ce filtre");
             /*StringBuilder stringBuilder = new StringBuilder();

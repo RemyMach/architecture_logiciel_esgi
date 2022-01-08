@@ -19,7 +19,10 @@ import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.exposition.authentication.CreateAuthTokenCommandHandler;
+import fr.remy.cc1.exposition.authentication.Tokens;
 import fr.remy.cc1.exposition.interceptor.MyMiddleware;
+import fr.remy.cc1.infrastructure.authentication.token.InMemoryToken;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
@@ -115,17 +118,30 @@ public class UserConfiguration {
     }
 
     @Bean
+    public Tokens tokens() {
+        return new InMemoryToken();
+    }
+
+    @Bean
+    public CreateAuthTokenCommandHandler createAuthTokenCommandHandler() {
+        return new CreateAuthTokenCommandHandler(tokens());
+    }
+
+
+    @Bean
     public FilterRegistrationBean someFilterRegistration() {
 
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(subscriptionFilter());
+        registration.setFilter(authenticationFilter());
         registration.addUrlPatterns("/auth");
         registration.setOrder(1);
         return registration;
     }
 
-    public MyMiddleware subscriptionFilter() {
+    public MyMiddleware authenticationFilter() {
         return new MyMiddleware();
     }
+
+
 
 }

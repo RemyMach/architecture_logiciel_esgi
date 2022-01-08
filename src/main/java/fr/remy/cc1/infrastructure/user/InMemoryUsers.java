@@ -3,9 +3,7 @@ package fr.remy.cc1.infrastructure.user;
 import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
-import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 
@@ -41,6 +39,14 @@ public class InMemoryUsers implements Users {
             throw new NoSuchEntityException(InfrastructureExceptionsDictionary.USER_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.USER_NOT_FOUND.getMessage());
         }
         return user;
+    }
+
+    @Override
+    public User byEmailAndPassword(Email email, Password password) throws NoSuchEntityException {
+        return usersData.values().stream()
+                .findFirst()
+                .filter( user -> user.getEmail() == email)
+                .orElseThrow(() -> new NoSuchEntityException(InfrastructureExceptionsDictionary.USER_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.USER_NOT_FOUND.getMessage()));
     }
 
     @Override
