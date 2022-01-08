@@ -24,7 +24,7 @@ public class MysqlCreditCards implements CreditCards {
     }
 
     @Override
-    public CreditCard byUserId(UserId userId) {
+    public CreditCard findByUserId(UserId userId) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 

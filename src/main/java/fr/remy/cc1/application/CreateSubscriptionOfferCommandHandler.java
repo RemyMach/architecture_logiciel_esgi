@@ -39,9 +39,9 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
         }
         Payment payment = null;
         if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
-            payment = PaymentDirector.createPaypalPayment(paypalAccounts.byUserId(user.getUserId()));
+            payment = PaymentDirector.createPaypalPayment(paypalAccounts.findByUserId(user.getUserId()));
         }else if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
-            payment = PaymentDirector.createCreditCardPayment(creditCards.byUserId(user.getUserId()), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
+            payment = PaymentDirector.createCreditCardPayment(creditCards.findByUserId(user.getUserId()), PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                     List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware()))
             );
         }

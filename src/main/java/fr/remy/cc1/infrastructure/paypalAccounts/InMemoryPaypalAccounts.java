@@ -30,7 +30,7 @@ public class InMemoryPaypalAccounts implements PaypalAccounts {
 
 
     @Override
-    public PaypalAccount byUserId(UserId userId) {
+    public PaypalAccount findByUserId(UserId userId) {
         return data.values().stream().filter(entry -> entry.getUserId().equals(userId)).findFirst().orElseThrow();
     }
 

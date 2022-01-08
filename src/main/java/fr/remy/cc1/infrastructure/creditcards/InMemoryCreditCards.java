@@ -30,7 +30,7 @@ public class InMemoryCreditCards implements CreditCards {
     }
 
     @Override
-    public CreditCard byUserId(UserId userId) {
+    public CreditCard findByUserId(UserId userId) {
         return data.values().stream().filter(entry -> entry.getUserId().equals(userId)).findFirst().orElseThrow();
     }
 

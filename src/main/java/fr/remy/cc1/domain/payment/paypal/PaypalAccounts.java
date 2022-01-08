@@ -8,7 +8,7 @@ public interface PaypalAccounts {
 
     PaypalAccount byId(PayPalAccountId PayPalAccountId);
 
-    PaypalAccount byUserId(UserId userId);
-
     void delete(PayPalAccountId PayPalAccountId);
+
+    PaypalAccount findByUserId(UserId userId);
 }

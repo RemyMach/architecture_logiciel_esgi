@@ -15,6 +15,7 @@ public class CreditCard implements Card {
 
     private final String name;
 
+    //TODO gardé ça dans le InMemory
     private final UserId userId;
 
     private CreditCard(CreditCardId creditCardId, String number, int expiryDate, int securityCode, String name, UserId userId) {

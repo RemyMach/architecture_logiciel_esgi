@@ -7,7 +7,6 @@ import fr.remy.cc1.domain.payment.paypal.PayPalAccountId;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.event.Event;
@@ -38,7 +37,7 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
         if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(0))) {
             final PayPalAccountId payPalAccountId = paypalAccounts.nextIdentity();
             try {
-                PaypalAccount paypalAccount = this.paypalAccounts.byUserId(user.getUserId());
+                PaypalAccount paypalAccount = this.paypalAccounts.findByUserId(user.getUserId());
                 this.paypalAccounts.delete(paypalAccount.getPayPalAccountId());
             }catch(Exception e) {}
             PaypalAccount paypalAccount = new PaypalAccount(payPalAccountId, user.getUserId());
@@ -46,7 +45,7 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
         }else if(command.payment.equals(Payer.PAYMENT_METHOD_SUPPORTED.get(1))) {
             final CreditCardId creditCardId = creditCards.nextIdentity();
             try {
-                CreditCard creditCard = this.creditCards.byUserId(user.getUserId());
+                CreditCard creditCard = this.creditCards.findByUserId(user.getUserId());
                 this.creditCards.delete(creditCard.getCreditCardId());
             }catch(Exception e) {}
             CreditCard creditCard = CreditCard.of(creditCardId, command.creditCardNumber, command.creditCardExpiryDate, command.creditCardSecurityCode, command.creditCardName, user.getUserId());

@@ -14,7 +14,7 @@ public interface CreditCards {
 
     CreditCard byId(CreditCardId creditCardId);
 
-    CreditCard byUserId(UserId userId);
+    CreditCard findByUserId(UserId userId);
 
     void delete(CreditCardId creditCardId);
 }

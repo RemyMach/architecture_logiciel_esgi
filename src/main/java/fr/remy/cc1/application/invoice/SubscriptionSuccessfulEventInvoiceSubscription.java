@@ -21,6 +21,7 @@ public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscribe
         this.users = users;
     }
 
+    //TODO voir ce que ça donne si je passe deux subscriptionOffer pour le même user à la suite
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
         final InvoiceId invoiceId = this.invoices.nextIdentity();

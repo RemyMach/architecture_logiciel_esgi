@@ -109,7 +109,7 @@ public class UserConfiguration {
 
     @Bean
     PaymentScheduler paymentScheduler() {
-        return new PaymentScheduler(users());
+        return new PaymentScheduler(users(), creditCards(), paypalAccounts());
     }
 
 }
