@@ -4,7 +4,6 @@ import fr.remy.cc1.application.CreatePaymentCommandHandler;
 import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.application.CreateUserCommandHandler;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
-import fr.remy.cc1.application.customer.SubscriptionSuccessfulEventCustomerSubscription;
 import fr.remy.cc1.application.scheduler.PaymentScheduler;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
@@ -21,7 +20,7 @@ import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.exposition.authentication.CreateAuthTokenCommandHandler;
 import fr.remy.cc1.exposition.authentication.Tokens;
-import fr.remy.cc1.exposition.interceptor.MyMiddleware;
+import fr.remy.cc1.exposition.authentication.AuthMiddleware;
 import fr.remy.cc1.infrastructure.authentication.token.InMemoryToken;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
@@ -38,7 +37,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.*;
-import java.util.logging.Filter;
 
 @Configuration
 @EnableScheduling
@@ -133,13 +131,13 @@ public class UserConfiguration {
 
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(authenticationFilter());
-        registration.addUrlPatterns("/auth");
+        registration.addUrlPatterns("/subscriptions");
         registration.setOrder(1);
         return registration;
     }
 
-    public MyMiddleware authenticationFilter() {
-        return new MyMiddleware();
+    public AuthMiddleware authenticationFilter() {
+        return new AuthMiddleware();
     }
 
 

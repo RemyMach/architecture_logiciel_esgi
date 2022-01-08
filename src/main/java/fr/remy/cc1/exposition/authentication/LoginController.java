@@ -1,11 +1,6 @@
 package fr.remy.cc1.exposition.authentication;
 
-import fr.remy.cc1.application.CreatePayment;
-import fr.remy.cc1.application.CreatePaymentCommandHandler;
-import fr.remy.cc1.application.CreateSubscriptionOffer;
-import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.domain.user.*;
-import fr.remy.cc1.exposition.subscription.SubscriptionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
