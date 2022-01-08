@@ -11,6 +11,7 @@ import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
+import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -32,11 +33,13 @@ public class PaymentScheduler {
     }
 
     @Scheduled(cron = "*/10 * * * * *")
-    public void PayUserSubscriptionOffer() {
+    public void PayUserSubscriptionOffer() throws PaymentProcessValidationException {
         List<User> userList = users.findAllByPaidSinceMoreThanCertainMonthAgo(0);
 
         System.out.println(userList);
-        userList.forEach(this::payUserSubscription);
+        for(User user: userList) {
+            this.payUserSubscription(user);
+        }
 
         //TODO récupérer le dernier paiement
         // si il date de moins d'un mois alors il n'a pas à payer
@@ -44,7 +47,7 @@ public class PaymentScheduler {
         // vérifier vos informations de carte de crédit
     }
 
-    private void payUserSubscription(User user) {
+    private void payUserSubscription(User user) throws PaymentProcessValidationException {
         SubscriptionOffer subscriptionOffer = users.getSubscriptionOffer(user.getUserId());
         Payment payment = null;
         CreditCard creditCard = this.creditCards.findByUserId(user.getUserId());

@@ -14,6 +14,7 @@ import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.*;
 
@@ -163,7 +164,7 @@ public class UserCreationTest {
             CreditCard creditCard,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
-    ) {
+    ) throws PaymentProcessValidationException {
         Payment payment = PaymentDirector.createCreditCardPayment(creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                 List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware())));
 

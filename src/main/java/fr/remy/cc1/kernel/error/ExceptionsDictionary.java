@@ -11,4 +11,6 @@ public class ExceptionsDictionary {
     public static final ValidationException PAYMENT_NOT_PRESENT = new ValidationException("payment_method_not_supported", "the payment method is not supported by the application");
 
     public static final ValidationException USER_CATEGORY_NOT_VALID = new ValidationException("user_category_not_valid", "the userCategory is not valid");
+
+    public static final ValidationException CARD_PAYMENT_VALIDATION_ERROR = new ValidationException("card_payment_process_check", "the process check has fail");
 }

@@ -13,6 +13,7 @@ import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.payment.currency.CurrencyValidator;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.kernel.error.PaymentMethodValidationException;
+import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.invoice.Invoices;
@@ -85,7 +86,7 @@ public class Main {
             String paymentMethod,
             boolean saveCreditCard,
             SubscriptionOffer subscriptionOffer
-    ) throws PaymentMethodValidationException {
+    ) throws PaymentMethodValidationException, PaymentProcessValidationException {
         Payment payment = getPayment(paymentMethod, creditCard, paypalAccount);
 
         UserService userService = new UserService(users);

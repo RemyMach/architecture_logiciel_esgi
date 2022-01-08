@@ -3,6 +3,7 @@ package fr.remy.cc1.exposition.exception;
 import fr.remy.cc1.exposition.CustomErrorResponse;
 import fr.remy.cc1.exposition.CustomErrorResponseCreator;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,15 @@ public class BasicExceptionHandler {
     }
 
     @ExceptionHandler(NoSuchEntityException.class)
-    public ResponseEntity<CustomErrorResponse> handleValidationException(NoSuchEntityException e) {
+    public ResponseEntity<CustomErrorResponse> handleNoSuchEntityException(NoSuchEntityException e) {
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(InfrastructureExceptionsDictionary.codeToExpositionErrors);
+        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PaymentProcessValidationException.class)
+    public ResponseEntity<CustomErrorResponse> handlePaymentProcessValidationException(PaymentProcessValidationException e) {
+        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionary.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }

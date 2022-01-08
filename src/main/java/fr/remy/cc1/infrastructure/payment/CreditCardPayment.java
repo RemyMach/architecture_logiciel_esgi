@@ -2,6 +2,7 @@ package fr.remy.cc1.infrastructure.payment;
 
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.*;
+import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 
 public class CreditCardPayment implements Payment {
 
@@ -15,7 +16,7 @@ public class CreditCardPayment implements Payment {
     }
 
     @Override
-    public void start(Money money) {
+    public void start(Money money) throws PaymentProcessValidationException {
         this.paymentCreditCardHandler.process(this.creditCard, money);
     }
 }

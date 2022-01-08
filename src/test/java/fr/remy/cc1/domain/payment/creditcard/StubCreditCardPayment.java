@@ -3,6 +3,7 @@ package fr.remy.cc1.domain.payment.creditcard;
 import fr.remy.cc1.domain.payment.Money;
 import fr.remy.cc1.domain.payment.PaymentCardMiddleware;
 import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
+import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 
 public class StubCreditCardPayment extends CreditCardPayment {
 
@@ -18,7 +19,7 @@ public class StubCreditCardPayment extends CreditCardPayment {
         this.paymentCreditCardHandler = paymentCreditCardHandler;
     }
 
-    public void start(Money money) {
+    public void start(Money money) throws PaymentProcessValidationException {
         this.paymentCreditCardHandler.process(this.creditCard, money);
     }
 
