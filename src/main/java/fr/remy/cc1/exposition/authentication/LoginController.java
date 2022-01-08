@@ -28,7 +28,7 @@ public class LoginController {
     public ResponseEntity<TokenId> create(@RequestBody @Valid LoginRequest request) throws Exception {
 
         User user = this.users.byEmailAndPassword(new Email(request.email), new Password(request.password));
-        TokenId tokenId = this.createAuthTokenCommandHandler.handle(new CreateAuthToken(user.getUserId()));
+        TokenId tokenId = this.createAuthTokenCommandHandler.handle(new CreateAuthToken(user.getUserId(), user.getEmail()));
         return ResponseEntity.ok(tokenId);
     }
 

@@ -45,7 +45,10 @@ public class InMemoryUsers implements Users {
     public User byEmailAndPassword(Email email, Password password) throws NoSuchEntityException {
         return usersData.values().stream()
                 .findFirst()
-                .filter( user -> user.getEmail() == email)
+                .filter( user -> {
+
+                    return user.getEmail().equals(email) && user.getPassword().equals(password);
+                })
                 .orElseThrow(() -> new NoSuchEntityException(InfrastructureExceptionsDictionary.USER_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.USER_NOT_FOUND.getMessage()));
     }
 

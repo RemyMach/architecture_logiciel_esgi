@@ -1,7 +1,5 @@
 package fr.remy.cc1.infrastructure.authentication.token;
 
-import fr.remy.cc1.domain.user.Email;
-import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.exposition.authentication.Token;
 import fr.remy.cc1.exposition.authentication.TokenId;
@@ -10,15 +8,19 @@ import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 
-import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 import java.io.UnsupportedEncodingException;
-import java.security.SecureRandom;
+import java.security.Key;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryToken implements Tokens {
+
+    @Value("${JWT_SECRET_KEY}")
+    private String SECRET_KEY;
 
     private final Map<UserId, Token> tokensData = new ConcurrentHashMap<>();
     @Override
@@ -37,13 +39,13 @@ public class InMemoryToken implements Tokens {
 
     @Override
     public TokenId nextIdentity(UserId userId) throws UnsupportedEncodingException {
-        //The JWT signature algorithm we will be using to sign the token
-        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
+        System.out.println(this.SECRET_KEY);
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(this.SECRET_KEY);
+        Key signingKey = new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
         String jws = Jwts.builder()
                 .setSubject("Bob")
-                .claim("userId", userId)
-                .signWith(SignatureAlgorithm.HS256,"secret".getBytes("UTF-8"))
+                .claim("userId", userId.getValue())
+                .signWith(signingKey)
                 .compact();
 
         return TokenId.of(jws);

@@ -27,7 +27,7 @@ public class SubscriptionController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@RequestBody @Valid SubscriptionRequest request) throws Exception {
-
+        System.out.println("on est là");
         CreatePayment createPayment = new CreatePayment(
                 request.payment.name,
                 request.payment.card.creditCardNumber,
@@ -36,6 +36,8 @@ public class SubscriptionController {
                 request.payment.card.creditCardName,
                 UserId.of(request.userId)
         );
+        System.out.println("ici");
+
         createPaymentCommandHandler.handle(createPayment);
         CreateSubscriptionOffer createSubscriptionOffer = new CreateSubscriptionOffer(
                 request.discountPercentage,
@@ -45,6 +47,7 @@ public class SubscriptionController {
                 request.payment.name
         );
         createSubscriptionOfferCommandHandler.handle(createSubscriptionOffer);
+        System.out.println("et encore là");
         return ResponseEntity.ok(null);
     }
 

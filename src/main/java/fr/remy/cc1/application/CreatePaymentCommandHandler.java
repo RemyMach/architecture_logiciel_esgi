@@ -50,6 +50,9 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
                 CreditCard creditCard = this.creditCards.findByUserId(user.getUserId());
                 this.creditCards.delete(creditCard.getCreditCardId());
             }catch(Exception e) {}
+            System.out.println("expiry date");
+            System.out.println(command.creditCardExpiryDate);
+            System.out.println("expiry date");
             CreditCard creditCard = CreditCard.of(creditCardId, command.creditCardNumber, command.creditCardExpiryDate, command.creditCardSecurityCode, command.creditCardName, user.getUserId());
             this.creditCards.save(creditCard, user);
         }

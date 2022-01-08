@@ -1,5 +1,7 @@
 package fr.remy.cc1.exposition.authentication;
 
+import java.util.Objects;
+
 public class TokenId {
 
     private final String value;
@@ -16,4 +18,16 @@ public class TokenId {
         return String.valueOf(value);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TokenId tokenId = (TokenId) o;
+        return Objects.equals(value, tokenId.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
 }

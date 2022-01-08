@@ -31,6 +31,7 @@ import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -136,8 +137,9 @@ public class UserConfiguration {
         return registration;
     }
 
+    @Bean
     public AuthMiddleware authenticationFilter() {
-        return new AuthMiddleware();
+        return new AuthMiddleware(tokens());
     }
 
 

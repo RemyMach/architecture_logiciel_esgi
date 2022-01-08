@@ -47,7 +47,7 @@ public class CreditCard implements Card {
 
     @Override
     public int getExpiryDate() {
-        return 0;
+        return expiryDate;
     }
 
     @Override
