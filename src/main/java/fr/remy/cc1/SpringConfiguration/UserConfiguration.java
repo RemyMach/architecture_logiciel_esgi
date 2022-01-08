@@ -19,6 +19,7 @@ import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.exposition.interceptor.MyMiddleware;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
@@ -28,11 +29,13 @@ import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.*;
+import java.util.logging.Filter;
 
 @Configuration
 @EnableScheduling
@@ -109,6 +112,20 @@ public class UserConfiguration {
     @Bean
     PaymentScheduler paymentScheduler() {
         return new PaymentScheduler(users(), creditCards(), paypalAccounts(), userCreationEventBus());
+    }
+
+    @Bean
+    public FilterRegistrationBean someFilterRegistration() {
+
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(subscriptionFilter());
+        registration.addUrlPatterns("/auth");
+        registration.setOrder(1);
+        return registration;
+    }
+
+    public MyMiddleware subscriptionFilter() {
+        return new MyMiddleware();
     }
 
 }

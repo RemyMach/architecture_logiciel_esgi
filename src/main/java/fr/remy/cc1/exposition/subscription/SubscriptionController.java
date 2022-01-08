@@ -30,10 +30,10 @@ public class SubscriptionController {
 
         CreatePayment createPayment = new CreatePayment(
                 request.payment.name,
-                request.payment.cardRequest.creditCardNumber,
-                request.payment.cardRequest.creditCardExpiryDate,
-                request.payment.cardRequest.creditCardSecurityCode,
-                request.payment.cardRequest.creditCardName,
+                request.payment.card.creditCardNumber,
+                request.payment.card.creditCardExpiryDate,
+                request.payment.card.creditCardSecurityCode,
+                request.payment.card.creditCardName,
                 UserId.of(request.userId)
         );
         createPaymentCommandHandler.handle(createPayment);
