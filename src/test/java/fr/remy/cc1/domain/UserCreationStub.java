@@ -14,7 +14,6 @@ import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscri
 import fr.remy.cc1.application.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.application.mail.SubscriptionSuccessfulEventMessengerSubscription;
-import fr.remy.cc1.application.customer.SubscriptionSuccessfulEventCustomerSubscription;
 
 import java.util.Arrays;
 import java.util.Collections;
