@@ -11,6 +11,7 @@ import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.BasicException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -58,9 +59,15 @@ public class AuthMiddleware extends OncePerRequestFilter {
 
         String token = tokens[1];
         Token tokenRequest = Token.of(TokenId.of(token));
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
-                .parseClaimsJws(token).getBody();
+        Claims claims;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+                    .parseClaimsJws(token).getBody();
+        }catch (MalformedJwtException exception) {
+            response = setResponseErrorCustom(ExpositionExceptionsDictionary.AUTH_FAILED, ExpositionExceptionsDictionary.AUTH_FAILED, response, HttpStatus.UNAUTHORIZED.value());
+            return;
+        }
 
         Object userIdValue = claims.get("userId");
 

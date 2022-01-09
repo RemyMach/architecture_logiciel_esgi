@@ -19,7 +19,6 @@ import fr.remy.cc1.application.payment.SaveCreditCardEvent;
 import fr.remy.cc1.application.payment.SaveCreditCardEventSubscription;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.application.user.RegisterUserEvent;
-import fr.remy.cc1.domain.user.UserService;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.exposition.authentication.CreateAuthTokenCommandHandler;
 import fr.remy.cc1.exposition.authentication.Tokens;
@@ -34,7 +33,6 @@ import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -112,7 +110,7 @@ public class UserConfiguration {
 
     @Bean
     public CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler() {
-        return new CreateSubscriptionOfferCommandHandler(creditCards(), paypalAccounts(), userService(), userCreationEventBus());
+        return new CreateSubscriptionOfferCommandHandler(creditCards(), paypalAccounts(), users(), userCreationEventBus());
     }
 
     @Bean

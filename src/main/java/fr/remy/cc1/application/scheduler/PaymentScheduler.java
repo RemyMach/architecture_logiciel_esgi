@@ -1,16 +1,14 @@
 package fr.remy.cc1.application.scheduler;
 
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.domain.payment.Card;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.payment.PaymentDirector;
-import fr.remy.cc1.domain.payment.PaymentService;
+import fr.remy.cc1.application.PaymentService;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.Users;
-import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;

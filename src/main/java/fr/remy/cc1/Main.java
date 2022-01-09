@@ -1,5 +1,6 @@
 package fr.remy.cc1;
 
+import fr.remy.cc1.application.PaymentService;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEventCustomerSubscription;
 import fr.remy.cc1.application.payment.SaveCreditCardEvent;
@@ -8,7 +9,6 @@ import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.customer.*;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethod;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
-import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodValidator;
 import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.payment.currency.CurrencyValidator;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;

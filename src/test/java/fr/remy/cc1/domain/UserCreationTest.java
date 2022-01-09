@@ -1,4 +1,5 @@
 package fr.remy.cc1.domain;
+import fr.remy.cc1.application.PaymentService;
 import fr.remy.cc1.application.payment.SaveCreditCardEvent;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoices;

@@ -5,14 +5,12 @@ import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.payment.*;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethod;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
-import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodValidator;
 import fr.remy.cc1.domain.payment.creditcard.*;
-import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.payment.currency.CurrencyCreator;
 import fr.remy.cc1.domain.payment.currency.CurrencyValidator;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.UserService;
+import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
@@ -24,19 +22,19 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
 
     private final CreditCards creditCards;
     private final PaypalAccounts paypalAccounts;
-    private final UserService userService;
+    private final Users users;
     private final EventBus<Event> eventBus;
 
-    public CreateSubscriptionOfferCommandHandler(CreditCards creditCards, PaypalAccounts paypalAccounts, UserService userService, EventBus<Event> eventBus) {
+    public CreateSubscriptionOfferCommandHandler(CreditCards creditCards, PaypalAccounts paypalAccounts, Users users, EventBus<Event> eventBus) {
         this.creditCards = creditCards;
         this.paypalAccounts = paypalAccounts;
-        this.userService = userService;
+        this.users = users;
         this.eventBus = eventBus;
     }
 
     @Override
     public Void handle(CreateSubscriptionOffer command) throws Exception {
-        User user = this.userService.getUser(command.userId);
+        User user = this.users.byId(command.userId);
 
         PaymentMethod paymentMethodEnum = PaymentMethodCreator.getValueOf(command.payment);
         Payment payment = null;

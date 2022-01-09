@@ -1,32 +1,22 @@
 package fr.remy.cc1.exposition.subscription;
 
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 // Getter and setter mandatory for Spring validation
 public class CardRequest {
 
-    @NotNull(message="userId_empty_null")
-    public boolean saveCreditCard;
-
-    @NotNull(message="userId_empty_null")
+    @NotNull(message="card_parameters_empty_or_null")
     public String creditCardNumber;
 
-    @NotNull(message="userId_empty_null")
+    @NotNull(message="card_parameters_empty_or_null")
     public Integer creditCardExpiryDate;
 
-    @NotNull(message="userId_empty_null")
+    @NotNull(message="card_parameters_empty_or_null")
     public Integer creditCardSecurityCode;
 
-    @NotNull(message="userId_empty_null")
+    @NotNull(message="card_parameters_empty_or_null")
     public String creditCardName;
-
-    public boolean isSaveCreditCard() {
-        return saveCreditCard;
-    }
-
-    public void setSaveCreditCard(boolean saveCreditCard) {
-        this.saveCreditCard = saveCreditCard;
-    }
 
     public String getCreditCardNumber() {
         return creditCardNumber;

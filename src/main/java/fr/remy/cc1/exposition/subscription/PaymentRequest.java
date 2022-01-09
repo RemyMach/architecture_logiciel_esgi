@@ -8,15 +8,22 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 public class PaymentRequest {
 
+    @NotNull(message = "payment_currency_empty_null")
     public String currency;
 
+    @NotNull(message = "payment_name_empty_null")
     public String name;
 
+    @NotNull(message = "card_parameters_empty_or_null")
+    @Valid
     public CardRequest card;
 
+    @NotNull(message = "paypal_parameters_empty_or_null")
+    @Valid
     public PaypalRequest paypal;
 
     public CardRequest getCard() {
