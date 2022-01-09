@@ -1,6 +1,9 @@
 package fr.remy.cc1.domain.user;
 
-import fr.remy.cc1.kernel.error.*;
+import fr.remy.cc1.kernel.error.EmailValidatorException;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.PasswordValidatorException;
+import fr.remy.cc1.kernel.error.ValidationException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

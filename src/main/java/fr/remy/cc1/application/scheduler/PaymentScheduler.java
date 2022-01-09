@@ -17,7 +17,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PaymentScheduler {
 

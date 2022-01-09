@@ -1,5 +1,5 @@
 package fr.remy.cc1.domain.user;
-import fr.remy.cc1.application.UserDTO;
+
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 

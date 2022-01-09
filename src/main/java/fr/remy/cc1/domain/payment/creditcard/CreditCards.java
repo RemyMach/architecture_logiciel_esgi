@@ -1,6 +1,5 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
-import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 
 public interface CreditCards {
