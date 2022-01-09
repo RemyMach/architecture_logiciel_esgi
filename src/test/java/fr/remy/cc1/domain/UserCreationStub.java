@@ -3,7 +3,6 @@ package fr.remy.cc1.domain;
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
-import fr.remy.cc1.domain.payment.creditcard.CreditCardService;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.domain.invoice.Invoices;

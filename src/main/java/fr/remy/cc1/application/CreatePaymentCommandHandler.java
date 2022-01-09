@@ -47,7 +47,7 @@ public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment
                 this.creditCards.delete(creditCard.getCreditCardId());
             }catch(Exception e) {}
             CreditCard creditCard = CreditCard.of(creditCardId, command.creditCardNumber, command.creditCardExpiryDate, command.creditCardSecurityCode, command.creditCardName, user.getUserId());
-            this.creditCards.save(creditCard, user);
+            this.creditCards.save(creditCard, user.getUserId());
         }
 
         return null;

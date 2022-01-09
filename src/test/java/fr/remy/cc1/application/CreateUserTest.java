@@ -2,14 +2,20 @@ package fr.remy.cc1.application;
 
 import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.domain.invoice.Invoices;
-import fr.remy.cc1.domain.user.Email;
-import fr.remy.cc1.domain.user.Password;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.domain.mail.MockEmailSender;
+import fr.remy.cc1.domain.user.*;
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateUserTest {
     Users users;
@@ -18,8 +24,9 @@ public class CreateUserTest {
 
     String lastnameStub;
     String firstnameStub;
-    Email emailStub;
-    Password passwordStub;
+    String emailStub;
+    String passwordStub;
+    String userCategoryStub;
 
     CreateUserCommandHandler createUserCommandHandler;
 
@@ -28,8 +35,9 @@ public class CreateUserTest {
     void initStubValues() {
         this.lastnameStub = "Machavoine";
         this.firstnameStub = "Rémy";
-        this.emailStub = new Email("pomme@pomme.fr");
-        this.passwordStub = new Password("aZertyu9?");
+        this.emailStub = "pomme@pomme.fr";
+        this.passwordStub = "aZertyu9?";
+        this.userCategoryStub = "TRADESMAN";
 
 
         this.users = new InMemoryUsers();
@@ -39,86 +47,37 @@ public class CreateUserTest {
         this.createUserCommandHandler = new CreateUserCommandHandler(users, UserCreationEventBus.getInstance());
     }
 
-    /*@Test
-    @DisplayName("should return an exception because currency is not EUR or USD")
-    void userHasNotAValidCurrency() {
-
-        assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-
-        currencyChoiceStub = "GBP";
-
-        try {
-            User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
-            CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
-            this.currencyCreator.getValueOf(currencyChoiceStub);
-            SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal(priceSubscriptionOfferStub), Currency.valueOf(currencyChoiceStub)) , discountPercentageStub);
-            createUser2(user, users, creditCard, saveCreditCardStub, subscriptionOffer);
-            fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException e) {
-            assertEquals(e.getMessage(), ExceptionsDictionary.CURRENCY_NOT_PRESENT.getErrorCode());
-            assertEquals(this.users.findAll().size(), 0);
-            assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-        }
-    }*/
-
-    /*@Test
-    @DisplayName("should return an exception because user has a not valid email")
-    void userHasNoValidEmail() {
-
-        assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-
-        emailStub = new Email("pomme");
-
-        try {
-            User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
-            this.currencyCreator.getValueOf(currencyChoiceStub);
-            SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal(priceSubscriptionOfferStub), Currency.valueOf(currencyChoiceStub)), discountPercentageStub);
-            CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
-            createUser2(user, users, creditCard, saveCreditCardStub, subscriptionOffer);
-            fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
-            assertEquals(this.users.findAll().size(), 0);
-            assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-        }
-    }
-
     @Test
-    @DisplayName("should register user, credit card and Invoice")
+    @DisplayName("should register the user and send an email")
     void userIsValid() throws ValidationException, NoSuchEntityException {
 
-        assertEquals(this.invoices.findAll().size(), 0);
+        assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
+        assertEquals(this.users.findAll().size(), 0);
 
-        User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
-        this.currencyCreator.getValueOf(currencyChoiceStub);
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal(priceSubscriptionOfferStub), Currency.valueOf(currencyChoiceStub)), discountPercentageStub);
-        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
-        createUser2(user, users, creditCard, saveCreditCardStub, subscriptionOffer);
-        assertEquals(users.byId(myUserIdStub), user);
-        assertEquals(this.invoices.findAll().size(), 1);
-        assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
-        assertEquals(this.users.byId(myUserIdStub), user);
-        assertEquals(this.creditCards.byId(this.creditCardIdStub), creditCard);
-        assertEquals(MockEmailSender.getInstance().getCountMail(), 2);
+        CreateUser createUser = new CreateUser(lastnameStub, firstnameStub, emailStub, passwordStub, UserCategoryCreator.getValueOf(userCategoryStub));
+        UserId userId = createUserCommandHandler.handle(createUser);
+
+        assertEquals(this.users.findAll().size(), 1);
+        assertEquals(this.users.byId(userId).getEmail().email, emailStub);
+        assertEquals(MockEmailSender.getInstance().getCountMail(), 1);
     }
 
     @Test
-    @DisplayName("should register user, and Invoice but not save credit card")
-    void userIsValidAndCreditCardIsNotSave() throws ValidationException, NoSuchEntityException {
+    @DisplayName("should not register the user and don't send the email because password is to short")
+    void userIsNotValid() throws ValidationException {
 
-        this.saveCreditCardStub = false;
-        assertEquals(this.invoices.findAll().size(), 0);
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal(priceSubscriptionOfferStub), Currency.valueOf(currencyChoiceStub)), discountPercentageStub);
+        assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
+        assertEquals(this.users.findAll().size(), 0);
 
-
-        User user = User.of(this.myUserIdStub, lastnameStub, firstnameStub, emailStub, passwordStub, this.userCategoryCreator.getValueOf(this.userCategoryChoiceStub));
-        this.currencyCreator.getValueOf(currencyChoiceStub);
-        CreditCard creditCard = CreditCard.of(this.creditCardIdStub,"1234567262", 1203, 321, "POMME", user.getUserId());
-        //createUser2(user, users, creditCard, saveCreditCardStub, subscriptionOffer);
-        assertEquals(users.byId(myUserIdStub), user);
-        assertEquals(this.invoices.findAll().size(), 1);
-        assertEquals(this.users.getSubscriptionOffer(myUserIdStub), subscriptionOffer);
-        assertEquals(this.users.byId(myUserIdStub), user);
-        assertEquals(this.creditCards.byId(this.creditCardIdStub), null);
-    }*/
+        try {
+            this.passwordStub = "short";
+            CreateUser createUser = new CreateUser(lastnameStub, firstnameStub, emailStub, passwordStub, UserCategoryCreator.getValueOf(userCategoryStub));
+            UserId userId = createUserCommandHandler.handle(createUser);
+            fail("the test should thrown an error");
+        }catch(ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.PASSWORD_NOT_VALID.getErrorCode());
+            assertEquals(this.users.findAll().size(), 0);
+            assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
+        }
+    }
 }

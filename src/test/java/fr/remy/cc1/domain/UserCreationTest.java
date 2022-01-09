@@ -30,7 +30,6 @@ public class UserCreationTest {
     Users users;
     UserId myUserIdStub;
     CreditCards creditCards;
-    CreditCardService creditCardService;
     CreditCardId creditCardIdStub;
     Invoices invoices;
 
@@ -68,7 +67,6 @@ public class UserCreationTest {
         this.creditCards = new InMemoryCreditCards();
         this.creditCardIdStub = creditCards.nextIdentity();
         this.invoices = new InMemoryInvoices();
-        this.creditCardService = new CreditCardService(this.creditCards);
         UserCreationStub.initUserCreationTest(this.users, this.invoices);
 
         this.currencyCreator = new CurrencyCreator();

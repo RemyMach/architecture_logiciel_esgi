@@ -15,7 +15,7 @@ public class InMemoryCreditCards implements CreditCards {
     private final Map<CreditCardId, CreditCard> data = new ConcurrentHashMap<>();
 
     @Override
-    public void save(CreditCard creditCard, User user) {
+    public void save(CreditCard creditCard, UserId userId) {
         data.put(creditCard.getCreditCardId(), creditCard);
     }
 

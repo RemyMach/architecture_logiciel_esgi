@@ -8,7 +8,7 @@ import fr.remy.cc1.domain.user.UserId;
 
 public class MysqlCreditCards implements CreditCards {
     @Override
-    public void save(CreditCard creditCard, User user) {
+    public void save(CreditCard creditCard, UserId userId) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 

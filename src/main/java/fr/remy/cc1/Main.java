@@ -11,7 +11,6 @@ import fr.remy.cc1.application.mail.SubscriptionSuccessfulEventMessengerSubscrip
 import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.EmailSender;
-import fr.remy.cc1.domain.payment.creditcard.CreditCardService;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.UserCategoryCreator;

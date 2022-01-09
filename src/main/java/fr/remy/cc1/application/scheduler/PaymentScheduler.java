@@ -35,20 +35,19 @@ public class PaymentScheduler {
     }
 
     @Scheduled(cron = "* * 18 * * *")
-    public void PayUserSubscriptionOffer() throws PaymentProcessValidationException {
+    public void PayUserSubscriptionOffer() {
         List<User> userList = Stream.concat(
                 users.findAllByPaidSinceMoreThanCertainMonthAgo(1).stream(),
                 users.findAllByPaymentRejectedWithOneValidInvoice().stream()
         ).collect(Collectors.toList());
 
-        System.out.println(userList);
 
         for(User user: userList) {
             this.payUserSubscription(user);
         }
     }
 
-    private void payUserSubscription(User user) throws PaymentProcessValidationException {
+    private void payUserSubscription(User user) {
         SubscriptionOffer subscriptionOffer = users.getSubscriptionOffer(user.getUserId());
         Payment payment = null;
         CreditCard creditCard = this.creditCards.findByUserId(user.getUserId());

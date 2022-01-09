@@ -4,7 +4,7 @@ import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 
 public interface CreditCards {
-    void save(CreditCard creditCard, User user);
+    void save(CreditCard creditCard, UserId userId);
 
     CreditCardId nextIdentity();
 
