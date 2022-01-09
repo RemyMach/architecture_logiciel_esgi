@@ -71,9 +71,16 @@ public class InMemoryUsers implements Users {
             if(subscriptionOffer == null) return false;
             List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
             if(InvoiceList.size() > 0) {
-                Invoice invoice = InvoiceList.get(InvoiceList.size() - 1);
+                int i = 0;
+                while(i >= 0 && InvoiceList.get(i).getPaymentState() == PaymentState.REJECTED) {
+
+                    i--;
+                }
+                if(i == -1) return false;
+                Invoice invoice = InvoiceList.get(i);
                 Instant thresholdInstantTime = thresholdZoneDateTime.toInstant().truncatedTo( ChronoUnit.DAYS );
                 Instant lastInvoiceInstantTime = invoice.getCreateAt().toInstant().truncatedTo( ChronoUnit.DAYS );
+                if(invoice.getPaymentState() == PaymentState.REJECTED) return false;
                 if(lastInvoiceInstantTime.isBefore(thresholdInstantTime) || lastInvoiceInstantTime.equals(thresholdInstantTime)) {
                     return true;
                 }
@@ -90,7 +97,11 @@ public class InMemoryUsers implements Users {
             List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
             if(InvoiceList.size() > 0) {
                 boolean hasOnPaymentSuccess = InvoiceList.stream().anyMatch(
-                        invoice -> invoice.getPaymentState() == PaymentState.VALIDATE
+                        invoice -> {
+                            Instant thresholdInstantTime = ZonedDateTime.now().toInstant().truncatedTo( ChronoUnit.DAYS );
+                            Instant lastInvoiceInstantTime = invoice.getCreateAt().toInstant().truncatedTo( ChronoUnit.DAYS );
+                            return invoice.getPaymentState() == PaymentState.VALIDATE && (lastInvoiceInstantTime.isBefore(thresholdInstantTime) || lastInvoiceInstantTime.equals(thresholdInstantTime));
+                        }
                 );
                 Invoice invoice = InvoiceList.get(InvoiceList.size() - 1);
                 if(hasOnPaymentSuccess && invoice.getPaymentState() == PaymentState.REJECTED) {

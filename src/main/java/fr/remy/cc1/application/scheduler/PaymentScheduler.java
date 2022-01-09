@@ -36,10 +36,7 @@ public class PaymentScheduler {
 
     @Scheduled(cron = "* * 18 * * *")
     public void PayUserSubscriptionOffer() {
-        List<User> userList = Stream.concat(
-                users.findAllByPaidSinceMoreThanCertainMonthAgo(1).stream(),
-                users.findAllByPaymentRejectedWithOneValidInvoice().stream()
-        ).collect(Collectors.toList());
+        List<User> userList = users.findAllByPaidSinceMoreThanCertainMonthAgo(1).stream().collect(Collectors.toList());
 
 
         for(User user: userList) {
