@@ -15,6 +15,6 @@ public class AuthRequiredException extends IOException implements BasicException
 
     @Override
     public String getErrorCode() {
-        return null;
+        return errorCode;
     }
 }

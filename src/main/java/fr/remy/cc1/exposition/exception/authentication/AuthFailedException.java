@@ -8,13 +8,13 @@ public class AuthFailedException extends IOException implements BasicException {
 
     private final String errorCode;
 
-    public AuthFailedException(String message, String errorCode) {
+    public AuthFailedException(String errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }
 
     @Override
     public String getErrorCode() {
-        return null;
+        return errorCode;
     }
 }

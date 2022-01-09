@@ -8,6 +8,7 @@ import fr.remy.cc1.exposition.exception.ExpositionExceptionsDictionary;
 import fr.remy.cc1.exposition.exception.authentication.AuthFailedException;
 import fr.remy.cc1.exposition.exception.authentication.AuthRequiredException;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.kernel.error.BasicException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 
+
+// je voulais faire ça bien mais j'avais plus le temps de me battre avec le système d'erreur des filtres
 public class AuthMiddleware extends OncePerRequestFilter {
 
     private final Tokens tokens;
@@ -40,17 +43,19 @@ public class AuthMiddleware extends OncePerRequestFilter {
 
         String s = request.getHeader("Authorization");
 
-        // custom error response class used across my project
-
 
         if(s == null) {
-            CustomErrorResponse customErrorResponse = new CustomErrorResponse(ExpositionExceptionsDictionary.AUTH_REQUIRED.getErrorCode(), ExpositionExceptionsDictionary.AUTH_REQUIRED.getMessage());
-
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.getWriter().write(convertObjectToJson(customErrorResponse));
+            response = setResponseErrorCustom(ExpositionExceptionsDictionary.AUTH_REQUIRED, ExpositionExceptionsDictionary.AUTH_REQUIRED, response, HttpStatus.FORBIDDEN.value());
+            return;
         }
 
         String[] tokens = s.split("Bearer ");
+
+        if(tokens.length < 2) {
+            response = setResponseErrorCustom(ExpositionExceptionsDictionary.AUTH_FAILED, ExpositionExceptionsDictionary.AUTH_FAILED, response, HttpStatus.UNAUTHORIZED.value());
+            return;
+        }
+
         String token = tokens[1];
         Token tokenRequest = Token.of(TokenId.of(token));
         Claims claims = Jwts.parser()
@@ -63,17 +68,25 @@ public class AuthMiddleware extends OncePerRequestFilter {
         try {
             Token tokenInDatabase = this.tokens.byUserId(userId);
             if(!tokenInDatabase.equals(tokenRequest)) {
-                CustomErrorResponse customErrorResponse = new CustomErrorResponse(ExpositionExceptionsDictionary.AUTH_REQUIRED.getErrorCode(), ExpositionExceptionsDictionary.AUTH_REQUIRED.getMessage());
-
-                response.setStatus(HttpStatus.FORBIDDEN.value());
-                response.getWriter().write(convertObjectToJson(customErrorResponse));
-                throw new AuthFailedException(ExpositionExceptionsDictionary.AUTH_FAILED.getErrorCode(), ExpositionExceptionsDictionary.AUTH_FAILED.getMessage());
+                response = setResponseErrorCustom(ExpositionExceptionsDictionary.AUTH_FAILED, ExpositionExceptionsDictionary.AUTH_FAILED, response, HttpStatus.UNAUTHORIZED.value());
+                return;
             }
         } catch (NoSuchEntityException e) {
-            throw new AuthFailedException(ExpositionExceptionsDictionary.AUTH_FAILED.getErrorCode(), ExpositionExceptionsDictionary.AUTH_FAILED.getMessage());
+            response = setResponseErrorCustom(ExpositionExceptionsDictionary.AUTH_FAILED, ExpositionExceptionsDictionary.AUTH_FAILED, response, HttpStatus.UNAUTHORIZED.value());
+            return;
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private HttpServletResponse setResponseErrorCustom(BasicException basicException, IOException ioException, HttpServletResponse response, int httpStatusValue) throws IOException {
+        HttpServletResponse newResponse = response;
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(basicException.getErrorCode(), ioException.getMessage());
+
+        newResponse.setStatus(httpStatusValue);
+        newResponse.setContentType("application/json");
+        newResponse.getWriter().write(convertObjectToJson(customErrorResponse));
+        return newResponse;
     }
 
     public String convertObjectToJson(Object object) throws JsonProcessingException {
@@ -83,4 +96,5 @@ public class AuthMiddleware extends OncePerRequestFilter {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
     }
+
 }
