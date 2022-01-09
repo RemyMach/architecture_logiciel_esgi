@@ -90,29 +90,6 @@ public class InMemoryUsers implements Users {
     }
 
     @Override
-    public List<User> findAllByPaymentRejectedWithOneValidInvoice() {
-        return List.copyOf(usersData.values().stream().filter( user -> {
-            SubscriptionOffer subscriptionOffer = this.getSubscriptionOffer(user.getUserId());
-            if(subscriptionOffer == null) return false;
-            List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
-            if(InvoiceList.size() > 0) {
-                boolean hasOnPaymentSuccess = InvoiceList.stream().anyMatch(
-                        invoice -> {
-                            Instant thresholdInstantTime = ZonedDateTime.now().toInstant().truncatedTo( ChronoUnit.DAYS );
-                            Instant lastInvoiceInstantTime = invoice.getCreateAt().toInstant().truncatedTo( ChronoUnit.DAYS );
-                            return invoice.getPaymentState() == PaymentState.VALIDATE && (lastInvoiceInstantTime.isBefore(thresholdInstantTime) || lastInvoiceInstantTime.equals(thresholdInstantTime));
-                        }
-                );
-                Invoice invoice = InvoiceList.get(InvoiceList.size() - 1);
-                if(hasOnPaymentSuccess && invoice.getPaymentState() == PaymentState.REJECTED) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList()));
-    }
-
-    @Override
     public SubscriptionOffer getSubscriptionOffer(UserId userId) {
         return userSubscriptionData.get(userId);
     }

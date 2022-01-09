@@ -41,10 +41,6 @@ public class MysqlUsers implements Users {
     public List<User> findAllByPaidSinceMoreThanCertainMonthAgo(int months) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
-    @Override
-    public List<User> findAllByPaymentRejectedWithOneValidInvoice() {
-        throw new UnsupportedOperationException("Not yet implemented.");
-    }
 
     @Override
     public SubscriptionOffer getSubscriptionOffer(UserId userId) { throw new UnsupportedOperationException("Not yet implemented."); }

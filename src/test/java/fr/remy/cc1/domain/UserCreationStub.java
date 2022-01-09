@@ -7,13 +7,13 @@ import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.user.Users;
-import fr.remy.cc1.application.user.RegisterUserEvent;
-import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.user.RegisteredUserEvent;
+import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
-import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
-import fr.remy.cc1.application.mail.RegisterUserEventMessengerSubscription;
+import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
+import fr.remy.cc1.application.mail.RegisteredUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.application.mail.SubscriptionSuccessfulEventMessengerSubscription;
+import fr.remy.cc1.application.mail.SubscriptionSuccessTerminatedEventMessengerSubscription;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,8 +37,8 @@ public class UserCreationStub {
         MockEmailSender mockEmailSender = MockEmailSender.getInstance();
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
-                new SubscriptionSuccessfulEventMessengerSubscription(mockEmailSender),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users)
+                new SubscriptionSuccessTerminatedEventMessengerSubscription(mockEmailSender),
+                new SubscriptionSuccessTerminatedEventInvoiceSubscription(invoices, users)
         );
 
         List<Subscriber> subscriptionPaymentFailedEventSubscriptions = Arrays.asList(
@@ -47,8 +47,8 @@ public class UserCreationStub {
         );
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
-                RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(mockEmailSender)),
-                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
+                RegisteredUserEvent.class, Collections.singletonList(new RegisteredUserEventMessengerSubscription(mockEmailSender)),
+                SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
 

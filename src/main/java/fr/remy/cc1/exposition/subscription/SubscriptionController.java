@@ -6,6 +6,7 @@ import fr.remy.cc1.application.CreateSubscriptionOffer;
 import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.domain.user.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +49,7 @@ public class SubscriptionController {
                 request.payment.name
         );
         createSubscriptionOfferCommandHandler.handle(createSubscriptionOffer);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
 }

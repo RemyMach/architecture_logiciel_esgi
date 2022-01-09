@@ -1,24 +1,24 @@
 package fr.remy.cc1.application.mail;
 
 import fr.remy.cc1.application.UserDTO;
-import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.domain.mail.Content;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.Message;
 import fr.remy.cc1.domain.user.Email;
 import fr.remy.cc1.kernel.event.Subscriber;
 
-public class SubscriptionSuccessfulEventMessengerSubscription implements Subscriber<SubscriptionSuccessfulEvent> {
+public class SubscriptionSuccessTerminatedEventMessengerSubscription implements Subscriber<SubscriptionSuccessTerminatedEvent> {
 
     private final EmailSender emailSender;
 
-    public SubscriptionSuccessfulEventMessengerSubscription(EmailSender emailSender) {
+    public SubscriptionSuccessTerminatedEventMessengerSubscription(EmailSender emailSender) {
         this.emailSender = emailSender;
     }
 
     @Override
-    public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
-        this.sendMail(subscriptionSuccessfulEvent.getUserDTO());
+    public void accept(SubscriptionSuccessTerminatedEvent subscriptionSuccessTerminatedEvent) {
+        this.sendMail(subscriptionSuccessTerminatedEvent.getUserDTO());
     }
 
     private void sendMail(UserDTO userDTO) {

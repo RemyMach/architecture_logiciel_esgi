@@ -2,13 +2,13 @@ package fr.remy.cc1;
 
 import fr.remy.cc1.application.*;
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
-import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
-import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
-import fr.remy.cc1.application.mail.RegisterUserEventMessengerSubscription;
+import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
+import fr.remy.cc1.application.mail.RegisteredUserEventMessengerSubscription;
 import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
-import fr.remy.cc1.application.mail.SubscriptionSuccessfulEventMessengerSubscription;
-import fr.remy.cc1.application.user.RegisterUserEvent;
+import fr.remy.cc1.application.mail.SubscriptionSuccessTerminatedEventMessengerSubscription;
+import fr.remy.cc1.application.user.RegisteredUserEvent;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
@@ -92,8 +92,8 @@ public class Main {
     private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users) {
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
-                new SubscriptionSuccessfulEventMessengerSubscription(emailSender),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users)
+                new SubscriptionSuccessTerminatedEventMessengerSubscription(emailSender),
+                new SubscriptionSuccessTerminatedEventInvoiceSubscription(invoices, users)
         );
 
         List<Subscriber> subscriptionPaymentFailedEventSubscriptions = Arrays.asList(
@@ -102,8 +102,8 @@ public class Main {
         );
 
         return Map.of(
-                RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(emailSender)),
-                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
+                RegisteredUserEvent.class, Collections.singletonList(new RegisteredUserEventMessengerSubscription(emailSender)),
+                SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
     }

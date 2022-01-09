@@ -6,6 +6,7 @@ import fr.remy.cc1.domain.user.UserCategoryCreator;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,6 @@ public class UserController {
     public ResponseEntity<Void> create(@RequestBody @Valid UserRequest request) throws ValidationException {
         CreateUser createUser = new CreateUser(request.lastname, request.firstname, request.email, request.password, UserCategoryCreator.getValueOf(request.userCategory));
         UserId userId = createUserCommandHandler.handle(createUser);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 }

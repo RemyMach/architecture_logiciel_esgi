@@ -1,7 +1,7 @@
 package fr.remy.cc1.application;
 
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
-import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.user.User;
@@ -24,7 +24,7 @@ public class PaymentService {
         try {
             this.payment.start(subscriptionOffer.getMoney());
             this.eventBus.send(
-                    SubscriptionSuccessfulEvent.of(
+                    SubscriptionSuccessTerminatedEvent.of(
                             user.getUserId(),
                             subscriptionOffer,
                             subscriptionOffer.getMoney(),

@@ -1,6 +1,6 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.user.RegisterUserEvent;
+import fr.remy.cc1.application.user.RegisteredUserEvent;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ValidationException;
@@ -24,7 +24,7 @@ public final class CreateUserCommandHandler implements CommandHandler<CreateUser
         final UserId userId = users.nextIdentity();
         User user = User.of(userId, userCandidate.lastname, userCandidate.firstname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
         this.users.save(user);
-        this.eventBus.send(RegisterUserEvent.withUser(new UserDTO(userId, createUser.lastname, createUser.firstname, new Email(createUser.email))));
+        this.eventBus.send(RegisteredUserEvent.withUser(new UserDTO(userId, createUser.lastname, createUser.firstname, new Email(createUser.email))));
         return userId;
     }
 }
