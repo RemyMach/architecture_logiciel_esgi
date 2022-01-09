@@ -75,7 +75,6 @@ public class UserConfiguration {
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(emailSender)),
-                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCardService())),
                 SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );

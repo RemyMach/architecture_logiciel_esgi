@@ -168,12 +168,8 @@ public class UserCreationTest {
         Payment payment = PaymentDirector.createCreditCardPayment(creditCard, PaymentCreditCardHandlerCreator.buildPaymentHandlers(
                 List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware())));
 
-        UserService userService = new UserService(users);
         PaymentService paymentService = new PaymentService(payment, UserCreationEventBus.getInstance());
 
         paymentService.paySubscription(subscriptionOffer, user);
-        userService.create(user);
-        if(saveCreditCard)
-            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(creditCard, user));
     }
 }

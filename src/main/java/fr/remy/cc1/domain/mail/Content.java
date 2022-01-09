@@ -27,5 +27,7 @@ public class Content {
         return new Content(text);
     }
 
-
+    public String getText() {
+        return text;
+    }
 }

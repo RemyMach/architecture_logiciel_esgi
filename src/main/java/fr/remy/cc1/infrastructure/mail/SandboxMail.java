@@ -8,5 +8,6 @@ public class SandboxMail implements Mail {
     @Override
     public void send(Message message) {
         System.out.println("Sandbox is sending email to " + message.getRecipient());
+        System.out.println("Subject -> " + message.getSubject());
     }
 }

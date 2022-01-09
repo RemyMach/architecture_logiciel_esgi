@@ -1,7 +1,10 @@
 package fr.remy.cc1;
 
-import fr.remy.cc1.application.PaymentService;
+import fr.remy.cc1.application.*;
+import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
+import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
 import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.customer.*;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethod;
@@ -9,6 +12,8 @@ import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
 import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.payment.currency.CurrencyValidator;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
+import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
+import fr.remy.cc1.infrastructure.paypalAccounts.InMemoryPaypalAccounts;
 import fr.remy.cc1.kernel.error.PaymentMethodValidationException;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
@@ -32,7 +37,7 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) throws ValidationException {
+    public static void main(String[] args) throws Exception {
 
         EmailSender emailSender = EmailSender.getInstance();
         emailSender.setMail(new SandboxMail());
@@ -40,6 +45,7 @@ public class Main {
         Users users = new InMemoryUsers();
         Invoices invoices = new InMemoryInvoices();
         CreditCards creditCards = new InMemoryCreditCards();
+        PaypalAccounts paypalAccounts = new InMemoryPaypalAccounts();
         CreditCardService creditCardService = new CreditCardService(creditCards);
 
         Map<Class, List<Subscriber>> subscriptionMap = initSubscriptionMap(emailSender, invoices, users, creditCardService);
@@ -49,33 +55,47 @@ public class Main {
 
         String lastnameStub = "Machavoine";
         String firstnameStub = "Rémy";
-        Email emailStub = new Email("pomme@pomme.fr");
-        Password passwordStub = new Password("aZertyu9?");
-
+        String emailStub = "pomme@pomme.fr";
+        String passwordStub = "aZertyu9?";
+        CreateUserCommandHandler createUserCommandHandler = new CreateUserCommandHandler(users, UserCreationEventBus.getInstance());
+        CreatePaymentCommandHandler createPaymentCommandHandler = new CreatePaymentCommandHandler(creditCards, paypalAccounts, users);
+        CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler = new CreateSubscriptionOfferCommandHandler(creditCards, paypalAccounts, users, UserCreationEventBus.getInstance());
         BigDecimal priceSubscriptionOfferStub = new BigDecimal("12.05");
         int discountPercentageStub = 10;
 
         String currencyChoiceStub = "EUR";
         String paymentChoiceStub = "CreditCard";
-        String userCategoryChoiceStub = "Trademan";
-        UserCategoryCreator userCategoryCreator = new UserCategoryCreator();
-        boolean saveCreditCardStub = true;
+        String userCategoryChoiceStub = "TRADESMAN";
+        String creditCardNumber = "1234567262";
+        int creditCardExpiryDate = 1203;
+        int creditCardSecurityCode = 321;
+        String creditCardName = "Pomme";
 
-        CurrencyValidator.getInstance().test(currencyChoiceStub);
+        CreateUser createUser = new CreateUser(lastnameStub, firstnameStub, emailStub, passwordStub, UserCategoryCreator.getValueOf(userCategoryChoiceStub));
+        UserId userId = createUserCommandHandler.handle(createUser);
 
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(priceSubscriptionOfferStub, Currency.valueOf(currencyChoiceStub)),discountPercentageStub);
+        CreatePayment createPayment = new CreatePayment(
+                paymentChoiceStub,
+                creditCardNumber,
+                creditCardExpiryDate,
+                creditCardSecurityCode,
+                creditCardName,
+                userId
+        );
+        createPaymentCommandHandler.handle(createPayment);
 
-        final UserId myUserId = users.nextIdentity();
-        User user = User.of(myUserId, lastnameStub, firstnameStub, emailStub, passwordStub, userCategoryCreator.getValueOf(userCategoryChoiceStub));
+        CreateSubscriptionOffer createSubscriptionOffer = new CreateSubscriptionOffer(
+                discountPercentageStub,
+                priceSubscriptionOfferStub,
+                userId,
+                currencyChoiceStub,
+                paymentChoiceStub
+        );
+        createSubscriptionOfferCommandHandler.handle(createSubscriptionOffer);
 
-
-        final CreditCardId creditCardId = creditCards.nextIdentity();
-        CreditCard creditCard = CreditCard.of(creditCardId,"1234567262", 1203, 321, "POMME", user.getUserId());
-
-        createUser(user, users, creditCard, null, paymentChoiceStub, saveCreditCardStub, subscriptionOffer);
     }
 
-    private static void createUser(
+    /*private static void createUser2(
             User user,
             Users users,
             CreditCard creditCard,
@@ -91,25 +111,28 @@ public class Main {
 
         paymentService.paySubscription(subscriptionOffer, user);
         userService.create(user);
-        if(saveCreditCard)
-            UserCreationEventBus.getInstance().send(SaveCreditCardEvent.of(creditCard, user));
-    }
+    }*/
 
     private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users, CreditCardService creditCardService) {
+
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(emailSender),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users),
-                new SubscriptionSuccessfulEventCustomerSubscription(users)
+                new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users)
+        );
+
+        List<Subscriber> subscriptionPaymentFailedEventSubscriptions = Arrays.asList(
+                new SubscriptionPaymentFailedEventMessengerSubscription(emailSender),
+                new SubscriptionPaymentFailedEventInvoiceSubscription(invoices, users)
         );
 
         return Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(emailSender)),
-                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCardService)),
-                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
+                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
+                SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
     }
 
-    private static Payment getPayment(String paymentMethod, CreditCard creditCard, PaypalAccount paypalAccount) throws PaymentMethodValidationException {
+    /*private static Payment getPayment(String paymentMethod, CreditCard creditCard, PaypalAccount paypalAccount) throws PaymentMethodValidationException {
         PaymentMethod paymentMethodEnum = PaymentMethodCreator.getValueOf(paymentMethod);
         if(paymentMethodEnum == PaymentMethod.Paypal) {
             return PaymentDirector.createPaypalPayment(paypalAccount);
@@ -122,5 +145,5 @@ public class Main {
         }
 
         return null;
-    }
+    }*/
 }

@@ -36,13 +36,11 @@ public class UserCreationStub {
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
                 new SubscriptionSuccessfulEventMessengerSubscription(mockEmailSender),
-                new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users),
-                new SubscriptionSuccessfulEventCustomerSubscription(users)
+                new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users)
         );
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(mockEmailSender)),
-                SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCardService)),
                 SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
         );
 
