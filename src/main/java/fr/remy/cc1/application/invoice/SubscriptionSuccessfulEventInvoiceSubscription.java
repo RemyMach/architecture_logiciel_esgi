@@ -4,6 +4,7 @@ import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.invoice.InvoiceId;
 import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.domain.payment.PaymentState;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.kernel.event.Subscriber;
@@ -25,7 +26,7 @@ public class SubscriptionSuccessfulEventInvoiceSubscription implements Subscribe
     @Override
     public void accept(SubscriptionSuccessfulEvent subscriptionSuccessfulEvent) {
         final InvoiceId invoiceId = this.invoices.nextIdentity();
-        Invoice invoice = Invoice.of(invoiceId, subscriptionSuccessfulEvent.getMoney(), subscriptionSuccessfulEvent.getUserId(), ZonedDateTime.now());
+        Invoice invoice = Invoice.of(invoiceId, subscriptionSuccessfulEvent.getMoney(), subscriptionSuccessfulEvent.getUserId(), PaymentState.VALIDATE, ZonedDateTime.now());
         this.invoices.save(invoice);
         //TODO peut-être mettre un autre event ici
         SubscriptionOffer subscriptionOffer = subscriptionSuccessfulEvent.getSubscriptionOffer().addInvoice(invoice);

@@ -3,7 +3,10 @@ package fr.remy.cc1.SpringConfiguration;
 import fr.remy.cc1.application.CreatePaymentCommandHandler;
 import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.application.CreateUserCommandHandler;
+import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
+import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
+import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
 import fr.remy.cc1.application.scheduler.PaymentScheduler;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
@@ -69,10 +72,16 @@ public class UserConfiguration {
                 new SubscriptionSuccessfulEventInvoiceSubscription(invoices(), users())
         );
 
+        List<Subscriber> subscriptionPaymentFailedEventSubscriptions = Arrays.asList(
+                new SubscriptionPaymentFailedEventMessengerSubscription(emailSender),
+                new SubscriptionPaymentFailedEventInvoiceSubscription(invoices(), users())
+        );
+
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(emailSender)),
                 SaveCreditCardEvent.class, Collections.singletonList(new SaveCreditCardEventSubscription(creditCardService())),
-                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
+                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
+                SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
 
         UserCreationEventBus userCreationEventBus = UserCreationEventBus.getInstance();

@@ -35,19 +35,13 @@ public class PaymentScheduler {
         this.eventBus = eventBus;
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 0 18 * * *")
     public void PayUserSubscriptionOffer() throws PaymentProcessValidationException {
         List<User> userList = users.findAllByPaidSinceMoreThanCertainMonthAgo(0);
 
-        System.out.println(userList);
         for(User user: userList) {
             this.payUserSubscription(user);
         }
-
-        //TODO récupérer le dernier paiement
-        // si il date de moins d'un mois alors il n'a pas à payer
-        // essayer le paiement 10 fois, si fonctionne pas envoi de mail suivant l'étape pour dire erreur de paiement
-        // vérifier vos informations de carte de crédit
     }
 
     private void payUserSubscription(User user) throws PaymentProcessValidationException {
