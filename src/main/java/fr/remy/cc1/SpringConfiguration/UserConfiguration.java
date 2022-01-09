@@ -15,8 +15,6 @@ import fr.remy.cc1.application.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.application.mail.SubscriptionSuccessfulEventMessengerSubscription;
 import fr.remy.cc1.domain.payment.creditcard.CreditCardService;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
-import fr.remy.cc1.application.payment.SaveCreditCardEvent;
-import fr.remy.cc1.application.payment.SaveCreditCardEventSubscription;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.user.Users;
@@ -88,10 +86,6 @@ public class UserConfiguration {
         return userCreationEventBus;
     }
 
-    @Bean
-    public UserService userService() {
-        return new UserService(users());
-    }
 
     @Bean
     public CreditCardService creditCardService() {

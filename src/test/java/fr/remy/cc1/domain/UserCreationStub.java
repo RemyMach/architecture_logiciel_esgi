@@ -8,8 +8,6 @@ import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
-import fr.remy.cc1.application.payment.SaveCreditCardEvent;
-import fr.remy.cc1.application.payment.SaveCreditCardEventSubscription;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
 import fr.remy.cc1.application.mail.RegisterUserEventMessengerSubscription;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;

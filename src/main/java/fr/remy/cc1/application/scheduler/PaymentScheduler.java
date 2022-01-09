@@ -34,10 +34,10 @@ public class PaymentScheduler {
         this.eventBus = eventBus;
     }
 
-    @Scheduled(cron = "*/6 * * * * *")
+    @Scheduled(cron = "* * 18 * * *")
     public void PayUserSubscriptionOffer() throws PaymentProcessValidationException {
         List<User> userList = Stream.concat(
-                users.findAllByPaidSinceMoreThanCertainMonthAgo(0).stream(),
+                users.findAllByPaidSinceMoreThanCertainMonthAgo(1).stream(),
                 users.findAllByPaymentRejectedWithOneValidInvoice().stream()
         ).collect(Collectors.toList());
 
