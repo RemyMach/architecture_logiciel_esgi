@@ -1,20 +1,16 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.domain.payment.PaymentDirector;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethod;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
-import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodValidator;
-import fr.remy.cc1.domain.payment.creditcard.*;
+import fr.remy.cc1.domain.payment.creditcard.CreditCard;
+import fr.remy.cc1.domain.payment.creditcard.CreditCardId;
+import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.paypal.PayPalAccountId;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.kernel.CommandHandler;
-import fr.remy.cc1.kernel.event.Event;
-import fr.remy.cc1.kernel.event.EventBus;
-
-import java.util.List;
 
 public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment, Void> {
 

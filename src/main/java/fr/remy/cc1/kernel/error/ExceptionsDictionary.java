@@ -1,7 +1,5 @@
 package fr.remy.cc1.kernel.error;
 
-import java.util.Map;
-
 public class ExceptionsDictionary {
     public static final ValidationException EMAIL_NOT_VALID = new ValidationException("email_not_valid", "the email is not valid");
     public static final ValidationException PASSWORD_NOT_VALID = new ValidationException("password_not_valid", "the password is not valid");

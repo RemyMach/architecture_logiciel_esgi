@@ -1,7 +1,6 @@
 package fr.remy.cc1.application;
 
 import fr.remy.cc1.domain.user.Email;
-import fr.remy.cc1.domain.user.UserCategory;
 import fr.remy.cc1.domain.user.UserId;
 
 public class UserDTO {

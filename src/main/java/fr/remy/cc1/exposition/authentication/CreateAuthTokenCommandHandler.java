@@ -1,7 +1,6 @@
 package fr.remy.cc1.exposition.authentication;
 
 import fr.remy.cc1.kernel.CommandHandler;
-import fr.remy.cc1.kernel.error.ValidationException;
 
 import java.io.UnsupportedEncodingException;
 

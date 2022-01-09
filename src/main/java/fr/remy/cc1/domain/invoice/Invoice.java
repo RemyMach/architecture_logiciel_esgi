@@ -2,10 +2,8 @@ package fr.remy.cc1.domain.invoice;
 
 import fr.remy.cc1.domain.payment.Money;
 import fr.remy.cc1.domain.payment.PaymentState;
-import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 public final class Invoice {

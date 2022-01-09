@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.exposition.CustomErrorResponse;
 import fr.remy.cc1.exposition.exception.ExpositionExceptionsDictionary;
-import fr.remy.cc1.exposition.exception.authentication.AuthFailedException;
-import fr.remy.cc1.exposition.exception.authentication.AuthRequiredException;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.BasicException;
 import io.jsonwebtoken.Claims;

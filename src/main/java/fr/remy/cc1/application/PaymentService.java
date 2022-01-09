@@ -1,12 +1,10 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
+import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;

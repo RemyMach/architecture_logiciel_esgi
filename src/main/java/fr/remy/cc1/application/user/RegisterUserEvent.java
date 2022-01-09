@@ -1,7 +1,6 @@
 package fr.remy.cc1.application.user;
 
 import fr.remy.cc1.application.UserDTO;
-import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.kernel.event.ApplicationEvent;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventId;

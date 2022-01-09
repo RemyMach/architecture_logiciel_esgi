@@ -1,9 +1,5 @@
 package fr.remy.cc1.domain.payment.creditcard;
 
-import fr.remy.cc1.domain.payment.creditcard.CreditCard;
-import fr.remy.cc1.domain.payment.creditcard.CreditCardId;
-import fr.remy.cc1.domain.payment.paypal.PayPalAccountId;
-import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.UserId;
 

@@ -2,6 +2,8 @@ package fr.remy.cc1.domain;
 
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.kernel.error.BasicException;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.UserCategoryValidatorException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -24,10 +26,11 @@ public class UserValidationTest {
     @DisplayName("should return an error because email and password are empty")
     void userHasNullPasswordAndEmail() {
         try {
-            User user = User.of(stubUserId, "", "", new Email(""), new Password(""), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email(""), new Password(""), UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.EMAIL_NOT_VALID.getErrorCode());
         }
     }
 
@@ -35,10 +38,11 @@ public class UserValidationTest {
     @DisplayName("should return an error because email is empty")
     void userHasNullEmail() {
         try {
-            User user = User.of(stubUserId, "", "", new Email(""), new Password("azertyuiop"), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email(""), new Password("azertyuiop"),UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.EMAIL_NOT_VALID.getErrorCode());
         }
     }
 
@@ -46,10 +50,11 @@ public class UserValidationTest {
     @DisplayName("should return an error because email has no domain")
     void userHasANEmailWithNoDomain() {
         try {
-            User user = User.of(stubUserId, "", "", new Email("pomme@"), new Password(""), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@"), new Password(""), UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.EMAIL_NOT_VALID.getErrorCode());
         }
     }
 
@@ -58,10 +63,11 @@ public class UserValidationTest {
     void userHasAPasswordWithALengthLessThan8Characters() {
         try {
             String password = "aZert9!";
-            User user = User.of(stubUserId, "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.PASSWORD_NOT_VALID.getErrorCode());
         }
     }
 
@@ -71,10 +77,11 @@ public class UserValidationTest {
         try {
             String stringRepeated = "b";
             String password = "aZert9!" + stringRepeated.repeat(14);
-            User user = User.of(stubUserId, "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.PASSWORD_NOT_VALID.getErrorCode());
         }
     }
 
@@ -83,10 +90,11 @@ public class UserValidationTest {
     void userHasAPasswordWithNoUppercase() {
         try {
             String password = "azerty9!";
-            User user = User.of(stubUserId, "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of("", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the password is not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.PASSWORD_NOT_VALID.getErrorCode());
         }
     }
 
@@ -95,10 +103,11 @@ public class UserValidationTest {
     void userHasAPasswordWithNoLowercase() {
         try {
             String password = "AZERTY9!";
-            User user = User.of(stubUserId, "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.PASSWORD_NOT_VALID.getErrorCode());
         }
     }
 
@@ -107,10 +116,11 @@ public class UserValidationTest {
     void userHasAPasswordWithNoNumber() {
         try {
             String password = "aZertyo!";
-            User user = User.of(stubUserId, "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.PASSWORD_NOT_VALID.getErrorCode());
         }
     }
 
@@ -119,10 +129,24 @@ public class UserValidationTest {
     void userHasAPasswordWithNoSpecialCharacters() {
         try {
             String password = "aZerty98";
-            User user = User.of(stubUserId, "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.TRADESMAN);
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password),UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+        }catch (ValidationException validationException) {
+            assertEquals(validationException.getErrorCode(), ExceptionsDictionary.PASSWORD_NOT_VALID.getErrorCode());
+        }
+    }
+
+    @Test
+    @DisplayName("should return an error because pomme is not a user categrory")
+    void userHasANotValidUserCategory() {
+        try {
+            String password = "aZerty98";
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("pomme"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
+            fail( "Should have thrown an exception" );
+        }catch (ValidationException userCategoryValidatorException) {
+            assertEquals(userCategoryValidatorException.getErrorCode(), ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getErrorCode());
         }
     }
 
@@ -131,9 +155,10 @@ public class UserValidationTest {
     void userHasAValidEmailAndPassword() {
         try {
             String password = "aZertyo9!";
-            User user = User.of(stubUserId, "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.TRADESMAN);
-        }catch (IllegalArgumentException | ValidationException exception) {
-            assertEquals(exception.getMessage(), "the user fields are not valid");
+            UserCandidate userCandidate = UserCandidate.of(  "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
+        }catch (ValidationException exception) {
+            fail( "Should have not thrown an exception" );
         }
     }
 
@@ -145,9 +170,10 @@ public class UserValidationTest {
             for(int i = 0; i<specialCharacters.length(); i++) {
                 String password = "aZertyo9";
                 password += specialCharacters.charAt(i);
-                User user = User.of(stubUserId, "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.TRADESMAN);
+                UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+                User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             }
-        } catch (IllegalArgumentException | ValidationException exception) {
+        } catch (ValidationException exception) {
             fail( "Should not thrown an error" );
         }
     }

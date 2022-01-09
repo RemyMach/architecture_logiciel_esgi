@@ -1,9 +1,9 @@
 package fr.remy.cc1.application.scheduler;
 
+import fr.remy.cc1.application.PaymentService;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.payment.PaymentDirector;
-import fr.remy.cc1.application.PaymentService;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;

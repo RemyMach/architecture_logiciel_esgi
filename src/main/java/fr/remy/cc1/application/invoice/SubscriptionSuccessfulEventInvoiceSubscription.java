@@ -1,14 +1,13 @@
 package fr.remy.cc1.application.invoice;
 
+import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.invoice.InvoiceId;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.PaymentState;
-import fr.remy.cc1.domain.user.User;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.kernel.event.Subscriber;
-import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
 
 import java.time.ZonedDateTime;
 

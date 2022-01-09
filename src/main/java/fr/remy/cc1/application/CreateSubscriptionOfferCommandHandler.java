@@ -2,7 +2,9 @@ package fr.remy.cc1.application;
 
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
-import fr.remy.cc1.domain.payment.*;
+import fr.remy.cc1.domain.payment.Money;
+import fr.remy.cc1.domain.payment.Payment;
+import fr.remy.cc1.domain.payment.PaymentDirector;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethod;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
 import fr.remy.cc1.domain.payment.creditcard.*;

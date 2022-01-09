@@ -6,21 +6,21 @@ import fr.remy.cc1.application.CreateUserCommandHandler;
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessfulEvent;
 import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
-import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
-import fr.remy.cc1.application.scheduler.PaymentScheduler;
-import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessfulEventInvoiceSubscription;
-import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.application.mail.RegisterUserEventMessengerSubscription;
+import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
 import fr.remy.cc1.application.mail.SubscriptionSuccessfulEventMessengerSubscription;
+import fr.remy.cc1.application.scheduler.PaymentScheduler;
+import fr.remy.cc1.application.user.RegisterUserEvent;
+import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.payment.creditcard.CreditCardService;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
-import fr.remy.cc1.application.user.RegisterUserEvent;
 import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.exposition.authentication.AuthMiddleware;
 import fr.remy.cc1.exposition.authentication.CreateAuthTokenCommandHandler;
 import fr.remy.cc1.exposition.authentication.Tokens;
-import fr.remy.cc1.exposition.authentication.AuthMiddleware;
 import fr.remy.cc1.infrastructure.authentication.token.InMemoryToken;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
@@ -36,7 +36,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 @EnableScheduling

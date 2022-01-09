@@ -1,6 +1,5 @@
 package fr.remy.cc1.infrastructure.user;
 
-import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.payment.PaymentState;

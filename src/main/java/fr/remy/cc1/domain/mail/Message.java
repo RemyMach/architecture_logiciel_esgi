@@ -1,7 +1,6 @@
 package fr.remy.cc1.domain.mail;
 
 import fr.remy.cc1.domain.user.Email;
-import fr.remy.cc1.domain.user.User;
 
 public final class Message {
 

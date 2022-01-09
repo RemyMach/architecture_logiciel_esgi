@@ -7,6 +7,7 @@ import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,8 +109,8 @@ public class PaymentCreditCardProcessTest {
 
             this.payment.start(subscriptionOffer.getMoney());
             fail( "Should throw an exception" );
-        }catch(IllegalArgumentException | PaymentProcessValidationException illegalArgumentException) {
-            assertEquals(illegalArgumentException.getMessage(), "The security code is not valid");
+        }catch(PaymentProcessValidationException paymentProcessValidationException) {
+            assertEquals(paymentProcessValidationException.getErrorCode(), ExceptionsDictionary.CARD_PAYMENT_VALIDATION_ERROR.getErrorCode() );
         }
     }
 }

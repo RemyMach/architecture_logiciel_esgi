@@ -1,7 +1,6 @@
 package fr.remy.cc1.exposition.subscription;
 
 import javax.validation.constraints.NotNull;
-import java.util.Map;
 
 // Getter and setter mandatory for Spring validation
 public class CardRequest {

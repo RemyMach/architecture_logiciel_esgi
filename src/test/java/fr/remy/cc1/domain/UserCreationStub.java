@@ -1,5 +1,8 @@
 package fr.remy.cc1.domain;
 
+import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
+import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
+import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
 import fr.remy.cc1.domain.payment.creditcard.CreditCardService;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.domain.mail.MockEmailSender;
@@ -20,9 +23,9 @@ import java.util.Map;
 
 public class UserCreationStub {
 
-    public static void initUserCreationTest(Users users, Invoices invoices, CreditCardService creditCardService) {
+    public static void initUserCreationTest(Users users, Invoices invoices) {
         buildStubMailSender();
-        buildStubEventBus(users, invoices, creditCardService);
+        buildStubEventBus(users, invoices);
     }
 
     private static void buildStubMailSender() {
@@ -31,7 +34,7 @@ public class UserCreationStub {
         mockEmailSender.setMail(new SandboxMail());
     }
 
-    private static void buildStubEventBus(Users users, Invoices invoices, CreditCardService creditCardService) {
+    private static void buildStubEventBus(Users users, Invoices invoices) {
         MockEmailSender mockEmailSender = MockEmailSender.getInstance();
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
@@ -39,9 +42,15 @@ public class UserCreationStub {
                 new SubscriptionSuccessfulEventInvoiceSubscription(invoices, users)
         );
 
+        List<Subscriber> subscriptionPaymentFailedEventSubscriptions = Arrays.asList(
+                new SubscriptionPaymentFailedEventMessengerSubscription(mockEmailSender),
+                new SubscriptionPaymentFailedEventInvoiceSubscription(invoices, users)
+        );
+
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisterUserEvent.class, Collections.singletonList(new RegisterUserEventMessengerSubscription(mockEmailSender)),
-                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions)
+                SubscriptionSuccessfulEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
+                SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
 
         UserCreationEventBus userCreationEventBus = UserCreationEventBus.getInstance();
