@@ -20,5 +20,7 @@ public interface Users {
 
     List<User> findAllByPaidSinceMoreThanCertainMonthAgo(int months);
 
+    List<User> findAllByPaymentRejectedWithOneValidInvoice();
+
     SubscriptionOffer getSubscriptionOffer(UserId userId);
 }

@@ -73,12 +73,28 @@ public class InMemoryUsers implements Users {
             List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
             if(InvoiceList.size() > 0) {
                 Invoice invoice = InvoiceList.get(InvoiceList.size() - 1);
-                if(invoice.getPaymentState() == PaymentState.REJECTED) {
-                    return true;
-                }
                 Instant thresholdInstantTime = thresholdZoneDateTime.toInstant().truncatedTo( ChronoUnit.DAYS );
                 Instant lastInvoiceInstantTime = invoice.getCreateAt().toInstant().truncatedTo( ChronoUnit.DAYS );
                 if(lastInvoiceInstantTime.isBefore(thresholdInstantTime) || lastInvoiceInstantTime.equals(thresholdInstantTime)) {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<User> findAllByPaymentRejectedWithOneValidInvoice() {
+        return List.copyOf(usersData.values().stream().filter( user -> {
+            SubscriptionOffer subscriptionOffer = this.getSubscriptionOffer(user.getUserId());
+            if(subscriptionOffer == null) return false;
+            List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
+            if(InvoiceList.size() > 0) {
+                boolean hasOnPaymentSuccess = InvoiceList.stream().anyMatch(
+                        invoice -> invoice.getPaymentState() == PaymentState.VALIDATE
+                );
+                Invoice invoice = InvoiceList.get(InvoiceList.size() - 1);
+                if(hasOnPaymentSuccess && invoice.getPaymentState() == PaymentState.REJECTED) {
                     return true;
                 }
             }

@@ -19,6 +19,9 @@ public class ExpositionExceptionsDictionaryMapper {
             Map.entry( "payment_currency_empty_null", "payment Currency can't be null or blank"),
             Map.entry( "payment_name_empty_null", "payment name can't be null or blank"),
             Map.entry( "auth_failed", "your authentication has failed"),
-            Map.entry( "auth_required", "an authentication is required")
+            Map.entry( "auth_required", "an authentication is required"),
+            Map.entry( "email_required", "email is required"),
+            Map.entry( "password_required", "password is required"),
+            Map.entry( "password_email_auth_failed" ,"your password / login is invalid")
     );
 }

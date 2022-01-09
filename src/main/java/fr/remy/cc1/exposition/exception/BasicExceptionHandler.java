@@ -3,6 +3,7 @@ package fr.remy.cc1.exposition.exception;
 import fr.remy.cc1.exposition.CustomErrorResponse;
 import fr.remy.cc1.exposition.CustomErrorResponseCreator;
 import fr.remy.cc1.exposition.exception.authentication.AuthFailedException;
+import fr.remy.cc1.exposition.exception.authentication.AuthPasswordEmailNotMatchException;
 import fr.remy.cc1.exposition.exception.authentication.AuthRequiredException;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.BasicException;
@@ -30,7 +31,7 @@ public class BasicExceptionHandler {
     public ResponseEntity<CustomErrorResponse> authFailedExceptionHandler(AuthFailedException e) {
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(ExpositionExceptionsDictionaryMapper.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(customErrorResponse);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(customErrorResponse);
     }
 
     @ExceptionHandler({ValidationException.class, PaymentProcessValidationException.class})
@@ -43,6 +44,13 @@ public class BasicExceptionHandler {
     @ExceptionHandler(NoSuchEntityException.class)
     public ResponseEntity<CustomErrorResponse> handleNoSuchEntityException(NoSuchEntityException e) {
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(InfrastructureExceptionsDictionaryMapper.codeToExpositionErrors);
+        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthPasswordEmailNotMatchException.class)
+    public ResponseEntity<CustomErrorResponse> handleUserAndEmailException(AuthPasswordEmailNotMatchException e) {
+        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(ExpositionExceptionsDictionaryMapper.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }

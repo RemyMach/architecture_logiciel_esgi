@@ -49,6 +49,7 @@ public class PaymentService {
                             )
                     )
             );
+            throw paymentProcessValidationException;
         }
     }
 }

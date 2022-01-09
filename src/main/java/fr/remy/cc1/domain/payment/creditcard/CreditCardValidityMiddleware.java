@@ -11,10 +11,7 @@ public class CreditCardValidityMiddleware implements PaymentCardMiddleware {
 
     @Override
     public void process(CreditCard creditCard, Money money) throws PaymentProcessValidationException {
-        System.out.println(creditCard.getName() );
-        System.out.println(creditCard.getSecurityCode()  );
-        System.out.println(creditCard.getExpiryDate() );
-        System.out.println(creditCard.getNumber() );
+
         if(creditCard.getName() == null || creditCard.getSecurityCode() == 0 || creditCard.getExpiryDate() == 0 || creditCard.getNumber() == null) {
 
             throw new PaymentProcessValidationException(ExceptionsDictionary.CARD_PAYMENT_VALIDATION_ERROR.getErrorCode(), ExceptionsDictionary.CARD_PAYMENT_VALIDATION_ERROR.getMessage());

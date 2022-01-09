@@ -4,9 +4,9 @@ import javax.validation.constraints.NotNull;
 
 public class LoginRequest {
 
-    @NotNull(message = "user_not_found")
+    @NotNull(message = "email_required")
     public String email;
 
-    @NotNull(message = "user_not_found")
+    @NotNull(message = "password_required")
     public String password;
 }

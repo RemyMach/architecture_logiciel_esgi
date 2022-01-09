@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PaymentScheduler {
 
@@ -35,9 +36,14 @@ public class PaymentScheduler {
         this.eventBus = eventBus;
     }
 
-    @Scheduled(cron = "0 0 18 * * *")
+    @Scheduled(cron = "*/6 * * * * *")
     public void PayUserSubscriptionOffer() throws PaymentProcessValidationException {
-        List<User> userList = users.findAllByPaidSinceMoreThanCertainMonthAgo(0);
+        List<User> userList = Stream.concat(
+                users.findAllByPaidSinceMoreThanCertainMonthAgo(0).stream(),
+                users.findAllByPaymentRejectedWithOneValidInvoice().stream()
+        ).collect(Collectors.toList());
+
+        System.out.println(userList);
 
         for(User user: userList) {
             this.payUserSubscription(user);
@@ -60,7 +66,11 @@ public class PaymentScheduler {
         }
         assert payment != null;
         PaymentService paymentService = new PaymentService(payment, this.eventBus);
-        paymentService.paySubscription(subscriptionOffer, user);
-        System.out.println("félicitations vous avez payé");
+        try {
+            paymentService.paySubscription(subscriptionOffer, user);
+            System.out.println("félicitations vous avez payé");
+        }catch (PaymentProcessValidationException paymentProcessValidationException){
+            System.out.println("Le paiement est un echec");
+        }
     }
 }
