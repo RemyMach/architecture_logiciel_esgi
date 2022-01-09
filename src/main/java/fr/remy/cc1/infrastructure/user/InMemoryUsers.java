@@ -3,6 +3,7 @@ package fr.remy.cc1.infrastructure.user;
 import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
+import fr.remy.cc1.domain.payment.PaymentState;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
@@ -72,6 +73,9 @@ public class InMemoryUsers implements Users {
             List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
             if(InvoiceList.size() > 0) {
                 Invoice invoice = InvoiceList.get(InvoiceList.size() - 1);
+                if(invoice.getPaymentState() == PaymentState.REJECTED) {
+                    return true;
+                }
                 Instant thresholdInstantTime = thresholdZoneDateTime.toInstant().truncatedTo( ChronoUnit.DAYS );
                 Instant lastInvoiceInstantTime = invoice.getCreateAt().toInstant().truncatedTo( ChronoUnit.DAYS );
                 if(lastInvoiceInstantTime.isBefore(thresholdInstantTime) || lastInvoiceInstantTime.equals(thresholdInstantTime)) {

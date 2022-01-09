@@ -40,4 +40,8 @@ public final class Invoice {
     public ZonedDateTime getCreateAt() {
         return createAt;
     }
+
+    public PaymentState getPaymentState() {
+        return paymentState;
+    }
 }
