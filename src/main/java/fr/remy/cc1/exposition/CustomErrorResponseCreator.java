@@ -1,6 +1,6 @@
 package fr.remy.cc1.exposition;
 
-import fr.remy.cc1.exposition.exception.ExpositionExceptionsDictionary;
+import fr.remy.cc1.exposition.exception.ExpositionExceptionsDictionaryMapper;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public class CustomErrorResponseCreator {
         String message;
         if(!this.codeToExpositionErrorsMap.containsKey(errorCode)) {
             errorCode = "system_error";
-            message = ExpositionExceptionsDictionary.codeToExpositionErrors.get("system_error");
+            message = ExpositionExceptionsDictionaryMapper.codeToExpositionErrors.get("system_error");
         }else {
             message = this.codeToExpositionErrorsMap.get(errorCode);
         }

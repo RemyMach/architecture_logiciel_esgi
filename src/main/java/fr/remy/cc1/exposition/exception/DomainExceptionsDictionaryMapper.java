@@ -2,7 +2,7 @@ package fr.remy.cc1.exposition.exception;
 
 import java.util.Map;
 
-public class DomainExceptionsDictionary {
+public class DomainExceptionsDictionaryMapper {
 
     public static final Map<String, String> codeToExpositionErrors = Map.ofEntries(
             Map.entry("email_not_valid", "the email is not valid"),

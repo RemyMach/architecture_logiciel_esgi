@@ -1,11 +1,18 @@
 package fr.remy.cc1.exposition.authentication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.remy.cc1.domain.user.UserId;
+import fr.remy.cc1.exposition.CustomErrorResponse;
+import fr.remy.cc1.exposition.exception.ExpositionExceptionsDictionary;
+import fr.remy.cc1.exposition.exception.authentication.AuthFailedException;
+import fr.remy.cc1.exposition.exception.authentication.AuthRequiredException;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -33,8 +40,14 @@ public class AuthMiddleware extends OncePerRequestFilter {
 
         String s = request.getHeader("Authorization");
 
+        // custom error response class used across my project
+
+
         if(s == null) {
-            throw new ServletException();
+            CustomErrorResponse customErrorResponse = new CustomErrorResponse(ExpositionExceptionsDictionary.AUTH_REQUIRED.getErrorCode(), ExpositionExceptionsDictionary.AUTH_REQUIRED.getMessage());
+
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.getWriter().write(convertObjectToJson(customErrorResponse));
         }
 
         String[] tokens = s.split("Bearer ");
@@ -47,16 +60,27 @@ public class AuthMiddleware extends OncePerRequestFilter {
         Object userIdValue = claims.get("userId");
 
         UserId userId = UserId.of(Integer.parseInt(userIdValue.toString()));
-        System.out.println(userId);
         try {
             Token tokenInDatabase = this.tokens.byUserId(userId);
             if(!tokenInDatabase.equals(tokenRequest)) {
-                throw new ServletException();
+                CustomErrorResponse customErrorResponse = new CustomErrorResponse(ExpositionExceptionsDictionary.AUTH_REQUIRED.getErrorCode(), ExpositionExceptionsDictionary.AUTH_REQUIRED.getMessage());
+
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+                response.getWriter().write(convertObjectToJson(customErrorResponse));
+                throw new AuthFailedException(ExpositionExceptionsDictionary.AUTH_FAILED.getErrorCode(), ExpositionExceptionsDictionary.AUTH_FAILED.getMessage());
             }
         } catch (NoSuchEntityException e) {
-            throw new ServletException();
+            throw new AuthFailedException(ExpositionExceptionsDictionary.AUTH_FAILED.getErrorCode(), ExpositionExceptionsDictionary.AUTH_FAILED.getMessage());
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    public String convertObjectToJson(Object object) throws JsonProcessingException {
+        if (object == null) {
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(object);
     }
 }
