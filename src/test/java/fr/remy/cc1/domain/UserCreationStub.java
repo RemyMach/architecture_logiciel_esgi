@@ -1,19 +1,19 @@
 package fr.remy.cc1.domain;
 
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
-import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
-import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
-import fr.remy.cc1.kernel.event.Subscriber;
-import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.invoice.Invoices;
-import fr.remy.cc1.domain.user.Users;
-import fr.remy.cc1.application.user.RegisteredUserEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
 import fr.remy.cc1.application.mail.RegisteredUserEventMessengerSubscription;
-import fr.remy.cc1.infrastructure.mail.SandboxMail;
+import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
 import fr.remy.cc1.application.mail.SubscriptionSuccessTerminatedEventMessengerSubscription;
+import fr.remy.cc1.application.user.RegisteredUserEvent;
+import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.domain.mail.MockEmailSender;
+import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.infrastructure.mail.SandboxMail;
+import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.kernel.event.Subscriber;
 
 import java.util.Arrays;
 import java.util.Collections;

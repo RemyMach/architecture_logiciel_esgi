@@ -1,7 +1,10 @@
 package fr.remy.cc1.domain;
 
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.domain.payment.*;
+import fr.remy.cc1.domain.payment.Money;
+import fr.remy.cc1.domain.payment.Payment;
+import fr.remy.cc1.domain.payment.PaymentCardMiddleware;
+import fr.remy.cc1.domain.payment.PaymentDirector;
 import fr.remy.cc1.domain.payment.creditcard.*;
 import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.user.*;

@@ -2,23 +2,17 @@ package fr.remy.cc1.application;
 
 import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.domain.invoice.Invoices;
-import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.payment.creditcard.CreditCard;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
-import fr.remy.cc1.kernel.error.ExceptionsDictionary;
-import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CreatePaymentTest {
     Users users;

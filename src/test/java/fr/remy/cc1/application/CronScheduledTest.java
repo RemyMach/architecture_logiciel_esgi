@@ -1,12 +1,11 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.SpringConfiguration.UserConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.scheduling.support.CronSequenceGenerator;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CronScheduledTest {
 

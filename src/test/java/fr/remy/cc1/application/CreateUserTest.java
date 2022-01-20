@@ -3,7 +3,9 @@ package fr.remy.cc1.application;
 import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.user.*;
+import fr.remy.cc1.domain.user.UserCategoryCreator;
+import fr.remy.cc1.domain.user.UserId;
+import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
@@ -14,8 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CreateUserTest {
     Users users;
