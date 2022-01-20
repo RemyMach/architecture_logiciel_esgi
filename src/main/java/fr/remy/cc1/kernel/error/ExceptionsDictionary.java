@@ -11,4 +11,7 @@ public class ExceptionsDictionary {
     public static final ValidationException USER_CATEGORY_NOT_VALID = new ValidationException("user_category_not_valid", "the userCategory is not valid");
 
     public static final ValidationException CARD_PAYMENT_VALIDATION_ERROR = new ValidationException("card_payment_process_check", "the process check has fail");
+
+    public static final ValidationException INVALID_PROJECT_NAME = new ValidationException("invalid_project_name", "invalid project name");
+    public static final ValidationException INVALID_PROJECT_DESCRIPTION = new ValidationException("invalid_project_description", "invalid project description");
 }
