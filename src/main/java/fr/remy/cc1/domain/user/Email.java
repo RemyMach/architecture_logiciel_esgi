@@ -2,7 +2,7 @@ package fr.remy.cc1.domain.user;
 
 import java.util.Objects;
 
-public class Email {
+public final class Email {
 
     public final String email;
 

@@ -5,6 +5,7 @@ import fr.remy.cc1.domain.payment.PaymentState;
 import fr.remy.cc1.domain.user.UserId;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 public final class Invoice {
 
@@ -41,5 +42,18 @@ public final class Invoice {
 
     public PaymentState getPaymentState() {
         return paymentState;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invoice invoice = (Invoice) o;
+        return Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(money, invoice.money) && Objects.equals(createAt, invoice.createAt) && paymentState == invoice.paymentState && Objects.equals(userId, invoice.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(invoiceId, money, createAt, paymentState, userId);
     }
 }

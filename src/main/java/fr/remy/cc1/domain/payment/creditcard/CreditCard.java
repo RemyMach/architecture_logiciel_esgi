@@ -3,7 +3,9 @@ package fr.remy.cc1.domain.payment.creditcard;
 import fr.remy.cc1.domain.payment.Card;
 import fr.remy.cc1.domain.user.UserId;
 
-public class CreditCard implements Card {
+import java.util.Objects;
+
+public final class CreditCard implements Card {
 
     private final CreditCardId creditCardId;
 
@@ -57,5 +59,18 @@ public class CreditCard implements Card {
 
     public UserId getUserId() {
         return userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CreditCard that = (CreditCard) o;
+        return expiryDate == that.expiryDate && securityCode == that.securityCode && Objects.equals(creditCardId, that.creditCardId) && Objects.equals(number, that.number) && Objects.equals(name, that.name) && Objects.equals(userId, that.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(creditCardId, number, expiryDate, securityCode, name, userId);
     }
 }

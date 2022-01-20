@@ -3,7 +3,7 @@ package fr.remy.cc1.domain.payment.currency;
 import fr.remy.cc1.kernel.error.CurrencyValidationException;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 
-public class CurrencyCreator {
+public final class CurrencyCreator {
 
     public CurrencyCreator() {}
 

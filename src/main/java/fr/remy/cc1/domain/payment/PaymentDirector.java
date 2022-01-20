@@ -5,7 +5,7 @@ import fr.remy.cc1.domain.payment.paypal.PaypalAccount;
 import fr.remy.cc1.infrastructure.payment.CreditCardPayment;
 import fr.remy.cc1.infrastructure.payment.PaypalPayment;
 
-public class PaymentDirector {
+public final class PaymentDirector {
 
     //TODO replace by factory maybe
     public static Payment createCreditCardPayment(CreditCard creditCard, PaymentCardMiddleware paymentCreditCardHandler) {

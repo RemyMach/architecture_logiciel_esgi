@@ -2,7 +2,7 @@ package fr.remy.cc1.domain.user;
 
 import java.util.Objects;
 
-public class Password {
+public final class Password {
 
     public final String password;
 

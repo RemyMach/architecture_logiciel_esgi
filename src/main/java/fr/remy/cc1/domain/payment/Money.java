@@ -6,7 +6,7 @@ import fr.remy.cc1.kernel.error.CurrencyValidationException;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Money {
+public final class Money {
     public final BigDecimal amount;
     public final Currency currency;
 

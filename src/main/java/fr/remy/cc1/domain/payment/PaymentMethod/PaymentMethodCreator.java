@@ -3,7 +3,7 @@ package fr.remy.cc1.domain.payment.PaymentMethod;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.PaymentMethodValidationException;
 
-public class PaymentMethodCreator {
+public final class PaymentMethodCreator {
 
     public static PaymentMethod getValueOf(String paymentMethod) throws PaymentMethodValidationException {
         if(!PaymentMethodValidator.getInstance().test(paymentMethod)) {

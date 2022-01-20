@@ -1,6 +1,8 @@
 package fr.remy.cc1.domain.payment.paypal;
 
-public class PayPalAccountId {
+import java.util.Objects;
+
+public final class PayPalAccountId {
     private final int value;
 
     private PayPalAccountId(int value) {
@@ -13,5 +15,18 @@ public class PayPalAccountId {
 
     public String getValue() {
         return String.valueOf(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PayPalAccountId that = (PayPalAccountId) o;
+        return value == that.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

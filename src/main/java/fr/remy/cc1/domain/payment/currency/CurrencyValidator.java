@@ -5,7 +5,7 @@ import fr.remy.cc1.kernel.EnumValidator;
 
 import java.util.function.Predicate;
 
-public class CurrencyValidator implements Predicate<String> {
+public final class CurrencyValidator implements Predicate<String> {
 
     private static final CurrencyValidator INSTANCE = new CurrencyValidator();
 

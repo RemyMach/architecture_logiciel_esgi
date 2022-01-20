@@ -4,7 +4,7 @@ import fr.remy.cc1.kernel.EnumValidator;
 
 import java.util.function.Predicate;
 
-public class PaymentMethodValidator implements Predicate<String> {
+public final class PaymentMethodValidator implements Predicate<String> {
 
     private static final PaymentMethodValidator INSTANCE = new PaymentMethodValidator();
 

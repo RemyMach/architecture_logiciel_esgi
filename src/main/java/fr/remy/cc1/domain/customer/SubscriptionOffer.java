@@ -5,8 +5,9 @@ import fr.remy.cc1.domain.payment.Money;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class SubscriptionOffer {
+public final class SubscriptionOffer {
 
     private final Money money;
 
@@ -44,5 +45,18 @@ public class SubscriptionOffer {
 
     public List<Invoice> getInvoiceList() {
         return invoiceList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubscriptionOffer that = (SubscriptionOffer) o;
+        return discountPercentage == that.discountPercentage && Objects.equals(money, that.money) && Objects.equals(invoiceList, that.invoiceList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money, discountPercentage, invoiceList);
     }
 }
