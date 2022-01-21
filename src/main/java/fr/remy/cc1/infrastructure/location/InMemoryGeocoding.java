@@ -3,6 +3,9 @@ package fr.remy.cc1.infrastructure.location;
 import fr.remy.cc1.domain.location.Address;
 import fr.remy.cc1.domain.location.LatLng;
 import fr.remy.cc1.domain.location.LocationGeocoding;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.LocationValidationException;
+import fr.remy.cc1.kernel.error.ValidationException;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -25,8 +28,11 @@ public final class InMemoryGeocoding implements LocationGeocoding {
     }
 
     @Override
-    public LatLng processAdresse(Address address) {
+    public LatLng processAdresse(Address address) throws ValidationException {
         LatLng latLng = addresses.get(address.getAddress());
-        return null;
+        if (latLng == null) {
+            throw new LocationValidationException(ExceptionsDictionary.GEOCODING_ERROR.getErrorCode(), ExceptionsDictionary.GEOCODING_ERROR.getMessage());
+        }
+        return latLng;
     }
 }

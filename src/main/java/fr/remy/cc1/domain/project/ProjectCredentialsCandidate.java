@@ -6,49 +6,34 @@ import fr.remy.cc1.domain.payment.Money;
 import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.domain.trades.Trades;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class ProjectCredentials {
+public class ProjectCredentialsCandidate {
 
-    private final ProjectId projectId;
-    private final List<Trades> tradesList;
-    private final List<Skill> skills;
-    private final Money budget;
-    private final Location location;
-    private final Duration duration;
+    public final List<Trades> tradesList;
+    public final List<Skill> skills;
+    public final Money budget;
+    public final Location location;
+    public final Duration duration;
 
-    private ProjectCredentials(ProjectId projectId, List<Trades> tradesList, List<Skill> skills, Money budget, Location location, Duration duration) {
-        this.projectId = projectId;
-        this.tradesList = new ArrayList<>(tradesList);
-        this.skills = new ArrayList<>(skills);
+    private ProjectCredentialsCandidate(List<Trades> tradesList, List<Skill> skills, Money budget, Location location, Duration duration) {
+        this.tradesList = tradesList;
+        this.skills = skills;
         this.budget = budget;
         this.location = location;
         this.duration = duration;
     }
 
-    public static ProjectCredentials of(ProjectId projectId, List<Trades> tradesList, List<Skill> skills, Money budget, Location location, Duration duration) {
-        return new ProjectCredentials(projectId, tradesList, skills, budget, location, duration);
-    }
-
-    public void addTrades(Trades trades) {
-        this.tradesList.add(trades);
-    }
-
-    public void addSkill(Skill skill) {
-        this.skills.add(skill);
-    }
-
-    public ProjectId getProjectId() {
-        return projectId;
+    public static ProjectCredentialsCandidate of(List<Trades> tradesList, List<Skill> skills, Money budget, Location location, Duration duration) {
+        return new ProjectCredentialsCandidate(tradesList, skills, budget, location, duration);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProjectCredentials that = (ProjectCredentials) o;
+        ProjectCredentialsCandidate that = (ProjectCredentialsCandidate) o;
         return Objects.equals(tradesList, that.tradesList) && Objects.equals(skills, that.skills) && Objects.equals(budget, that.budget) && Objects.equals(location, that.location) && Objects.equals(duration, that.duration);
     }
 
@@ -59,7 +44,7 @@ public final class ProjectCredentials {
 
     @Override
     public String toString() {
-        return "ProjectCredentials{" +
+        return "ProjectCredentialsCandidate{" +
                 "tradesList=" + tradesList +
                 ", skills=" + skills +
                 ", budget=" + budget +

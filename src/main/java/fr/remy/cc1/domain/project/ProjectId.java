@@ -32,4 +32,11 @@ public final class ProjectId implements ValueObjectId {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    @Override
+    public String toString() {
+        return "ProjectId{" +
+                "value=" + value +
+                '}';
+    }
 }

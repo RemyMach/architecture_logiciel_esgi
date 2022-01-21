@@ -4,7 +4,7 @@ import fr.remy.cc1.domain.project.*;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ValidationException;
 
-public class CreateProjectCommandHandler implements CommandHandler<CreateProject, ProjectId> {
+public final class CreateProjectCommandHandler implements CommandHandler<CreateProject, ProjectId> {
 
     private final Projects projects;
 
@@ -18,6 +18,7 @@ public class CreateProjectCommandHandler implements CommandHandler<CreateProject
         final ProjectId projectId = projects.nextIdentity();
         Project project = Project.of(projectId, ProjectState.PENDING, projectCandidate.name, projectCandidate.description);
         this.projects.save(project);
+        System.out.println(this.projects.findAll());
         return projectId;
     }
 }

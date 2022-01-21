@@ -5,14 +5,14 @@ import java.util.Objects;
 public final class Duration {
 
     private final int length;
-    private final DurationEnum unit;
+    private final DurationUnit unit;
 
-    private Duration(int length, DurationEnum unit) {
+    private Duration(int length, DurationUnit unit) {
         this.length = length;
         this.unit = unit;
     }
 
-    public static Duration of(int length, DurationEnum unit) {
+    public static Duration of(int length, DurationUnit unit) {
         return new Duration(length, unit);
     }
 

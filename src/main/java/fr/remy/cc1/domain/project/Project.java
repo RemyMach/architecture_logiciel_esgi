@@ -25,7 +25,11 @@ public final class Project {
     }
 
     public ProjectId getProjectId() {
-        return projectId;
+        return this.projectId;
+    }
+
+    public ProjectStateHistory getHistory() {
+        return this.history;
     }
 
     @Override

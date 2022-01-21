@@ -8,13 +8,9 @@ import java.math.BigDecimal;
 public class CreateSubscriptionOffer implements Command {
 
     public final int discountPercentage;
-
     public final BigDecimal amount;
-
     public final UserId userId;
-
     public final String currency;
-
     public final String payment;
 
     public CreateSubscriptionOffer(int discountPercentage, BigDecimal amount, UserId userId, String currency, String payment) {

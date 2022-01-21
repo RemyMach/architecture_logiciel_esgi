@@ -10,7 +10,6 @@ public final class ValidationProjectCandidateEngine {
     private static final ValidationProjectCandidateEngine INSTANCE = new ValidationProjectCandidateEngine();
 
     private ValidationProjectCandidateEngine() {
-
     }
 
     public static ValidationProjectCandidateEngine getInstance() {

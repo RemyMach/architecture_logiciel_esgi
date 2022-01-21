@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/projects")
-public class ProjectController {
+public final class ProjectController {
 
     private final CreateProjectCommandHandler createProjectCommandHandler;
 
@@ -27,9 +27,9 @@ public class ProjectController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@RequestBody @Valid ProjectRequest request) throws ValidationException {
+    public ResponseEntity<ProjectId> create(@RequestBody @Valid ProjectRequest request) throws ValidationException {
         CreateProject createProject = new CreateProject(request.name, request.description);
         ProjectId projectId = createProjectCommandHandler.handle(createProject);
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectId);
     }
 }
