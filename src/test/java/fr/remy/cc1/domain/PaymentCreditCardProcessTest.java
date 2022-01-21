@@ -6,7 +6,7 @@ import fr.remy.cc1.domain.payment.Payment;
 import fr.remy.cc1.domain.payment.PaymentCardMiddleware;
 import fr.remy.cc1.domain.payment.PaymentDirector;
 import fr.remy.cc1.domain.payment.creditcard.*;
-import fr.remy.cc1.domain.currency.Currency;
+import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;

@@ -4,7 +4,7 @@ import fr.remy.cc1.kernel.ValueObjectId;
 
 import java.util.Objects;
 
-public class ProjectId implements ValueObjectId {
+public final class ProjectId implements ValueObjectId {
 
     private final int value;
 

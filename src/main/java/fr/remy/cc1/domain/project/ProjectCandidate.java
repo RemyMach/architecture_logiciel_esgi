@@ -2,7 +2,7 @@ package fr.remy.cc1.domain.project;
 
 import fr.remy.cc1.kernel.error.ValidationException;
 
-public class ProjectCandidate {
+public final class ProjectCandidate {
 
     public final String name;
     public final String description;

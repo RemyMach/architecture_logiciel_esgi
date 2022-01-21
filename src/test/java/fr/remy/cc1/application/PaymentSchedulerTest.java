@@ -10,7 +10,7 @@ import fr.remy.cc1.domain.payment.Money;
 import fr.remy.cc1.domain.payment.PaymentState;
 import fr.remy.cc1.domain.payment.creditcard.CreditCard;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
-import fr.remy.cc1.domain.currency.Currency;
+import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;

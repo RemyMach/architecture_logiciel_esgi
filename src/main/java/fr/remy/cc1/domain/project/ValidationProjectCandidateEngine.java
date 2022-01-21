@@ -5,7 +5,7 @@ import fr.remy.cc1.kernel.error.ProjectDescriptionValidatorException;
 import fr.remy.cc1.kernel.error.ProjectNameValidatorException;
 import fr.remy.cc1.kernel.error.ValidationException;
 
-public class ValidationProjectCandidateEngine {
+public final class ValidationProjectCandidateEngine {
 
     private static final ValidationProjectCandidateEngine INSTANCE = new ValidationProjectCandidateEngine();
 
