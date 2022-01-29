@@ -12,7 +12,7 @@ public class ProjectCredentialsRequest {
 
     @NotNull(message = "trades_empty_null")
     @NotBlank(message = "trades_empty_null")
-    public String trades;
+    public String trade;
 
     @NotNull(message = "skills_empty_null")
     @NotBlank(message = "skills_empty_null")

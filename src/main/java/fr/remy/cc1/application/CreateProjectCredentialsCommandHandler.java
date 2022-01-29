@@ -10,7 +10,7 @@ import fr.remy.cc1.domain.payment.Money;
 import fr.remy.cc1.domain.payment.currency.CurrencyCreator;
 import fr.remy.cc1.domain.project.*;
 import fr.remy.cc1.domain.skill.Skill;
-import fr.remy.cc1.domain.trades.Trades;
+import fr.remy.cc1.domain.trades.Trade;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
@@ -57,12 +57,12 @@ public final class CreateProjectCredentialsCommandHandler implements CommandHand
         }
 
         ProjectCredentialsCandidate projectCredentialsCandidate = ProjectCredentialsCandidate.of(
-                List.copyOf(Arrays.stream(createProjectCredentials.trades.split(",")).map(Trades::of).collect(Collectors.toList())),
+                List.copyOf(Arrays.stream(createProjectCredentials.trade.split(",")).map(Trade::of).collect(Collectors.toList())),
                 List.copyOf(Arrays.stream(createProjectCredentials.skills.split(",")).map(Skill::of).collect(Collectors.toList())),
                 Money.of(createProjectCredentials.amount, CurrencyCreator.getValueOf(createProjectCredentials.currency)),
                 Location.of(Address.of(createProjectCredentials.address), locationGeocoding.processAdresse(Address.of(createProjectCredentials.address))),
                 Duration.of(createProjectCredentials.duration, DurationUnit.getUnitFromCode(createProjectCredentials.durationUnit)));
-        ProjectCredentials projectCredentials = ProjectCredentials.of(projectId, projectCredentialsCandidate.tradesList, projectCredentialsCandidate.skills, projectCredentialsCandidate.budget, projectCredentialsCandidate.location, projectCredentialsCandidate.duration);
+        ProjectCredentials projectCredentials = ProjectCredentials.of(projectId, projectCredentialsCandidate.tradeList, projectCredentialsCandidate.skills, projectCredentialsCandidate.budget, projectCredentialsCandidate.location, projectCredentialsCandidate.duration);
         this.projectsCredentials.save(projectCredentials);
         this.eventBus.send(RegisteredProjectCredentialsEvent.withProjectId(new ProjectDTO(projectId, project.getHistory())));
         System.out.println(this.projectsCredentials.findAll());

@@ -28,7 +28,7 @@ public final class ProjectCredentialsController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@RequestBody @Valid ProjectCredentialsRequest request) throws ValidationException {
-        CreateProjectCredentials createProjectCredentials = new CreateProjectCredentials(request.projectId, request.trades, request.skills, request.amount, request.currency, request.address, request.duration, request.durationUnit);
+        CreateProjectCredentials createProjectCredentials = new CreateProjectCredentials(request.projectId, request.trade, request.skills, request.amount, request.currency, request.address, request.duration, request.durationUnit);
         ProjectId projectId = createProjectCredentialsCommandHandler.handle(createProjectCredentials);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }

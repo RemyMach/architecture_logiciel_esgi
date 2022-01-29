@@ -23,4 +23,6 @@ public class ExceptionsDictionary {
     public static final ValidationException UNRECOGNIZED_DURATION_UNIT = new ValidationException("unrecognized_duration_unit", "the provided code does not match any known duration unit");
 
     public static final ValidationException SIREN_VALIDATION_ERROR = new ValidationException("siren_validation_error", "the siren number is not valid");
+
+    public static final ValidationException TRADES_VALIDATION_ERROR = new ValidationException("trades_validation_error", "the trades filled is not valid");
 }

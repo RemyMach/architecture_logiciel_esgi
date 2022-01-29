@@ -39,7 +39,6 @@ public class InMemoryToken implements Tokens {
 
     @Override
     public TokenId nextIdentity(UserId userId) throws UnsupportedEncodingException {
-        System.out.println(this.SECRET_KEY);
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(this.SECRET_KEY);
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
         String jws = Jwts.builder()
