@@ -10,6 +10,8 @@ public interface Certificates {
 
     List<Certificate> byUserId(UserId userId) throws NoSuchEntityException;
 
+    Certificate byId(CertificateId certificateId) throws NoSuchEntityException;
+
     CertificateId nextIdentity();
 
     List<Certificate> findAll();

@@ -15,4 +15,16 @@ public class Certificate {
     public static Certificate of(CertificateId certificateId, String name, String link) {
         return new Certificate(certificateId, name, link);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public CertificateId getCertificateId() {
+        return certificateId;
+    }
 }
