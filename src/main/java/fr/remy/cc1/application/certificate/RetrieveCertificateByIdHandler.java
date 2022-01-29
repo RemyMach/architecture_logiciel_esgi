@@ -1,4 +1,4 @@
-package fr.remy.cc1.application;
+package fr.remy.cc1.application.certificate;
 
 import fr.remy.cc1.domain.certificate.Certificate;
 import fr.remy.cc1.domain.certificate.Certificates;

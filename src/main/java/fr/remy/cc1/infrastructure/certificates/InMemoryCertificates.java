@@ -34,7 +34,7 @@ public class InMemoryCertificates implements Certificates {
     public List<Certificate> byUserId(UserId userId) throws NoSuchEntityException {
         final List<Certificate> certificates = usersCertificate.get(userId);
         if (certificates == null) {
-            throw new NoSuchEntityException(InfrastructureExceptionsDictionary.USER_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.USER_NOT_FOUND.getMessage());
+            throw new NoSuchEntityException(InfrastructureExceptionsDictionary.CERTIFICATE_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.CERTIFICATE_NOT_FOUND.getMessage());
         }
         return certificates;
     }
@@ -45,13 +45,15 @@ public class InMemoryCertificates implements Certificates {
                 .filter(certificate -> certificate.getCertificateId() == certificateId)
                 .findFirst()
                 .orElseThrow(
-                        () ->  new NoSuchEntityException(InfrastructureExceptionsDictionary.USER_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.USER_NOT_FOUND.getMessage())
+                        () ->  new NoSuchEntityException(InfrastructureExceptionsDictionary.CERTIFICATE_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.CERTIFICATE_NOT_FOUND.getMessage())
                 );
     }
 
     @Override
     public CertificateId nextIdentity() {
-        return CertificateId.of(counter.incrementAndGet());
+        int counter1 = counter.incrementAndGet();
+        System.out.println(counter1);
+        return CertificateId.of(counter1);
     }
 
     @Override

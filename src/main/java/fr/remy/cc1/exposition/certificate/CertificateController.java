@@ -1,8 +1,7 @@
 package fr.remy.cc1.exposition.certificate;
 
-import fr.remy.cc1.application.CreateUserCommandHandler;
-import fr.remy.cc1.application.RetrieveCertificateById;
-import fr.remy.cc1.application.RetrieveCertificateByIdHandler;
+import fr.remy.cc1.application.certificate.RetrieveCertificateById;
+import fr.remy.cc1.application.certificate.RetrieveCertificateByIdHandler;
 import fr.remy.cc1.domain.certificate.Certificate;
 import fr.remy.cc1.domain.certificate.CertificateId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/certificates")
 public class CertificateController {
 
     private final RetrieveCertificateByIdHandler retrieveCertificateByIdHandler;
@@ -28,12 +25,10 @@ public class CertificateController {
         this.retrieveCertificateByIdHandler = retrieveCertificateByIdHandler;
     }
 
-    @GetMapping(path = "{certificateId}",produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(path = "/{certificateId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CertificateResponse> getCertificateById(@PathVariable("certificateId") int certificateId) throws Exception {
         final Certificate certificate = this.retrieveCertificateByIdHandler.handle(new RetrieveCertificateById(CertificateId.of(certificateId)));
         CertificateResponse certificateResponse = new CertificateResponse(certificate.getCertificateId().getValue(), certificate.getName(), certificate.getLink());
         return ResponseEntity.ok(certificateResponse);
     }
-
-
 }

@@ -1,5 +1,6 @@
 package fr.remy.cc1.domain.certificate;
 
+
 import java.util.Objects;
 
 public class CertificateId {

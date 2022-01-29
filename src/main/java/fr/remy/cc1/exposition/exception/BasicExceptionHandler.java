@@ -22,19 +22,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class BasicExceptionHandler {
 
-    @ExceptionHandler(AuthRequiredException.class)
-    public ResponseEntity<CustomErrorResponse> authRequiredExceptionHandler(AuthRequiredException e) {
-        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(ExpositionExceptionsDictionaryMapper.codeToExpositionErrors);
-        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(customErrorResponse);
-    }
-
-    @ExceptionHandler(AuthFailedException.class)
-    public ResponseEntity<CustomErrorResponse> authFailedExceptionHandler(AuthFailedException e) {
-        CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(ExpositionExceptionsDictionaryMapper.codeToExpositionErrors);
-        CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(customErrorResponse);
-    }
 
     @ExceptionHandler({ValidationException.class, PaymentProcessValidationException.class})
     public ResponseEntity<CustomErrorResponse> handleValidationException(BasicException e) {

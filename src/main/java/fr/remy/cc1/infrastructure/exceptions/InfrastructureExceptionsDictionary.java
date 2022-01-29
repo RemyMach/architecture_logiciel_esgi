@@ -5,5 +5,6 @@ public class InfrastructureExceptionsDictionary {
     public static final NoSuchEntityException TOKEN_NOT_FOUND = new NoSuchEntityException("token_not_found", "the pair user token doesn't match");
     public static final NoSuchEntityException PROJECT_NOT_FOUND = new NoSuchEntityException("project_not_found", "the specified projectId does not match any known project");
     public static final NoSuchEntityException PROJECT_CREDENTIALS_NOT_FOUND = new NoSuchEntityException("project_credentials_not_found", "the specified projectId does not match any known project credentials");
+    public static final NoSuchEntityException CERTIFICATE_NOT_FOUND = new NoSuchEntityException("certificate_not_found", "the specified certificateId does not match any known certificateId");
 
 }
