@@ -26,6 +26,7 @@ public class InMemoryCertificates implements Certificates {
             certificates = this.byUserId(userId);
         } catch (NoSuchEntityException noSuchEntityException) {}
 
+        certificates.add(certificate);
         usersCertificate.put(userId, certificates);
     }
 

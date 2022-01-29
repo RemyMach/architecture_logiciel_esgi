@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public class CreateProjectCredentials implements Command {
 
     public final int projectId;
-    public final String trades;
+    public final String trade;
     public final String skills;
     public final BigDecimal amount;
     public final String currency;
@@ -15,9 +15,9 @@ public class CreateProjectCredentials implements Command {
     public final int duration;
     public final String durationUnit;
 
-    public CreateProjectCredentials(int projectId, String trades, String skills, BigDecimal amount, String currency, String address, int duration, String durationUnit) {
+    public CreateProjectCredentials(int projectId, String trade, String skills, BigDecimal amount, String currency, String address, int duration, String durationUnit) {
         this.projectId = projectId;
-        this.trades = trades;
+        this.trade = trade;
         this.skills = skills;
         this.amount = amount;
         this.currency = currency;
