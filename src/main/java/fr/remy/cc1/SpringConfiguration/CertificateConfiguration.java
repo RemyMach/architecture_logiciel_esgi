@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.util.List;
+
 @Configuration
 @EnableScheduling
 public class CertificateConfiguration {
@@ -18,7 +20,7 @@ public class CertificateConfiguration {
     @Bean
     public Certificates certificates() throws NoSuchEntityException {
         Certificates certificates =  new InMemoryCertificates();
-        certificates.save(UserId.of(0), Certificate.of(certificates.nextIdentity(), "jean", "http://pomme"));
+        certificates.save(UserId.of(0), Certificate.of(certificates.nextIdentity(), "jean", "http://pomme", List.of()));
         return certificates;
     }
 
