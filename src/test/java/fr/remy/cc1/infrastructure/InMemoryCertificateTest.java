@@ -3,11 +3,13 @@ package fr.remy.cc1.infrastructure;
 import fr.remy.cc1.domain.certificate.Certificate;
 import fr.remy.cc1.domain.certificate.CertificateId;
 import fr.remy.cc1.domain.certificate.Certificates;
+import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.Users;
 import fr.remy.cc1.infrastructure.certificates.InMemoryCertificates;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,17 +24,18 @@ public class InMemoryCertificateTest {
     Certificate certificate;
     UserId userId;
     Certificates certificates;
-    Users users = new InMemoryUsers();
+    Users users;
 
     @BeforeEach
     void setup(){
-         certificates = new InMemoryCertificates();
+        users = new InMemoryUsers();
+        certificates = new InMemoryCertificates();
     }
 
     @Test
     @DisplayName("the certificate is create")
-    void certificateIsCreate() throws NoSuchEntityException {
-        certificate = Certificate.of(certificates.nextIdentity(), "charlo", "http://linkverslecertificat", List.of());
+    void certificateIsCreate() throws NoSuchEntityException, ValidationException {
+        certificate = Certificate.of(certificates.nextIdentity(), "charlo", "http://linkverslecertificat", List.of(Skill.of("plaquo")));
         userId = users.nextIdentity();
         try {
             assertEquals(certificates.byUserId(userId).size(), 0);
@@ -47,9 +50,9 @@ public class InMemoryCertificateTest {
 
     @Test
     @DisplayName("2 certificate are create for the same user")
-    void TwoCertificateForTheSameUser() throws NoSuchEntityException {
-        certificate = Certificate.of(certificates.nextIdentity(), "charlo", "http://linkverslecertificat", List.of());
-        Certificate certificate2 = Certificate.of(certificates.nextIdentity(), "charlo2", "http://linkverslecertificat2", List.of());
+    void TwoCertificateForTheSameUser() throws NoSuchEntityException, ValidationException {
+        certificate = Certificate.of(certificates.nextIdentity(), "charlo", "http://linkverslecertificat", List.of(Skill.of("plaquo")));
+        Certificate certificate2 = Certificate.of(certificates.nextIdentity(), "charlo2", "http://linkverslecertificat2", List.of(Skill.of("plaquo")));
         userId = users.nextIdentity();
         try {
             assertEquals(certificates.byUserId(userId).size(), 0);
@@ -65,10 +68,10 @@ public class InMemoryCertificateTest {
 
     @Test
     @DisplayName("2 certificate are create for the same user and one for another")
-    void TwoCertificateForTheSameUserAndOneForAnOther() throws NoSuchEntityException {
-        certificate = Certificate.of(certificates.nextIdentity(), "charlo", "http://linkverslecertificat", List.of());
-        Certificate certificate2 = Certificate.of(certificates.nextIdentity(), "charlo2", "http://linkverslecertificat2", List.of());
-        Certificate certificate3 = Certificate.of(certificates.nextIdentity(), "pomme", "http://lapomme", List.of());
+    void TwoCertificateForTheSameUserAndOneForAnOther() throws NoSuchEntityException, ValidationException {
+        certificate = Certificate.of(certificates.nextIdentity(), "charlo", "http://linkverslecertificat", List.of(Skill.of("plaquo")));
+        Certificate certificate2 = Certificate.of(certificates.nextIdentity(), "charlo2", "http://linkverslecertificat2",List.of(Skill.of("plaquo")));
+        Certificate certificate3 = Certificate.of(certificates.nextIdentity(), "pomme", "http://lapomme", List.of(Skill.of("plaquo")));
         userId = users.nextIdentity();
         UserId userId2 = users.nextIdentity();
         try {
@@ -91,8 +94,8 @@ public class InMemoryCertificateTest {
 
     @Test
     @DisplayName("get a certificate by it's creation certificateId")
-    void getCertificateByCertificateId() throws NoSuchEntityException {
-        certificate = Certificate.of(CertificateId.of(1), "charlo", "http://linkverslecertificat", List.of());
+    void getCertificateByCertificateId() throws NoSuchEntityException, ValidationException {
+        certificate = Certificate.of(CertificateId.of(1), "charlo", "http://linkverslecertificat", List.of(Skill.of("plaquo")));
         userId = users.nextIdentity();
         try {
             assertEquals(certificates.byId(CertificateId.of(1)).getCertificateId(), CertificateId.of(1));

@@ -25,4 +25,6 @@ public class ExceptionsDictionary {
     public static final ValidationException SIREN_VALIDATION_ERROR = new ValidationException("siren_validation_error", "the siren number is not valid");
 
     public static final ValidationException TRADES_VALIDATION_ERROR = new ValidationException("trades_validation_error", "the trades filled is not valid");
+
+    public static final ValidationException CERTIFICATE_SKILLS_VALIDATION_ERROR = new ValidationException("certificate_skills_validation_error", "the certificate must have skills");
 }
