@@ -15,6 +15,7 @@ public class RetrieveCertificateByIdHandler implements QueryHandler<RetrieveCert
 
     @Override
     public Certificate handle(RetrieveCertificateById query) throws Exception {
+        System.out.println(this.certificates.findAll());
         return this.certificates.byId(query.certificateId);
     }
 }

@@ -42,7 +42,7 @@ public class InMemoryCertificates implements Certificates {
     @Override
     public Certificate byId(CertificateId certificateId) throws NoSuchEntityException {
         return this.findAll().stream()
-                .filter(certificate -> certificate.getCertificateId() == certificateId)
+                .filter(certificate -> certificate.getCertificateId().equals(certificateId))
                 .findFirst()
                 .orElseThrow(
                         () ->  new NoSuchEntityException(InfrastructureExceptionsDictionary.CERTIFICATE_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.CERTIFICATE_NOT_FOUND.getMessage())

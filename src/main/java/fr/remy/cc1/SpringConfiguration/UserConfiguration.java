@@ -128,7 +128,7 @@ public class UserConfiguration {
 
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(authenticationFilter());
-        registration.addUrlPatterns("/subscriptions");
+        registration.addUrlPatterns("/subscriptions", "/certificates/*");
         registration.setOrder(1);
         return registration;
     }

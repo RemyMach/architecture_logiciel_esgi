@@ -1,6 +1,7 @@
 package fr.remy.cc1.infrastructure;
 
 import fr.remy.cc1.domain.certificate.Certificate;
+import fr.remy.cc1.domain.certificate.CertificateId;
 import fr.remy.cc1.domain.certificate.Certificates;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.domain.user.Users;
@@ -86,6 +87,21 @@ public class InMemoryCertificateTest {
         assertEquals(certificates.byUserId(userId), List.of(certificate, certificate2));
         assertEquals(certificates.byUserId(userId2), List.of(certificate3));
         assertEquals(certificates.findAll(), List.of(certificate, certificate2, certificate3));
+    }
+
+    @Test
+    @DisplayName("get a certificate by it's creation certificateId")
+    void getCertificateByCertificateId() throws NoSuchEntityException {
+        certificate = Certificate.of(CertificateId.of(1), "charlo", "http://linkverslecertificat");
+        userId = users.nextIdentity();
+        try {
+            assertEquals(certificates.byId(CertificateId.of(1)).getCertificateId(), CertificateId.of(1));
+            fail("should Fail");
+        }catch(NoSuchEntityException noSuchEntityException) {}
+
+        certificates.save(userId, certificate);
+
+        assertEquals(certificates.byId(CertificateId.of(1)).getCertificateId(), CertificateId.of(1));
     }
 
 }
