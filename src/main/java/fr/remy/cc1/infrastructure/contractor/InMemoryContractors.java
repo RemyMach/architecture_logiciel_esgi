@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMemoryContractor implements Contractors {
+public class InMemoryContractors implements Contractors {
     private final Map<UserId, Contractor> contractorsData = new ConcurrentHashMap<>();
 
     @Override

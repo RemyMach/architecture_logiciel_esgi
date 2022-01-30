@@ -29,7 +29,8 @@ public class CreateContractorCommandHandler implements CommandHandler<CreateCont
         final UserId userId = users.nextIdentity();
         Contractor contractor = Contractor.of(userId, contractorCreationCandidate.lastname, contractorCreationCandidate.firstname, contractorCreationCandidate.email, contractorCreationCandidate.password, contractorCreationCandidate.company);
         this.contractors.save(contractor);
-        this.eventBus.send(RegisteredUserEvent.withUser(new UserDTO(userId, contractor.getLastname(), contractor.getFirstname(), contractor.getEmail())));
+        this.users.save(User.of(contractor.getUserId(), contractor.getLastname(), contractor.getFirstname(), contractor.getEmail(), contractor.getPassword(), UserCategory.CONTRACTOR));
+        this.eventBus.send(RegisterContractorEvent.withUser(new UserDTO(userId, contractor.getLastname(), contractor.getFirstname(), contractor.getEmail())));
         return userId;
     }
 }

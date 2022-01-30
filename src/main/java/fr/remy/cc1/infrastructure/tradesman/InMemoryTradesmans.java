@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMemoryTradesman implements Tradesmans {
+public class InMemoryTradesmans implements Tradesmans {
     private final Map<UserId, Tradesman> tradesmansData = new ConcurrentHashMap<>();
 
     @Override

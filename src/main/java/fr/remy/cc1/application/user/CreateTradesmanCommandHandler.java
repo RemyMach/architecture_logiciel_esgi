@@ -28,7 +28,8 @@ public class CreateTradesmanCommandHandler implements CommandHandler<CreateTrade
         final UserId userId = users.nextIdentity();
         Tradesman tradesman = Tradesman.of(userId, tradesmanCreationCandidate.lastname, tradesmanCreationCandidate.firstname, tradesmanCreationCandidate.email, tradesmanCreationCandidate.password, null, null, null, null);
         this.tradesmans.save(tradesman);
-        this.eventBus.send(RegisteredUserEvent.withUser(new UserDTO(userId, tradesman.getLastname(), tradesman.getFirstname(), tradesman.getEmail())));
+        this.users.save(User.of(tradesman.getUserId(), tradesman.getLastname(), tradesman.getFirstname(), tradesman.getEmail(), tradesman.getPassword(), UserCategory.TRADESMAN));
+        this.eventBus.send(RegisterTradesmanEvent.withUser(new UserDTO(userId, tradesman.getLastname(), tradesman.getFirstname(), tradesman.getEmail())));
         return userId;
     }
 }

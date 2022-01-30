@@ -51,21 +51,21 @@ public final class Tradesman implements IUser {
 
     @Override
     public Email getEmail() {
-        return null;
+        return this.email;
     }
 
     @Override
     public String getLastname() {
-        return null;
+        return this.lastname;
     }
 
     @Override
     public String getFirstname() {
-        return null;
+        return this.firstname;
     }
 
     @Override
     public Password getPassword() {
-        return null;
+        return this.password;
     }
 }
