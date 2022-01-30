@@ -3,6 +3,7 @@ package fr.remy.cc1.exposition.project;
 import fr.remy.cc1.application.CreateProjectRequirements;
 import fr.remy.cc1.application.CreateProjectRequirementsCommandHandler;
 import fr.remy.cc1.domain.project.ProjectId;
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public final class ProjectRequirementsController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@RequestBody @Valid ProjectRequirementsRequest request) throws ValidationException {
+    public ResponseEntity<Void> create(@RequestBody @Valid ProjectRequirementsRequest request) throws ValidationException, NoSuchEntityException {
         CreateProjectRequirements createProjectRequirements = new CreateProjectRequirements(request.projectId, request.trade, request.skills, request.amount, request.currency, request.address, request.duration, request.durationUnit);
         ProjectId projectId = createProjectRequirementsCommandHandler.handle(createProjectRequirements);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);

@@ -38,22 +38,13 @@ public final class CreateProjectRequirementsCommandHandler implements CommandHan
     }
 
     @Override
-    public ProjectId handle(CreateProjectRequirements createProjectRequirements) throws ValidationException {
+    public ProjectId handle(CreateProjectRequirements createProjectRequirements) throws ValidationException, NoSuchEntityException {
         ProjectId projectId = ProjectId.of(createProjectRequirements.projectId);
-        Project project;
+        Project project = this.projects.byId(projectId);
 
-        try {
-            project = this.projects.byId(projectId);
-        } catch (NoSuchEntityException e) {
-            throw new ValidationException(ExceptionsDictionary.INVALID_PROJECT_ID.getErrorCode(), ExceptionsDictionary.INVALID_PROJECT_ID.getMessage());
-        }
-
-        try {
-            ProjectRequirements projectRequirements = this.projectsRequirements.byId(projectId);
-            if (projectRequirements != null) {
-                throw new ValidationException(ExceptionsDictionary.PROJECT_REQUIREMENTS_ALREADY_EXISTS.getErrorCode(), ExceptionsDictionary.PROJECT_REQUIREMENTS_ALREADY_EXISTS.getMessage());
-            }
-        } catch (NoSuchEntityException ignored) {
+        ProjectRequirements projectRequirements = this.projectsRequirements.byId(projectId);
+        if (projectRequirements != null) {
+            throw new ValidationException(ExceptionsDictionary.PROJECT_REQUIREMENTS_ALREADY_EXISTS.getErrorCode(), ExceptionsDictionary.PROJECT_REQUIREMENTS_ALREADY_EXISTS.getMessage());
         }
 
         ProjectRequirementsCandidate projectRequirementsCandidate = ProjectRequirementsCandidate.of(
@@ -62,7 +53,7 @@ public final class CreateProjectRequirementsCommandHandler implements CommandHan
                 Money.of(createProjectRequirements.amount, CurrencyCreator.getValueOf(createProjectRequirements.currency)),
                 Location.of(Address.of(createProjectRequirements.address), locationGeocoding.processAddress(Address.of(createProjectRequirements.address))),
                 Duration.of(createProjectRequirements.duration, DurationUnit.getUnitFromCode(createProjectRequirements.durationUnit)));
-        ProjectRequirements projectRequirements = ProjectRequirements.of(projectId, projectRequirementsCandidate.tradeList, projectRequirementsCandidate.skills, projectRequirementsCandidate.budget, projectRequirementsCandidate.location, projectRequirementsCandidate.duration);
+        projectRequirements = ProjectRequirements.of(projectId, projectRequirementsCandidate.tradeList, projectRequirementsCandidate.skills, projectRequirementsCandidate.budget, projectRequirementsCandidate.location, projectRequirementsCandidate.duration);
         this.projectsRequirements.save(projectRequirements);
         this.eventBus.send(RegisteredProjectRequirementsEvent.withProjectId(new ProjectDTO(projectId, project.getHistory())));
         System.out.println(this.projectsRequirements.findAll());
