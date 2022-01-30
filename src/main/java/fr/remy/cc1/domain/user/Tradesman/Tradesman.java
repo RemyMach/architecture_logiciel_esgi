@@ -1,9 +1,10 @@
-package fr.remy.cc1.domain.user;
+package fr.remy.cc1.domain.user.Tradesman;
 
 import fr.remy.cc1.domain.location.Country;
 import fr.remy.cc1.domain.payment.Money;
 import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.domain.trades.ETrade;
+import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.kernel.error.ValidationException;
 
 import java.util.List;
@@ -35,9 +36,11 @@ public final class Tradesman implements IUser {
     }
 
     public static Tradesman of(UserId userId, String lastname, String firstname, Email email, Password password, List<ETrade> trade, List<Country> availabilityZone, Money dailyRate, List<Skill> skills) throws ValidationException {
-        return new Tradesman(userId, lastname, firstname, email,  password, trade, availabilityZone, dailyRate, skills);
+        UserCandidate userCandidate = UserCandidate.of(lastname, firstname, email, password, UserCategory.TRADESMAN);
+        return new Tradesman(userId, userCandidate.lastname, userCandidate.firstname, userCandidate.email,  userCandidate.password, trade, availabilityZone, dailyRate, skills);
     }
 
+    @Override
     public UserId getUserId() {
         return userId;
     }
