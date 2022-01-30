@@ -2,29 +2,34 @@ package fr.remy.cc1.application.user;
 
 import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.user.*;
+import fr.remy.cc1.domain.user.contractor.Contractor;
+import fr.remy.cc1.domain.user.contractor.ContractorCreationCandidate;
+import fr.remy.cc1.domain.user.contractor.Contractors;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 
-public class CreateContractorCommandHandler implements CommandHandler<CreateUser, UserId> {
+public class CreateContractorCommandHandler implements CommandHandler<CreateContractor, UserId> {
 
     private final Users users;
+    private final Contractors contractors;
     private final EventBus<Event> eventBus;
 
 
-    public CreateContractorCommandHandler(Users users, EventBus<Event> eventBus) {
+    public CreateContractorCommandHandler(Users users, Contractors contractors, EventBus<Event> eventBus) {
         this.users = users;
         this.eventBus = eventBus;
+        this.contractors = contractors;
     }
 
     @Override
-    public UserId handle(CreateUser createUser) throws ValidationException {
-        UserCandidate userCandidate = UserCandidate.of(createUser.lastname, createUser.firstname, new Email(createUser.email), new Password(createUser.password), createUser.userCategory);
+    public UserId handle(CreateContractor createContractor) throws ValidationException {
+        ContractorCreationCandidate contractorCreationCandidate = ContractorCreationCandidate.of(createContractor.lastname, createContractor.firstname, new Email(createContractor.email), new Password(createContractor.password), createContractor.company);
         final UserId userId = users.nextIdentity();
-        User user = User.of(userId, userCandidate.lastname, userCandidate.firstname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
-        this.users.save(user);
-        this.eventBus.send(RegisteredUserEvent.withUser(new UserDTO(userId, createUser.lastname, createUser.firstname, new Email(createUser.email))));
+        Contractor contractor = Contractor.of(userId, contractorCreationCandidate.lastname, contractorCreationCandidate.firstname, contractorCreationCandidate.email, contractorCreationCandidate.password, contractorCreationCandidate.company);
+        this.contractors.save(contractor);
+        this.eventBus.send(RegisteredUserEvent.withUser(new UserDTO(userId, contractor.getLastname(), contractor.getFirstname(), contractor.getEmail())));
         return userId;
     }
 }

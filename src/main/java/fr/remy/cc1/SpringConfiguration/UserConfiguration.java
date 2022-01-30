@@ -1,5 +1,6 @@
 package fr.remy.cc1.SpringConfiguration;
 
+import fr.remy.cc1.application.mail.*;
 import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
 import fr.remy.cc1.application.customer.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.application.user.CreateUserCommandHandler;
@@ -7,10 +8,9 @@ import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
-import fr.remy.cc1.application.mail.RegisteredUserEventMessengerSubscription;
-import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
-import fr.remy.cc1.application.mail.SubscriptionSuccessTerminatedEventMessengerSubscription;
 import fr.remy.cc1.application.scheduler.PaymentScheduler;
+import fr.remy.cc1.application.user.RegisterContractorEvent;
+import fr.remy.cc1.application.user.RegisterTradesmanEvent;
 import fr.remy.cc1.application.user.RegisteredUserEvent;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.EmailSender;
@@ -76,7 +76,8 @@ public class UserConfiguration {
         );
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
-                RegisteredUserEvent.class, Collections.singletonList(new RegisteredUserEventMessengerSubscription(emailSender)),
+                RegisterContractorEvent.class, Collections.singletonList(new RegisteredContractorEventMessengerSubscription(emailSender)),
+                RegisterTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(emailSender)),
                 SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );

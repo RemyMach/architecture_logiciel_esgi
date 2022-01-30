@@ -7,21 +7,19 @@ import fr.remy.cc1.kernel.event.EventId;
 
 import java.time.ZonedDateTime;
 
-//TODO deprecated
-public class RegisteredUserEvent implements Event, ApplicationEvent {
-
+public class RegisterContractorEvent implements Event, ApplicationEvent {
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
     private final UserDTO userDTO;
 
-    private RegisteredUserEvent(EventId eventId, ZonedDateTime occurredDate, UserDTO userDTO) {
+    private RegisterContractorEvent(EventId eventId, ZonedDateTime occurredDate, UserDTO userDTO) {
         this.eventId = eventId;
         this.occurredDate = occurredDate;
         this.userDTO = userDTO;
     }
 
-    public static RegisteredUserEvent withUser(UserDTO userDTO) {
-        return new RegisteredUserEvent(EventId.create(), ZonedDateTime.now(), userDTO);
+    public static RegisterContractorEvent withUser(UserDTO userDTO) {
+        return new RegisterContractorEvent(EventId.create(), ZonedDateTime.now(), userDTO);
     }
 
     @Override

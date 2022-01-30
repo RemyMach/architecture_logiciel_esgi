@@ -7,6 +7,7 @@ import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 
+//TODO deprecated
 public final class CreateUserCommandHandler implements CommandHandler<CreateUser, UserId> {
 
     private final Users users;
