@@ -1,5 +1,6 @@
-package fr.remy.cc1.application;
+package fr.remy.cc1.application.payment;
 
+import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;

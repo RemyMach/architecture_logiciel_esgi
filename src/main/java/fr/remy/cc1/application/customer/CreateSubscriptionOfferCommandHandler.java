@@ -1,5 +1,6 @@
-package fr.remy.cc1.application;
+package fr.remy.cc1.application.customer;
 
+import fr.remy.cc1.application.payment.PaymentService;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;
 import fr.remy.cc1.domain.payment.Money;

@@ -1,7 +1,7 @@
 package fr.remy.cc1.exposition.user;
 
-import fr.remy.cc1.application.CreateUser;
-import fr.remy.cc1.application.CreateUserCommandHandler;
+import fr.remy.cc1.application.user.CreateUser;
+import fr.remy.cc1.application.user.CreateUserCommandHandler;
 import fr.remy.cc1.domain.user.UserCategoryCreator;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.kernel.error.ValidationException;

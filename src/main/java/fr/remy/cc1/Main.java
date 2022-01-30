@@ -1,6 +1,7 @@
 package fr.remy.cc1;
 
-import fr.remy.cc1.application.*;
+import fr.remy.cc1.application.customer.CreateSubscriptionOffer;
+import fr.remy.cc1.application.customer.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
@@ -8,6 +9,10 @@ import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoice
 import fr.remy.cc1.application.mail.RegisteredUserEventMessengerSubscription;
 import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
 import fr.remy.cc1.application.mail.SubscriptionSuccessTerminatedEventMessengerSubscription;
+import fr.remy.cc1.application.payment.CreatePayment;
+import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
+import fr.remy.cc1.application.user.CreateUser;
+import fr.remy.cc1.application.user.CreateUserCommandHandler;
 import fr.remy.cc1.application.user.RegisteredUserEvent;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.EmailSender;

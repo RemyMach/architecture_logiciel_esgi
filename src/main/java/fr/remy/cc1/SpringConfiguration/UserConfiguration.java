@@ -1,8 +1,8 @@
 package fr.remy.cc1.SpringConfiguration;
 
-import fr.remy.cc1.application.CreatePaymentCommandHandler;
-import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
-import fr.remy.cc1.application.CreateUserCommandHandler;
+import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
+import fr.remy.cc1.application.customer.CreateSubscriptionOfferCommandHandler;
+import fr.remy.cc1.application.user.CreateUserCommandHandler;
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;

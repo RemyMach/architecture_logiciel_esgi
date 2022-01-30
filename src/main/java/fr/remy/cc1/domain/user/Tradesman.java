@@ -3,7 +3,7 @@ package fr.remy.cc1.domain.user;
 import fr.remy.cc1.domain.location.Country;
 import fr.remy.cc1.domain.payment.Money;
 import fr.remy.cc1.domain.skill.Skill;
-import fr.remy.cc1.domain.trade.ETrade;
+import fr.remy.cc1.domain.trades.ETrade;
 import fr.remy.cc1.kernel.error.ValidationException;
 
 import java.util.List;
@@ -15,6 +15,8 @@ public final class Tradesman implements IUser {
     private final String firstname;
     private final Email email;
     private final Password password;
+
+    //InMemory -> User(User_Category) -> Tradesman(userId)
     private final List<ETrade> trade;
     private final List<Skill> skills;
     private final List<Country> availabilityZone;

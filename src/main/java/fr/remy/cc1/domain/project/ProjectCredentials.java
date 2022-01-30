@@ -19,6 +19,7 @@ public final class ProjectCredentials {
     private final Location location;
     private final Duration duration;
 
+
     private ProjectCredentials(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
         this.projectId = projectId;
         this.tradeList = new ArrayList<>(tradeList);

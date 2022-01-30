@@ -1,5 +1,7 @@
 package fr.remy.cc1.application;
 
+import fr.remy.cc1.application.customer.CreateSubscriptionOffer;
+import fr.remy.cc1.application.customer.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.invoice.Invoice;

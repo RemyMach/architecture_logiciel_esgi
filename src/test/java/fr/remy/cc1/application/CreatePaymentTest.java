@@ -1,5 +1,7 @@
 package fr.remy.cc1.application;
 
+import fr.remy.cc1.application.payment.CreatePayment;
+import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;

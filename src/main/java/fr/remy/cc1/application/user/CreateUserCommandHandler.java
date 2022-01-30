@@ -1,6 +1,6 @@
-package fr.remy.cc1.application;
+package fr.remy.cc1.application.user;
 
-import fr.remy.cc1.application.user.RegisteredUserEvent;
+import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ValidationException;

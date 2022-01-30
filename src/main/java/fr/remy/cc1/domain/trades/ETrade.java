@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain.trade;
+package fr.remy.cc1.domain.trades;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.TradesValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;

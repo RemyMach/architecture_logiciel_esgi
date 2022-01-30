@@ -1,5 +1,6 @@
-package fr.remy.cc1.application;
+package fr.remy.cc1.application.payment;
 
+import fr.remy.cc1.application.payment.CreatePayment;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethod;
 import fr.remy.cc1.domain.payment.PaymentMethod.PaymentMethodCreator;
 import fr.remy.cc1.domain.payment.creditcard.CreditCard;

@@ -1,4 +1,4 @@
-package fr.remy.cc1.application;
+package fr.remy.cc1.application.customer;
 
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.kernel.Command;

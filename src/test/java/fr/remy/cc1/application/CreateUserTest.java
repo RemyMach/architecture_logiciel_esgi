@@ -1,5 +1,7 @@
 package fr.remy.cc1.application;
 
+import fr.remy.cc1.application.user.CreateUser;
+import fr.remy.cc1.application.user.CreateUserCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;

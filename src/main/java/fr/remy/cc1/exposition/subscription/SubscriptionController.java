@@ -1,9 +1,9 @@
 package fr.remy.cc1.exposition.subscription;
 
-import fr.remy.cc1.application.CreatePayment;
-import fr.remy.cc1.application.CreatePaymentCommandHandler;
-import fr.remy.cc1.application.CreateSubscriptionOffer;
-import fr.remy.cc1.application.CreateSubscriptionOfferCommandHandler;
+import fr.remy.cc1.application.payment.CreatePayment;
+import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
+import fr.remy.cc1.application.customer.CreateSubscriptionOffer;
+import fr.remy.cc1.application.customer.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.domain.user.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
