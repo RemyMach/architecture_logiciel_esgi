@@ -60,7 +60,7 @@ public final class CreateProjectCredentialsCommandHandler implements CommandHand
                 List.copyOf(Arrays.stream(createProjectCredentials.trade.split(",")).map(Trade::of).collect(Collectors.toList())),
                 List.copyOf(Arrays.stream(createProjectCredentials.skills.split(",")).map(Skill::of).collect(Collectors.toList())),
                 Money.of(createProjectCredentials.amount, CurrencyCreator.getValueOf(createProjectCredentials.currency)),
-                Location.of(Address.of(createProjectCredentials.address), locationGeocoding.processAdresse(Address.of(createProjectCredentials.address))),
+                Location.of(Address.of(createProjectCredentials.address), locationGeocoding.processAddress(Address.of(createProjectCredentials.address))),
                 Duration.of(createProjectCredentials.duration, DurationUnit.getUnitFromCode(createProjectCredentials.durationUnit)));
         ProjectCredentials projectCredentials = ProjectCredentials.of(projectId, projectCredentialsCandidate.tradeList, projectCredentialsCandidate.skills, projectCredentialsCandidate.budget, projectCredentialsCandidate.location, projectCredentialsCandidate.duration);
         this.projectsCredentials.save(projectCredentials);

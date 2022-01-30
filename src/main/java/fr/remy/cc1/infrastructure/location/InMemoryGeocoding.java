@@ -28,7 +28,7 @@ public final class InMemoryGeocoding implements LocationGeocoding {
     }
 
     @Override
-    public LatLng processAdresse(Address address) throws ValidationException {
+    public LatLng processAddress(Address address) throws ValidationException {
         LatLng latLng = addresses.get(address.getAddress());
         if (latLng == null) {
             throw new LocationValidationException(ExceptionsDictionary.GEOCODING_ERROR.getErrorCode(), ExceptionsDictionary.GEOCODING_ERROR.getMessage());
