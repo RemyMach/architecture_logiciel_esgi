@@ -4,7 +4,7 @@ import fr.remy.cc1.kernel.Command;
 
 import java.math.BigDecimal;
 
-public class CreateProjectCredentials implements Command {
+public class CreateProjectRequirements implements Command {
 
     public final int projectId;
     public final String trade;
@@ -15,7 +15,7 @@ public class CreateProjectCredentials implements Command {
     public final int duration;
     public final String durationUnit;
 
-    public CreateProjectCredentials(int projectId, String trade, String skills, BigDecimal amount, String currency, String address, int duration, String durationUnit) {
+    public CreateProjectRequirements(int projectId, String trade, String skills, BigDecimal amount, String currency, String address, int duration, String durationUnit) {
         this.projectId = projectId;
         this.trade = trade;
         this.skills = skills;

@@ -9,7 +9,7 @@ import fr.remy.cc1.domain.trades.Trade;
 import java.util.List;
 import java.util.Objects;
 
-public class ProjectCredentialsCandidate {
+public class ProjectRequirementsCandidate {
 
     public final List<Trade> tradeList;
     public final List<Skill> skills;
@@ -17,7 +17,7 @@ public class ProjectCredentialsCandidate {
     public final Location location;
     public final Duration duration;
 
-    private ProjectCredentialsCandidate(List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
+    private ProjectRequirementsCandidate(List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
         this.tradeList = tradeList;
         this.skills = skills;
         this.budget = budget;
@@ -25,15 +25,15 @@ public class ProjectCredentialsCandidate {
         this.duration = duration;
     }
 
-    public static ProjectCredentialsCandidate of(List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
-        return new ProjectCredentialsCandidate(tradeList, skills, budget, location, duration);
+    public static ProjectRequirementsCandidate of(List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
+        return new ProjectRequirementsCandidate(tradeList, skills, budget, location, duration);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProjectCredentialsCandidate that = (ProjectCredentialsCandidate) o;
+        ProjectRequirementsCandidate that = (ProjectRequirementsCandidate) o;
         return Objects.equals(tradeList, that.tradeList) && Objects.equals(skills, that.skills) && Objects.equals(budget, that.budget) && Objects.equals(location, that.location) && Objects.equals(duration, that.duration);
     }
 
@@ -44,7 +44,7 @@ public class ProjectCredentialsCandidate {
 
     @Override
     public String toString() {
-        return "ProjectCredentialsCandidate{" +
+        return "ProjectRequirementsCandidate{" +
                 "tradesList=" + tradeList +
                 ", skills=" + skills +
                 ", budget=" + budget +

@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ProjectCredentialsCreationEventBus<E extends Event> implements EventBus<E> {
+public class ProjectRequirementsCreationEventBus<E extends Event> implements EventBus<E> {
 
     private final Map<Class<E>, List<Subscriber<E>>> subscribers = new ConcurrentHashMap<>();
 
-    private static ProjectCredentialsCreationEventBus INSTANCE;
+    private static ProjectRequirementsCreationEventBus INSTANCE;
 
-    private ProjectCredentialsCreationEventBus() {
+    private ProjectRequirementsCreationEventBus() {
 
     }
 
-    public static ProjectCredentialsCreationEventBus getInstance() {
+    public static ProjectRequirementsCreationEventBus getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ProjectCredentialsCreationEventBus();
+            INSTANCE = new ProjectRequirementsCreationEventBus();
         }
         return INSTANCE;
     }

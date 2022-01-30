@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-public class ProjectCredentialsRequest {
+public class ProjectRequirementsRequest {
 
     @NotNull(message = "project_empty_null")
     public int projectId;

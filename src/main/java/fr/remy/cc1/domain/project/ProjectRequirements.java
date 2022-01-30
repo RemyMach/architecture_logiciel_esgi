@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class ProjectCredentials {
+public final class ProjectRequirements {
 
     private final ProjectId projectId;
     private final List<Trade> tradeList;
@@ -20,7 +20,7 @@ public final class ProjectCredentials {
     private final Duration duration;
 
 
-    private ProjectCredentials(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
+    private ProjectRequirements(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
         this.projectId = projectId;
         this.tradeList = new ArrayList<>(tradeList);
         this.skills = new ArrayList<>(skills);
@@ -29,8 +29,8 @@ public final class ProjectCredentials {
         this.duration = duration;
     }
 
-    public static ProjectCredentials of(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
-        return new ProjectCredentials(projectId, tradeList, skills, budget, location, duration);
+    public static ProjectRequirements of(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
+        return new ProjectRequirements(projectId, tradeList, skills, budget, location, duration);
     }
 
     public void addTrades(Trade trade) {
@@ -49,7 +49,7 @@ public final class ProjectCredentials {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProjectCredentials that = (ProjectCredentials) o;
+        ProjectRequirements that = (ProjectRequirements) o;
         return Objects.equals(tradeList, that.tradeList) && Objects.equals(skills, that.skills) && Objects.equals(budget, that.budget) && Objects.equals(location, that.location) && Objects.equals(duration, that.duration);
     }
 
@@ -60,7 +60,7 @@ public final class ProjectCredentials {
 
     @Override
     public String toString() {
-        return "ProjectCredentials{" +
+        return "ProjectRequirements{" +
                 "tradesList=" + tradeList +
                 ", skills=" + skills +
                 ", budget=" + budget +

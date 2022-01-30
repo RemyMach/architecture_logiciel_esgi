@@ -15,8 +15,8 @@ public class ExceptionsDictionary {
     public static final ValidationException INVALID_PROJECT_ID = new ValidationException("invalid_project_id", "the provided project id does not match any known project");
     public static final ValidationException INVALID_PROJECT_NAME = new ValidationException("invalid_project_name", "invalid project name");
     public static final ValidationException INVALID_PROJECT_DESCRIPTION = new ValidationException("invalid_project_description", "invalid project description");
-    //ProjectCredentials
-    public static final ValidationException PROJECT_CREDENTIALS_ALREADY_EXISTS = new ValidationException("project_credentials_already_exists", "project credentials already exists for given project id");
+    //ProjectRequirements
+    public static final ValidationException PROJECT_REQUIREMENTS_ALREADY_EXISTS = new ValidationException("project_requirements_already_exists", "project requirements already exists for given project id");
     //Location
     public static final ValidationException GEOCODING_ERROR = new ValidationException("geocoding_error", "could not encoding address to valid lat lng position");
     //Duration
