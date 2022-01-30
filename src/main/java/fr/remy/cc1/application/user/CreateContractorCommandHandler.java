@@ -1,6 +1,7 @@
 package fr.remy.cc1.application.user;
 
 import fr.remy.cc1.application.UserDTO;
+import fr.remy.cc1.domain.company.Company;
 import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.domain.user.contractor.Contractor;
 import fr.remy.cc1.domain.user.contractor.ContractorCreationCandidate;
@@ -25,7 +26,8 @@ public class CreateContractorCommandHandler implements CommandHandler<CreateCont
 
     @Override
     public UserId handle(CreateContractor createContractor) throws ValidationException {
-        ContractorCreationCandidate contractorCreationCandidate = ContractorCreationCandidate.of(createContractor.lastname, createContractor.firstname, new Email(createContractor.email), new Password(createContractor.password), createContractor.company);
+        Company company = Company.of(createContractor.companySiren, createContractor.companyName);
+        ContractorCreationCandidate contractorCreationCandidate = ContractorCreationCandidate.of(createContractor.lastname, createContractor.firstname, new Email(createContractor.email), new Password(createContractor.password), company);
         final UserId userId = users.nextIdentity();
         Contractor contractor = Contractor.of(userId, contractorCreationCandidate.lastname, contractorCreationCandidate.firstname, contractorCreationCandidate.email, contractorCreationCandidate.password, contractorCreationCandidate.company);
         this.contractors.save(contractor);

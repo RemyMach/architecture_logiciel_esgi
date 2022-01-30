@@ -66,7 +66,7 @@ public class CreateContractorTest {
         assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
         assertEquals(this.users.findAll().size(), 0);
 
-        CreateContractor createContractor = new CreateContractor(lastnameStub, firstnameStub, emailStub, passwordStub, Company.of(companySiren, companyName));
+        CreateContractor createContractor = new CreateContractor(lastnameStub, firstnameStub, emailStub, passwordStub, companySiren, companyName);
         UserId userId = createContractorCommandHandler.handle(createContractor);
 
         assertEquals(this.users.findAll().size(), 1);
@@ -83,7 +83,7 @@ public class CreateContractorTest {
 
         try {
             this.passwordStub = "short";
-            CreateContractor createContractor = new CreateContractor(lastnameStub, firstnameStub, emailStub, passwordStub, Company.of(companySiren, companyName));
+            CreateContractor createContractor = new CreateContractor(lastnameStub, firstnameStub, emailStub, passwordStub, companySiren, companyName);
             UserId userId = createContractorCommandHandler.handle(createContractor);
             fail("the test should thrown an error");
         }catch(ValidationException validationException) {
