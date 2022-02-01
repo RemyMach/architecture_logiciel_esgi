@@ -1,6 +1,5 @@
 package fr.remy.cc1.domain.certificate;
 
-import fr.remy.cc1.domain.company.SirenValidator;
 import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.kernel.Validator;
 import fr.remy.cc1.kernel.error.ValidationException;
