@@ -2,7 +2,7 @@ package fr.remy.cc1.domain.user;
 
 import fr.remy.cc1.kernel.error.ValidationException;
 
-public final class User {
+public final class User implements IUser{
 
     private final UserId userId;
     private final String lastname;

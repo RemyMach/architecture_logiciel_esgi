@@ -1,7 +1,7 @@
 package fr.remy.cc1.exposition.user;
 
-import fr.remy.cc1.application.user.CreateUser;
-import fr.remy.cc1.application.user.CreateUserCommandHandler;
+import fr.remy.cc1.application.user.*;
+import fr.remy.cc1.domain.company.Company;
 import fr.remy.cc1.domain.user.UserCategoryCreator;
 import fr.remy.cc1.domain.user.UserId;
 import fr.remy.cc1.kernel.error.ValidationException;
@@ -22,17 +22,26 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
 
-    private final CreateUserCommandHandler createUserCommandHandler;
+    private final CreateTradesmanCommandHandler createTradesmanCommandHandler;
+    private final CreateContractorCommandHandler createContractorCommandHandler;
 
     @Autowired
-    public UserController(CreateUserCommandHandler createUserCommandHandler) {
-        this.createUserCommandHandler = createUserCommandHandler;
+    public UserController(CreateTradesmanCommandHandler createTradesmanCommandHandler, CreateContractorCommandHandler createContractorCommandHandler) {
+        this.createTradesmanCommandHandler = createTradesmanCommandHandler;
+        this.createContractorCommandHandler = createContractorCommandHandler;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@RequestBody @Valid UserRequest request) throws ValidationException {
-        CreateUser createUser = new CreateUser(request.lastname, request.firstname, request.email, request.password, UserCategoryCreator.getValueOf(request.userCategory));
-        UserId userId = createUserCommandHandler.handle(createUser);
+    @PostMapping(path = "/contractor", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> create(@RequestBody @Valid ContractorRequest request) throws ValidationException {
+        CreateContractor createContractor = new CreateContractor(request.lastname, request.firstname, request.email, request.password, request.companySiren, request.companyName);
+        UserId userId = createContractorCommandHandler.handle(createContractor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    }
+
+    @PostMapping(path = "/tradesman", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> create(@RequestBody @Valid TradesmanRequest request) throws ValidationException {
+        CreateTradesman createTradesman = new CreateTradesman(request.lastname, request.firstname, request.email, request.password);
+        UserId userId = createTradesmanCommandHandler.handle(createTradesman);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 }

@@ -1,6 +1,7 @@
-package fr.remy.cc1.domain.user;
+package fr.remy.cc1.domain.user.contractor;
 
 import fr.remy.cc1.domain.company.Company;
+import fr.remy.cc1.domain.user.*;
 import fr.remy.cc1.kernel.error.ValidationException;
 
 public final class Contractor implements IUser {
@@ -23,9 +24,11 @@ public final class Contractor implements IUser {
     }
 
     public static Contractor of(UserId userId, String lastname, String firstname, Email email, Password password, Company company) throws ValidationException {
-        return new Contractor(userId, lastname, firstname, email,  password, company);
+        UserCandidate userCandidate = UserCandidate.of(lastname, firstname, email, password, UserCategory.TRADESMAN);
+        return new Contractor(userId, userCandidate.lastname, userCandidate.firstname, userCandidate.email,  userCandidate.password, company);
     }
 
+    @Override
     public UserId getUserId() {
         return userId;
     }
@@ -36,21 +39,21 @@ public final class Contractor implements IUser {
 
     @Override
     public Email getEmail() {
-        return null;
+        return this.email;
     }
 
     @Override
     public String getLastname() {
-        return null;
+        return this.lastname;
     }
 
     @Override
     public String getFirstname() {
-        return null;
+        return this.firstname;
     }
 
     @Override
     public Password getPassword() {
-        return null;
+        return this.password;
     }
 }
