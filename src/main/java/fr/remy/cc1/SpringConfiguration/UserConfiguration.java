@@ -3,28 +3,29 @@ package fr.remy.cc1.SpringConfiguration;
 import fr.remy.cc1.application.mail.*;
 import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
 import fr.remy.cc1.application.customer.CreateSubscriptionOfferCommandHandler;
-import fr.remy.cc1.application.user.CreateUserCommandHandler;
+import fr.remy.cc1.application.user.*;
 import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
 import fr.remy.cc1.application.scheduler.PaymentScheduler;
-import fr.remy.cc1.application.user.RegisterContractorEvent;
-import fr.remy.cc1.application.user.RegisterTradesmanEvent;
-import fr.remy.cc1.application.user.RegisteredUserEvent;
 import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.payment.creditcard.CreditCards;
 import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
+import fr.remy.cc1.domain.user.Tradesman.Tradesmans;
 import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.domain.user.contractor.Contractors;
 import fr.remy.cc1.exposition.authentication.AuthMiddleware;
 import fr.remy.cc1.exposition.authentication.CreateAuthTokenCommandHandler;
 import fr.remy.cc1.exposition.authentication.Tokens;
 import fr.remy.cc1.infrastructure.authentication.token.InMemoryToken;
+import fr.remy.cc1.infrastructure.contractor.InMemoryContractors;
 import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.infrastructure.paypalAccounts.InMemoryPaypalAccounts;
+import fr.remy.cc1.infrastructure.tradesman.InMemoryTradesmans;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Event;
@@ -139,6 +140,24 @@ public class UserConfiguration {
         return new AuthMiddleware(tokens());
     }
 
+    @Bean
+    public Tradesmans tradesmans() {
+        return new InMemoryTradesmans();
+    }
 
+    @Bean
+    public Contractors contractors() {
+        return new InMemoryContractors();
+    }
+
+    @Bean
+    public CreateTradesmanCommandHandler createTradesmanCommandHandler() {
+        return new CreateTradesmanCommandHandler(users(), tradesmans(), userCreationEventBus());
+    }
+
+    @Bean
+    public CreateContractorCommandHandler createContractorCommandHandler() {
+        return new CreateContractorCommandHandler(users(), contractors(), userCreationEventBus());
+    }
 
 }
