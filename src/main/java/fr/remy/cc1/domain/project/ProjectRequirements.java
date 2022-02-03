@@ -8,29 +8,31 @@ import fr.remy.cc1.domain.trades.Trade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class ProjectRequirements {
 
     private final ProjectId projectId;
     private final List<Trade> tradeList;
     private final List<Skill> skills;
-    private final Money budget;
+    private final Map<Trade, Money> tradesBudget;
+    private final Map<Trade, Duration> tradesDuration;
     private final Location location;
-    private final Duration duration;
 
 
-    private ProjectRequirements(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
+    private ProjectRequirements(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Map<Trade, Money> tradesBudget, Map<Trade, Duration> tradesDuration, Location location) {
         this.projectId = projectId;
         this.tradeList = new ArrayList<>(tradeList);
         this.skills = new ArrayList<>(skills);
-        this.budget = budget;
+        this.tradesBudget = new ConcurrentHashMap<>(tradesBudget);
+        this.tradesDuration = new ConcurrentHashMap<>(tradesDuration);
         this.location = location;
-        this.duration = duration;
     }
 
-    public static ProjectRequirements of(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Money budget, Location location, Duration duration) {
-        return new ProjectRequirements(projectId, tradeList, skills, budget, location, duration);
+    public static ProjectRequirements of(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Map<Trade, Money> tradesBudget, Map<Trade, Duration> tradesDuration, Location location) {
+        return new ProjectRequirements(projectId, tradeList, skills, tradesBudget, tradesDuration, location);
     }
 
     public void addTrades(Trade trade) {
@@ -50,22 +52,23 @@ public final class ProjectRequirements {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProjectRequirements that = (ProjectRequirements) o;
-        return Objects.equals(tradeList, that.tradeList) && Objects.equals(skills, that.skills) && Objects.equals(budget, that.budget) && Objects.equals(location, that.location) && Objects.equals(duration, that.duration);
+        return Objects.equals(tradeList, that.tradeList) && Objects.equals(skills, that.skills) && Objects.equals(tradesBudget, that.tradesBudget) && Objects.equals(tradesDuration, that.tradesDuration)&& Objects.equals(location, that.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tradeList, skills, budget, location, duration);
+        return Objects.hash(tradeList, skills, tradesBudget, tradesDuration, location);
     }
 
     @Override
     public String toString() {
         return "ProjectRequirements{" +
-                "tradesList=" + tradeList +
+                "projectId=" + projectId +
+                ", tradeList=" + tradeList +
                 ", skills=" + skills +
-                ", budget=" + budget +
+                ", tradesBudget=" + tradesBudget +
+                ", tradesDuration=" + tradesDuration +
                 ", location=" + location +
-                ", duration=" + duration +
                 '}';
     }
 }

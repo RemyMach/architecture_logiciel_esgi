@@ -7,7 +7,7 @@ import fr.remy.cc1.domain.location.Address;
 import fr.remy.cc1.domain.location.Location;
 import fr.remy.cc1.domain.location.LocationGeocoding;
 import fr.remy.cc1.domain.payment.Money;
-import fr.remy.cc1.domain.payment.currency.CurrencyCreator;
+import fr.remy.cc1.domain.payment.currency.Currency;
 import fr.remy.cc1.domain.project.*;
 import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.domain.trades.Trade;
@@ -18,8 +18,9 @@ import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public final class CreateProjectRequirementsCommandHandler implements CommandHandler<CreateProjectRequirements, ProjectId> {
@@ -42,18 +43,32 @@ public final class CreateProjectRequirementsCommandHandler implements CommandHan
         ProjectId projectId = ProjectId.of(createProjectRequirements.projectId);
         Project project = this.projects.byId(projectId);
 
-        ProjectRequirements projectRequirements = this.projectsRequirements.byId(projectId);
+        ProjectRequirements projectRequirements = null;
+        try {
+            projectRequirements = this.projectsRequirements.byId(projectId);
+        } catch (NoSuchEntityException ignored){}
+
         if (projectRequirements != null) {
             throw new ValidationException(ExceptionsDictionary.PROJECT_REQUIREMENTS_ALREADY_EXISTS.getErrorCode(), ExceptionsDictionary.PROJECT_REQUIREMENTS_ALREADY_EXISTS.getMessage());
         }
 
+        Map<Trade, Money> tradesBudget = new ConcurrentHashMap<>();
+        for (int i = 0; i < createProjectRequirements.trade.size(); i++) {
+            tradesBudget.put(Trade.of(createProjectRequirements.trade.get(i)), Money.of(createProjectRequirements.amount.get(i), Currency.valueOf(createProjectRequirements.currency)));
+        }
+
+        Map<Trade, Duration> tradesDuration = new ConcurrentHashMap<>();
+        for (int i = 0; i < createProjectRequirements.trade.size(); i++) {
+            tradesDuration.put(Trade.of(createProjectRequirements.trade.get(i)), Duration.of(createProjectRequirements.duration.get(i), DurationUnit.getUnitFromCode(createProjectRequirements.durationUnit.get(i))));
+        }
+
         ProjectRequirementsCandidate projectRequirementsCandidate = ProjectRequirementsCandidate.of(
-                List.copyOf(Arrays.stream(createProjectRequirements.trade.split(",")).map(Trade::of).collect(Collectors.toList())),
-                List.copyOf(Arrays.stream(createProjectRequirements.skills.split(",")).map(Skill::of).collect(Collectors.toList())),
-                Money.of(createProjectRequirements.amount, CurrencyCreator.getValueOf(createProjectRequirements.currency)),
-                Location.of(Address.of(createProjectRequirements.address), locationGeocoding.processAddress(Address.of(createProjectRequirements.address))),
-                Duration.of(createProjectRequirements.duration, DurationUnit.getUnitFromCode(createProjectRequirements.durationUnit)));
-        projectRequirements = ProjectRequirements.of(projectId, projectRequirementsCandidate.tradeList, projectRequirementsCandidate.skills, projectRequirementsCandidate.budget, projectRequirementsCandidate.location, projectRequirementsCandidate.duration);
+                List.copyOf(createProjectRequirements.trade.stream().map(Trade::of).collect(Collectors.toList())),
+                List.copyOf(createProjectRequirements.skills.stream().map(Skill::of).collect(Collectors.toList())),
+                tradesBudget,
+                tradesDuration,
+                Location.of(Address.of(createProjectRequirements.address), locationGeocoding.processAddress(Address.of(createProjectRequirements.address))));
+        projectRequirements = ProjectRequirements.of(projectId, projectRequirementsCandidate.tradeList, projectRequirementsCandidate.skills, projectRequirementsCandidate.tradesBudget, projectRequirementsCandidate.tradesDuration, projectRequirementsCandidate.location);
         this.projectsRequirements.save(projectRequirements);
         this.eventBus.send(RegisteredProjectRequirementsEvent.withProjectId(new ProjectDTO(projectId, project.getHistory())));
         System.out.println(this.projectsRequirements.findAll());

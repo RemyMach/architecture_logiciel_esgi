@@ -3,19 +3,20 @@ package fr.remy.cc1.application;
 import fr.remy.cc1.kernel.Command;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class CreateProjectRequirements implements Command {
 
     public final int projectId;
-    public final String trade;
-    public final String skills;
-    public final BigDecimal amount;
+    public final List<String> trade;
+    public final List<String> skills;
+    public final List<BigDecimal> amount;
     public final String currency;
     public final String address;
-    public final int duration;
-    public final String durationUnit;
+    public final List<Integer> duration;
+    public final List<String> durationUnit;
 
-    public CreateProjectRequirements(int projectId, String trade, String skills, BigDecimal amount, String currency, String address, int duration, String durationUnit) {
+    public CreateProjectRequirements(int projectId, List<String> trade, List<String> skills, List<BigDecimal> amount, String currency, String address, List<Integer> duration, List<String> durationUnit) {
         this.projectId = projectId;
         this.trade = trade;
         this.skills = skills;
