@@ -1,8 +1,8 @@
 package fr.remy.cc1.infrastructure.project;
 
-import fr.remy.cc1.domain.project.Project;
-import fr.remy.cc1.domain.project.ProjectId;
-import fr.remy.cc1.domain.project.Projects;
+import fr.remy.cc1.project.domain.project.Project;
+import fr.remy.cc1.project.domain.project.ProjectId;
+import fr.remy.cc1.project.domain.project.Projects;
 import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 

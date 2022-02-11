@@ -1,9 +1,9 @@
 package fr.remy.cc1.exposition.authentication;
 
-import fr.remy.cc1.domain.user.Email;
-import fr.remy.cc1.domain.user.Password;
-import fr.remy.cc1.domain.user.User;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.member.domain.user.Email;
+import fr.remy.cc1.member.domain.user.Password;
+import fr.remy.cc1.member.domain.user.User;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.exposition.exception.ExpositionExceptionsDictionary;
 import fr.remy.cc1.exposition.exception.authentication.AuthPasswordEmailNotMatchException;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;

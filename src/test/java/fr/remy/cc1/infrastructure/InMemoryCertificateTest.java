@@ -1,11 +1,11 @@
 package fr.remy.cc1.infrastructure;
 
-import fr.remy.cc1.domain.certificate.Certificate;
-import fr.remy.cc1.domain.certificate.CertificateId;
-import fr.remy.cc1.domain.certificate.Certificates;
+import fr.remy.cc1.certificate.domain.Certificate;
+import fr.remy.cc1.certificate.domain.CertificateId;
+import fr.remy.cc1.certificate.domain.Certificates;
 import fr.remy.cc1.domain.skill.Skill;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.certificates.InMemoryCertificates;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;

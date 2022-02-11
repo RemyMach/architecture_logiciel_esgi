@@ -1,17 +1,16 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.user.CreateContractor;
-import fr.remy.cc1.application.user.CreateContractorCommandHandler;
+import fr.remy.cc1.member.application.CreateContractor;
+import fr.remy.cc1.member.application.CreateContractorCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
-import fr.remy.cc1.domain.company.Company;
-import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
-import fr.remy.cc1.domain.user.contractor.Contractors;
-import fr.remy.cc1.infrastructure.contractor.InMemoryContractors;
+import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.member.domain.user.Users;
+import fr.remy.cc1.member.domain.user.contractor.Contractors;
+import fr.remy.cc1.member.infrastructure.contractor.InMemoryContractors;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
+import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;

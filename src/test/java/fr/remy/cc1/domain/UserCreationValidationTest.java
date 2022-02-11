@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain;
 
-import fr.remy.cc1.domain.user.*;
+import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeAll;

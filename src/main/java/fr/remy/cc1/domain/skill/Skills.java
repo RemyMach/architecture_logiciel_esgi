@@ -1,7 +1,7 @@
 package fr.remy.cc1.domain.skill;
 
-import fr.remy.cc1.domain.invoice.Invoice;
-import fr.remy.cc1.domain.invoice.InvoiceId;
+import fr.remy.cc1.subscription.domain.invoice.Invoice;
+import fr.remy.cc1.subscription.domain.invoice.InvoiceId;
 
 import java.util.List;
 

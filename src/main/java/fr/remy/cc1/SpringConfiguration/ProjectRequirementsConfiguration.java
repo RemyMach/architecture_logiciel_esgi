@@ -1,12 +1,12 @@
 package fr.remy.cc1.SpringConfiguration;
 
-import fr.remy.cc1.application.CreateProjectRequirementsCommandHandler;
-import fr.remy.cc1.application.project.ActivateProjectEventMessengerSubscription;
-import fr.remy.cc1.application.project.RegisteredProjectRequirementsEvent;
-import fr.remy.cc1.domain.location.LatLng;
-import fr.remy.cc1.domain.location.LocationGeocoding;
-import fr.remy.cc1.domain.project.Projects;
-import fr.remy.cc1.domain.project.ProjectsRequirements;
+import fr.remy.cc1.project.application.CreateProjectRequirementsCommandHandler;
+import fr.remy.cc1.project.application.ActivateProjectEventMessengerSubscription;
+import fr.remy.cc1.project.application.RegisteredProjectRequirementsEvent;
+import fr.remy.cc1.project.domain.location.LatLng;
+import fr.remy.cc1.project.domain.location.LocationGeocoding;
+import fr.remy.cc1.project.domain.project.Projects;
+import fr.remy.cc1.project.domain.project.ProjectsRequirements;
 import fr.remy.cc1.infrastructure.location.InMemoryGeocoding;
 import fr.remy.cc1.infrastructure.project.InMemoryProjectsRequirements;
 import fr.remy.cc1.infrastructure.project.ProjectRequirementsCreationEventBus;

@@ -1,16 +1,16 @@
 package fr.remy.cc1.domain;
 
-import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
-import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
-import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
-import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
+import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
+import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEvent;
+import fr.remy.cc1.subscription.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
+import fr.remy.cc1.subscription.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
 import fr.remy.cc1.application.mail.*;
-import fr.remy.cc1.application.user.RegisterContractorEvent;
-import fr.remy.cc1.application.user.RegisterTradesmanEvent;
-import fr.remy.cc1.application.user.RegisteredUserEvent;
-import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.member.application.RegisterContractorEvent;
+import fr.remy.cc1.member.application.RegisterTradesmanEvent;
+import fr.remy.cc1.member.application.RegisteredUserEvent;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Subscriber;

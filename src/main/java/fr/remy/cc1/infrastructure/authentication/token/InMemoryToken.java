@@ -1,6 +1,6 @@
 package fr.remy.cc1.infrastructure.authentication.token;
 
-import fr.remy.cc1.domain.user.UserId;
+import fr.remy.cc1.member.domain.user.UserId;
 import fr.remy.cc1.exposition.authentication.Token;
 import fr.remy.cc1.exposition.authentication.TokenId;
 import fr.remy.cc1.exposition.authentication.Tokens;

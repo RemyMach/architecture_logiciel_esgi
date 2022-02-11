@@ -1,11 +1,11 @@
 package fr.remy.cc1.application.mail;
 
 import fr.remy.cc1.application.UserDTO;
-import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
+import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.domain.mail.Content;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.Message;
-import fr.remy.cc1.domain.user.Email;
+import fr.remy.cc1.member.domain.user.Email;
 import fr.remy.cc1.kernel.event.Subscriber;
 
 public class SubscriptionPaymentFailedEventMessengerSubscription implements Subscriber<SubscriptionPaymentFailedEvent> {

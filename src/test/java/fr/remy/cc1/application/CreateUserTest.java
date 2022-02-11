@@ -1,15 +1,15 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.user.CreateUser;
-import fr.remy.cc1.application.user.CreateUserCommandHandler;
+import fr.remy.cc1.member.application.CreateUser;
+import fr.remy.cc1.member.application.CreateUserCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
-import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.user.UserCategoryCreator;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.member.domain.user.UserCategoryCreator;
+import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
+import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;

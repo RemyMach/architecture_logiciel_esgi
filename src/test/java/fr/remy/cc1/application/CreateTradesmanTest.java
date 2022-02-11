@@ -1,16 +1,16 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.user.CreateTradesman;
-import fr.remy.cc1.application.user.CreateTradesmanCommandHandler;
+import fr.remy.cc1.member.application.CreateTradesman;
+import fr.remy.cc1.member.application.CreateTradesmanCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
-import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.user.Tradesman.Tradesmans;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.member.domain.user.Tradesman.Tradesmans;
+import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.infrastructure.tradesman.InMemoryTradesmans;
+import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
+import fr.remy.cc1.member.infrastructure.tradesman.InMemoryTradesmans;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;

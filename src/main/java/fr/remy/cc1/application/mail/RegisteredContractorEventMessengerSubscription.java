@@ -1,13 +1,11 @@
 package fr.remy.cc1.application.mail;
 
 import fr.remy.cc1.application.UserDTO;
-import fr.remy.cc1.application.user.RegisterContractorEvent;
-import fr.remy.cc1.application.user.RegisterTradesmanEvent;
-import fr.remy.cc1.application.user.RegisteredUserEvent;
+import fr.remy.cc1.member.application.RegisterContractorEvent;
 import fr.remy.cc1.domain.mail.Content;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.Message;
-import fr.remy.cc1.domain.user.Email;
+import fr.remy.cc1.member.domain.user.Email;
 import fr.remy.cc1.kernel.event.Subscriber;
 
 public class RegisteredContractorEventMessengerSubscription implements Subscriber<RegisterContractorEvent> {

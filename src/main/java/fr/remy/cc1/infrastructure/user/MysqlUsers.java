@@ -1,7 +1,7 @@
 package fr.remy.cc1.infrastructure.user;
 
-import fr.remy.cc1.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.domain.user.*;
+import fr.remy.cc1.member.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 
 import java.util.List;

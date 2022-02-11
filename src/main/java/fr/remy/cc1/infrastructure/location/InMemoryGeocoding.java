@@ -1,8 +1,8 @@
 package fr.remy.cc1.infrastructure.location;
 
-import fr.remy.cc1.domain.location.Address;
-import fr.remy.cc1.domain.location.LatLng;
-import fr.remy.cc1.domain.location.LocationGeocoding;
+import fr.remy.cc1.project.domain.location.Address;
+import fr.remy.cc1.project.domain.location.LatLng;
+import fr.remy.cc1.project.domain.location.LocationGeocoding;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.LocationValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;

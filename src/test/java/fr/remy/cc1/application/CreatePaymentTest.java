@@ -1,14 +1,14 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.payment.CreatePayment;
-import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
+import fr.remy.cc1.subscription.application.payment.CreatePayment;
+import fr.remy.cc1.subscription.application.payment.CreatePaymentCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
-import fr.remy.cc1.domain.invoice.Invoices;
-import fr.remy.cc1.domain.payment.creditcard.CreditCards;
-import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
-import fr.remy.cc1.domain.user.*;
-import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
+import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
+import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
+import fr.remy.cc1.member.domain.user.*;
+import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
+import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.user.InMemoryUsers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
