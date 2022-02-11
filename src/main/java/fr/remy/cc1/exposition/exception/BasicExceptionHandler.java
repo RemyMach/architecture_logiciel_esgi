@@ -23,8 +23,6 @@ public class BasicExceptionHandler {
 
     @ExceptionHandler({ValidationException.class, PaymentProcessValidationException.class})
     public ResponseEntity<CustomErrorResponse> handleValidationException(BasicException e) {
-        System.out.println(e);
-        System.out.println(DomainExceptionsDictionaryMapper.codeToExpositionErrors);
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionaryMapper.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create(e.getErrorCode());
         return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
