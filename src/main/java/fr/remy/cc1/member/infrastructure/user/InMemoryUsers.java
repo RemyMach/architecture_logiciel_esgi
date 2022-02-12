@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure.user;
+package fr.remy.cc1.member.infrastructure.user;
 
 import fr.remy.cc1.member.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
@@ -19,8 +19,12 @@ import java.util.stream.Collectors;
 public class InMemoryUsers implements Users {
 
     private final AtomicInteger counter = new AtomicInteger(0);
-    private final Map<UserId, User> usersData = new ConcurrentHashMap<>();
+    private final Map<UserId, User> usersData;
     private final Map<UserId, SubscriptionOffer> userSubscriptionData = new ConcurrentHashMap<>();
+
+    public InMemoryUsers(Map<UserId, User> usersData) {
+        this.usersData = usersData;
+    }
 
     @Override
     public void save(User user) {

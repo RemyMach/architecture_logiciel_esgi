@@ -25,8 +25,8 @@ import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.subscription.infrastructure.paypalAccounts.InMemoryPaypalAccounts;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
 
 import java.math.BigDecimal;

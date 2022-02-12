@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure.user;
+package fr.remy.cc1.member.infrastructure.user;
 
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;

@@ -10,7 +10,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryContractors implements Contractors {
-    private final Map<UserId, Contractor> contractorsData = new ConcurrentHashMap<>();
+
+    private final Map<UserId, Contractor> contractorsData;
+
+    public InMemoryContractors(Map<UserId, Contractor> contractorsData) {
+        this.contractorsData = contractorsData;
+    }
 
     @Override
     public void save(Contractor contractor) {

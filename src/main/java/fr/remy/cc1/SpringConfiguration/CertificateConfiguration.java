@@ -5,7 +5,7 @@ import fr.remy.cc1.certificate.domain.Certificate;
 import fr.remy.cc1.certificate.domain.Certificates;
 import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.member.domain.user.UserId;
-import fr.remy.cc1.infrastructure.certificates.InMemoryCertificates;
+import fr.remy.cc1.certificate.infrastructure.InMemoryCertificates;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.springframework.context.annotation.Bean;

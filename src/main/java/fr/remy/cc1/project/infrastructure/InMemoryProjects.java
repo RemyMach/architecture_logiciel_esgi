@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure.project;
+package fr.remy.cc1.project.infrastructure;
 
 import fr.remy.cc1.project.domain.project.Project;
 import fr.remy.cc1.project.domain.project.ProjectId;

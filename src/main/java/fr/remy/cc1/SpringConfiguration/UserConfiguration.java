@@ -1,6 +1,9 @@
 package fr.remy.cc1.SpringConfiguration;
 
 import fr.remy.cc1.application.mail.*;
+import fr.remy.cc1.member.data.ContractorsData;
+import fr.remy.cc1.member.data.TradesmansData;
+import fr.remy.cc1.member.data.UsersData;
 import fr.remy.cc1.subscription.application.payment.CreatePaymentCommandHandler;
 import fr.remy.cc1.subscription.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
@@ -25,8 +28,8 @@ import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.subscription.infrastructure.paypalAccounts.InMemoryPaypalAccounts;
 import fr.remy.cc1.member.infrastructure.tradesman.InMemoryTradesmans;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
@@ -40,14 +43,33 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 @EnableScheduling
 public class UserConfiguration {
 
     @Bean
+    public ContractorsData contractorsData() {
+        ContractorsData.setup(new ConcurrentHashMap<>());
+        return ContractorsData.getInstance();
+    }
+
+    @Bean
+    public UsersData usersData() {
+        UsersData.setup(new ConcurrentHashMap<>());
+        return UsersData.getInstance();
+    }
+
+    @Bean
+    public TradesmansData tradesmansData() {
+        TradesmansData.setup(new ConcurrentHashMap<>());
+        return TradesmansData.getInstance();
+    }
+
+    @Bean
     public Users users() {
-        return new InMemoryUsers();
+        return new InMemoryUsers(usersData().data);
     }
 
     @Bean
@@ -142,12 +164,12 @@ public class UserConfiguration {
 
     @Bean
     public Tradesmans tradesmans() {
-        return new InMemoryTradesmans();
+        return new InMemoryTradesmans(tradesmansData().data);
     }
 
     @Bean
     public Contractors contractors() {
-        return new InMemoryContractors();
+        return new InMemoryContractors(contractorsData().data);
     }
 
     @Bean

@@ -9,7 +9,7 @@ import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

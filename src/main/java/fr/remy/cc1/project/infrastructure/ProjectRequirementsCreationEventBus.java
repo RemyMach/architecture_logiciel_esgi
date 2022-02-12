@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure.project;
+package fr.remy.cc1.project.infrastructure;
 
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;

@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure.certificates;
+package fr.remy.cc1.certificate.infrastructure;
 
 import fr.remy.cc1.certificate.domain.Certificate;
 import fr.remy.cc1.certificate.domain.CertificateId;

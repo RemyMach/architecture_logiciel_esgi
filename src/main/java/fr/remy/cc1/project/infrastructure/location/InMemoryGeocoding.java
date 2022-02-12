@@ -1,4 +1,4 @@
-package fr.remy.cc1.infrastructure.location;
+package fr.remy.cc1.project.infrastructure.location;
 
 import fr.remy.cc1.project.domain.location.Address;
 import fr.remy.cc1.project.domain.location.LatLng;

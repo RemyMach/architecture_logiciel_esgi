@@ -9,7 +9,7 @@ import fr.remy.cc1.subscription.domain.creditcard.*;
 import fr.remy.cc1.subscription.domain.currency.Currency;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;

@@ -12,7 +12,7 @@ import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
 
 import java.util.Arrays;
