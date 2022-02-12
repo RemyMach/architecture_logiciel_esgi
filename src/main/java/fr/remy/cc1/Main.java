@@ -1,5 +1,8 @@
 package fr.remy.cc1;
 
+import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
 import fr.remy.cc1.member.application.CreateTradesman;
 import fr.remy.cc1.member.application.CreateTradesmanCommandHandler;
 import fr.remy.cc1.member.application.RegisteredTradesmanEvent;
@@ -16,6 +19,7 @@ import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEventMessen
 import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEventMessengerSubscription;
 import fr.remy.cc1.subscription.application.payment.CreatePayment;
 import fr.remy.cc1.subscription.application.payment.CreatePaymentCommandHandler;
+import fr.remy.cc1.subscription.domain.SubscriptionOffers;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
@@ -29,6 +33,7 @@ import fr.remy.cc1.subscription.infrastructure.paypalAccounts.InMemoryPaypalAcco
 import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
+import fr.remy.cc1.subscription.infrastructure.subscriptions.InMemorySubscriptionOffers;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -44,9 +49,15 @@ public class Main {
         EmailSender emailSender = EmailSender.getInstance();
         emailSender.setMail(new SandboxMail());
 
-        Users users = new InMemoryUsers(new ConcurrentHashMap<>());
         Tradesmans tradesmans = new InMemoryTradesmans(new ConcurrentHashMap<>());
-        Invoices invoices = new InMemoryInvoices();
+
+        SubscriptionInvoiceData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        UsersData.setup(new ConcurrentHashMap<>());
+        Users users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
+        SubscriptionOffers subscriptionOffers = new InMemorySubscriptionOffers(new ConcurrentHashMap<>(), UserSubscriptionsData.getInstance().data, SubscriptionInvoiceData.getInstance().data);
+        Invoices invoices = new InMemoryInvoices(SubscriptionInvoiceData.getInstance().data);
+
         CreditCards creditCards = new InMemoryCreditCards();
         PaypalAccounts paypalAccounts = new InMemoryPaypalAccounts();
 
@@ -60,7 +71,7 @@ public class Main {
         String emailStub = "pomme@pomme.fr";
         String passwordStub = "aZertyu9?";
         CreatePaymentCommandHandler createPaymentCommandHandler = new CreatePaymentCommandHandler(creditCards, paypalAccounts, users);
-        CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler = new CreateSubscriptionOfferCommandHandler(creditCards, paypalAccounts, users, UserCreationEventBus.getInstance());
+        CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler = new CreateSubscriptionOfferCommandHandler(creditCards, paypalAccounts, subscriptionOffers, users, UserCreationEventBus.getInstance());
         CreateTradesmanCommandHandler createTradesmanCommandHandler = new CreateTradesmanCommandHandler(users, tradesmans, UserCreationEventBus.getInstance());
         BigDecimal priceSubscriptionOfferStub = new BigDecimal("12.05");
         int discountPercentageStub = 10;

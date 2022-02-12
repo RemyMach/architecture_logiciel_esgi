@@ -1,10 +1,9 @@
 package fr.remy.cc1.domain;
 
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.subscription.domain.*;
 import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.subscription.domain.Money;
-import fr.remy.cc1.subscription.domain.Payment;
-import fr.remy.cc1.subscription.domain.PaymentCardMiddleware;
-import fr.remy.cc1.subscription.domain.PaymentDirector;
 import fr.remy.cc1.subscription.domain.creditcard.*;
 import fr.remy.cc1.subscription.domain.currency.Currency;
 import fr.remy.cc1.member.domain.user.*;
@@ -13,6 +12,7 @@ import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
+import fr.remy.cc1.subscription.infrastructure.subscriptions.InMemorySubscriptionOffers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +31,7 @@ public class PaymentCreditCardProcessTest {
     CreditCardId creditCardIdStub;
     CreditCard creditCard;
 
+    SubscriptionOffers subscriptionOffers;
     SubscriptionOffer subscriptionOffer;
     MockCreditCardValidityMiddleware mockCreditCardChecker;
     MockCreditCardValidityTradeMiddleware mockCreditCardApproveTradesman;
@@ -42,13 +43,16 @@ public class PaymentCreditCardProcessTest {
     void initStubValues() throws ValidationException {
         this.creditCards = new InMemoryCreditCards();
         this.creditCardIdStub = creditCards.nextIdentity();
-        Users users = new InMemoryUsers(new ConcurrentHashMap<>());
-        this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", new Email("pomme@pomme.fr"), new Password("aZertyu9?"), UserCategoryCreator.getValueOf("TRADESMAN"));
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        Users users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
+        this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", new Email("pomme@pomme.fr"), new Password("aZertyu9?"), UserCategory.ofCode("tradesman"));
         this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 321, "POMME", user.getUserId());
         this.mockCreditCardChecker = new MockCreditCardValidityMiddleware();
         this.mockCreditCardApproveTradesman = new MockCreditCardValidityTradeMiddleware();
         this.mockCreditCardContractor = new MockCreditCardBankAccountValidityMiddleware();
-        this.subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal("10"), Currency.EUR), 10);
+        this.subscriptionOffers = new InMemorySubscriptionOffers(new ConcurrentHashMap<>(),UserSubscriptionsData.getInstance().data, new ConcurrentHashMap<>());
+        this.subscriptionOffer = SubscriptionOffer.of(new Money(new BigDecimal("10"), Currency.EUR), 10, this.subscriptionOffers.nextIdentity(), this.user.getUserId());
     }
 
     @Test

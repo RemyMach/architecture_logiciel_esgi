@@ -26,9 +26,7 @@ public class SubscriptionSuccessTerminatedEventInvoiceSubscription implements Su
     public void accept(SubscriptionSuccessTerminatedEvent subscriptionSuccessTerminatedEvent) {
         final InvoiceId invoiceId = this.invoices.nextIdentity();
         Invoice invoice = Invoice.of(invoiceId, subscriptionSuccessTerminatedEvent.getMoney(), subscriptionSuccessTerminatedEvent.getUserId(), PaymentState.VALIDATE, ZonedDateTime.now());
-        this.invoices.save(invoice);
-        //TODO peut-être mettre un autre event ici
-        SubscriptionOffer subscriptionOffer = subscriptionSuccessTerminatedEvent.getSubscriptionOffer().addInvoice(invoice);
-        this.users.saveSubscriptionOffer(subscriptionSuccessTerminatedEvent.getUserId(), subscriptionOffer);
+        this.invoices.saveSubscriptionInvoice(invoice, subscriptionSuccessTerminatedEvent.getSubscriptionOffer().getSubscriptionOfferId());
+        this.users.saveSubscriptionOffer(subscriptionSuccessTerminatedEvent.getUserId(), subscriptionSuccessTerminatedEvent.getSubscriptionOffer());
     }
 }

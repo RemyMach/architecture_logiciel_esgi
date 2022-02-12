@@ -26,8 +26,7 @@ public class SubscriptionPaymentFailedEventInvoiceSubscription implements Subscr
     public void accept(SubscriptionPaymentFailedEvent subscriptionPaymentFailedEvent) {
         final InvoiceId invoiceId = this.invoices.nextIdentity();
         Invoice invoice = Invoice.of(invoiceId, subscriptionPaymentFailedEvent.getMoney(), subscriptionPaymentFailedEvent.getUserId(), PaymentState.REJECTED, ZonedDateTime.now());
-        this.invoices.save(invoice);
-        SubscriptionOffer subscriptionOffer = subscriptionPaymentFailedEvent.getSubscriptionOffer().addInvoice(invoice);
-        this.users.saveSubscriptionOffer(subscriptionPaymentFailedEvent.getUserId(), subscriptionOffer);
+        this.invoices.saveSubscriptionInvoice(invoice, subscriptionPaymentFailedEvent.getSubscriptionOffer().getSubscriptionOfferId());
+        this.users.saveSubscriptionOffer(subscriptionPaymentFailedEvent.getUserId(), subscriptionPaymentFailedEvent.getSubscriptionOffer());
     }
 }

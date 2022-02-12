@@ -2,6 +2,9 @@ package fr.remy.cc1.application;
 
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
 import fr.remy.cc1.subscription.application.payment.CreatePayment;
 import fr.remy.cc1.subscription.application.payment.CreatePaymentCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
@@ -46,10 +49,13 @@ public class CreatePaymentTest {
         creditCardName = "Pomme";
         userId = UserId.of(1);
 
-
-        this.users = new InMemoryUsers(new ConcurrentHashMap<>());
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
         this.myUserIdStub = users.nextIdentity();
-        this.invoices = new InMemoryInvoices();
+        SubscriptionInvoiceData.setup(new ConcurrentHashMap<>());
+        SubscriptionInvoiceData subscriptionInvoiceData = SubscriptionInvoiceData.getInstance();
+        this.invoices = new InMemoryInvoices(subscriptionInvoiceData.data);
         this.creditCards = new InMemoryCreditCards();
 
         UserCreationStub.initUserCreationTest(this.users, this.invoices);

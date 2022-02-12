@@ -2,6 +2,12 @@ package fr.remy.cc1.application;
 
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.subscription.domain.SubscriptionOffers;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOfferId;
+import fr.remy.cc1.subscription.infrastructure.subscriptions.InMemorySubscriptionOffers;
 import fr.remy.cc1.subscription.scheduler.PaymentScheduler;
 import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
@@ -36,22 +42,29 @@ public class PaymentSchedulerTest {
 
     PaymentScheduler paymentScheduler;
     Users users;
+    SubscriptionOffers subscriptionOffers;
     UserId myUserIdStub;
     Invoices invoices;
     CreditCards creditCards;
     PaypalAccounts paypalAccounts;
     UserId userId;
+    SubscriptionOfferId subscriptionOfferId;
 
     @BeforeEach
     void initStubValues() {
         userId = UserId.of(1);
-        this.users = new InMemoryUsers(new ConcurrentHashMap<>());
+        subscriptionOfferId = SubscriptionOfferId.of(1);
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        SubscriptionInvoiceData.setup(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
+        this.subscriptionOffers = new InMemorySubscriptionOffers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data, SubscriptionInvoiceData.getInstance().data);
         this.myUserIdStub = users.nextIdentity();
-        this.invoices = new InMemoryInvoices();
+        this.invoices = new InMemoryInvoices(SubscriptionInvoiceData.getInstance().data);
         this.creditCards = new InMemoryCreditCards();
 
         UserCreationStub.initUserCreationTest(this.users, this.invoices);
-        this.paymentScheduler = new PaymentScheduler(users, creditCards, paypalAccounts, UserCreationEventBus.getInstance());
+        this.paymentScheduler = new PaymentScheduler(subscriptionOffers, creditCards, paypalAccounts, UserCreationEventBus.getInstance());
     }
 
     @Test
@@ -62,18 +75,20 @@ public class PaymentSchedulerTest {
         this.users.save(user);
         this.creditCards.save(creditCard, userId);
         Money money = Money.of(new BigDecimal(10), Currency.EUR);
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(Money.of(new BigDecimal(10), Currency.EUR), 10, subscriptionOfferId, userId);
+        this.users.saveSubscriptionOffer(userId, subscriptionOffer);
         Invoice invoice = Invoice.of(invoices.nextIdentity(), money,userId, PaymentState.VALIDATE, ZonedDateTime.now().minusMonths(1));
-        this.invoices.save(invoice);
-        this.users.saveSubscriptionOffer(userId, SubscriptionOffer.of(Money.of(new BigDecimal(10), Currency.EUR), 10, List.of(invoice)));
+        this.invoices.saveSubscriptionInvoice(invoice, subscriptionOfferId);
+        this.users.saveSubscriptionOffer(userId, subscriptionOffer);
 
         assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().size(), 1);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().get(0).getPaymentState(), PaymentState.VALIDATE);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).size(), 1);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).get(0).getPaymentState(), PaymentState.VALIDATE);
 
         paymentScheduler.PayUserSubscriptionOffer();
 
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().size(), 2);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().get(1).getPaymentState(), PaymentState.VALIDATE);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).size(), 2);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).get(1).getPaymentState(), PaymentState.VALIDATE);
         assertEquals(MockEmailSender.getInstance().getCountMail(), 1);
     }
 
@@ -85,17 +100,19 @@ public class PaymentSchedulerTest {
         this.users.save(user);
         this.creditCards.save(creditCard, userId);
         Money money = Money.of(new BigDecimal(10), Currency.EUR);
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(Money.of(new BigDecimal(10), Currency.EUR), 10, subscriptionOfferId, userId);
+        this.users.saveSubscriptionOffer(userId, subscriptionOffer);
         Invoice invoice = Invoice.of(invoices.nextIdentity(), money,userId, PaymentState.VALIDATE, ZonedDateTime.now().minusDays(20));
-        this.invoices.save(invoice);
-        this.users.saveSubscriptionOffer(userId, SubscriptionOffer.of(Money.of(new BigDecimal(10), Currency.EUR), 10, List.of(invoice)));
+        this.invoices.saveSubscriptionInvoice(invoice, subscriptionOfferId);
+        this.users.saveSubscriptionOffer(userId, subscriptionOffer);
 
         assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().size(), 1);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().get(0).getPaymentState(), PaymentState.VALIDATE);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).size(), 1);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).get(0).getPaymentState(), PaymentState.VALIDATE);
 
         paymentScheduler.PayUserSubscriptionOffer();
 
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().size(), 1);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).size(), 1);
         assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
     }
 
@@ -107,17 +124,19 @@ public class PaymentSchedulerTest {
         this.users.save(user);
         this.creditCards.save(creditCard, userId);
         Money money = Money.of(new BigDecimal(10), Currency.EUR);
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(Money.of(new BigDecimal(10), Currency.EUR), 10, subscriptionOfferId, userId);
+        this.users.saveSubscriptionOffer(userId, subscriptionOffer);
         Invoice invoice = Invoice.of(invoices.nextIdentity(), money,userId, PaymentState.REJECTED, ZonedDateTime.now().minusMonths(1));
-        this.invoices.save(invoice);
-        this.users.saveSubscriptionOffer(userId, SubscriptionOffer.of(Money.of(new BigDecimal(10), Currency.EUR), 10, List.of(invoice)));
+        this.invoices.saveSubscriptionInvoice(invoice, subscriptionOfferId);
+        this.users.saveSubscriptionOffer(userId, subscriptionOffer);
 
         assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().size(), 1);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().get(0).getPaymentState(), PaymentState.REJECTED);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).size(), 1);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).get(0).getPaymentState(), PaymentState.REJECTED);
 
         paymentScheduler.PayUserSubscriptionOffer();
 
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().size(), 1);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).size(), 1);
         assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
     }
 
@@ -131,17 +150,20 @@ public class PaymentSchedulerTest {
         Money money = Money.of(new BigDecimal(10), Currency.EUR);
         Invoice invoice = Invoice.of(invoices.nextIdentity(), money,userId, PaymentState.VALIDATE, ZonedDateTime.now().minusMonths(1).minusDays(1));
         Invoice invoice2 = Invoice.of(invoices.nextIdentity(), money,userId, PaymentState.REJECTED, ZonedDateTime.now().minusDays(1));
-        this.invoices.save(invoice);
-        this.users.saveSubscriptionOffer(userId, SubscriptionOffer.of(Money.of(new BigDecimal(10), Currency.EUR), 10, List.of(invoice, invoice2)));
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(Money.of(new BigDecimal(10), Currency.EUR), 10, subscriptionOfferId, userId);
+        this.users.saveSubscriptionOffer(userId, subscriptionOffer);
+        this.invoices.saveSubscriptionInvoice(invoice, subscriptionOfferId);
+        this.invoices.saveSubscriptionInvoice(invoice2, subscriptionOfferId);
+        this.users.saveSubscriptionOffer(userId, subscriptionOffer);
 
         assertEquals(MockEmailSender.getInstance().getCountMail(), 0);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().size(), 2);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().get(1).getPaymentState(), PaymentState.REJECTED);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).size(), 2);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).get(1).getPaymentState(), PaymentState.REJECTED);
 
         paymentScheduler.PayUserSubscriptionOffer();
 
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().size(), 3);
-        assertEquals(this.users.getSubscriptionOffer(userId).getInvoiceList().get(2).getPaymentState(), PaymentState.VALIDATE);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).size(), 3);
+        assertEquals(this.invoices.findBySubscriptionOfferId(subscriptionOfferId).get(2).getPaymentState(), PaymentState.VALIDATE);
         assertEquals(MockEmailSender.getInstance().getCountMail(), 1);
     }
 

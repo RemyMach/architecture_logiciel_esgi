@@ -1,6 +1,7 @@
 package fr.remy.cc1.subscription.application;
 
 import fr.remy.cc1.subscription.application.payment.PaymentService;
+import fr.remy.cc1.subscription.domain.SubscriptionOffers;
 import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.Money;
@@ -25,14 +26,16 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
 
     private final CreditCards creditCards;
     private final PaypalAccounts paypalAccounts;
+    private final SubscriptionOffers subscriptionOffers;
     private final Users users;
     private final EventBus<Event> eventBus;
 
-    public CreateSubscriptionOfferCommandHandler(CreditCards creditCards, PaypalAccounts paypalAccounts, Users users, EventBus<Event> eventBus) {
+    public CreateSubscriptionOfferCommandHandler(CreditCards creditCards, PaypalAccounts paypalAccounts, SubscriptionOffers subscriptionOffers, Users users, EventBus<Event> eventBus) {
         this.creditCards = creditCards;
         this.paypalAccounts = paypalAccounts;
         this.users = users;
         this.eventBus = eventBus;
+        this.subscriptionOffers = subscriptionOffers;
     }
 
     @Override
@@ -48,9 +51,7 @@ public class CreateSubscriptionOfferCommandHandler implements CommandHandler<Cre
                     List.of(new CreditCardValidityMiddleware(), new CreditCardValidityTradeMiddleware(), new CreditCardBankAccountValidityMiddleware()))
             );
         }
-        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, CurrencyCreator.getValueOf(command.currency)), command.discountPercentage, new ArrayList<Invoice>());
-        CurrencyValidator.getInstance().test(command.currency);
-
+        SubscriptionOffer subscriptionOffer = SubscriptionOffer.of(new Money(command.amount, CurrencyCreator.getValueOf(command.currency)), command.discountPercentage, this.subscriptionOffers.nextIdentity(), user.getUserId());
         PaymentService paymentService = new PaymentService(payment, this.eventBus);
         paymentService.paySubscription(subscriptionOffer, user);
         return null;

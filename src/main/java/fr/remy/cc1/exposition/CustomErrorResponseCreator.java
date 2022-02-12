@@ -12,7 +12,6 @@ public class CustomErrorResponseCreator {
     }
 
     public CustomErrorResponse create(String errorCode) {
-        System.out.println(errorCode);
         String message;
         if(!this.codeToExpositionErrorsMap.containsKey(errorCode)) {
             errorCode = "system_error";

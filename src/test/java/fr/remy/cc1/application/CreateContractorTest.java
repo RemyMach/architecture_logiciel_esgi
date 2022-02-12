@@ -1,5 +1,8 @@
 package fr.remy.cc1.application;
 
+import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
 import fr.remy.cc1.member.application.CreateContractor;
 import fr.remy.cc1.member.application.CreateContractorCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
@@ -53,9 +56,13 @@ public class CreateContractorTest {
         this.companyName = "Lucas";
 
         this.contractors = new InMemoryContractors(new ConcurrentHashMap<>());
-        this.users = new InMemoryUsers(new ConcurrentHashMap<>());
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
         this.myUserIdStub = users.nextIdentity();
-        this.invoices = new InMemoryInvoices();
+        SubscriptionInvoiceData.setup(new ConcurrentHashMap<>());
+        SubscriptionInvoiceData subscriptionInvoiceData = SubscriptionInvoiceData.getInstance();
+        this.invoices = new InMemoryInvoices(subscriptionInvoiceData.data);
         UserCreationStub.initUserCreationTest(this.users, this.invoices);
         this.createContractorCommandHandler = new CreateContractorCommandHandler(users, contractors, UserCreationEventBus.getInstance());
     }

@@ -1,5 +1,6 @@
 package fr.remy.cc1.subscription.infrastructure.invoices;
 
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOfferId;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.invoice.InvoiceId;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
@@ -19,6 +20,16 @@ public class MysqlInvoices implements Invoices {
 
     @Override
     public List<Invoice> findAll() {
+        throw new UnsupportedOperationException("Not yet implemented.");
+    }
+
+    @Override
+    public void saveSubscriptionInvoice(Invoice invoice, SubscriptionOfferId subscriptionOfferId) {
+        throw new UnsupportedOperationException("Not yet implemented.");
+    }
+
+    @Override
+    public List<Invoice> findBySubscriptionOfferId(SubscriptionOfferId subscriptionOfferId) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 }

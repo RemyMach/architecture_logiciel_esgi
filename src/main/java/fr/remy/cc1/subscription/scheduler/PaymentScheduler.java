@@ -1,6 +1,7 @@
 package fr.remy.cc1.subscription.scheduler;
 
 import fr.remy.cc1.subscription.application.payment.PaymentService;
+import fr.remy.cc1.subscription.domain.SubscriptionOffers;
 import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.Payment;
 import fr.remy.cc1.subscription.domain.PaymentDirector;
@@ -8,7 +9,6 @@ import fr.remy.cc1.subscription.domain.creditcard.*;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccount;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
 import fr.remy.cc1.domain.User;
-import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
@@ -20,14 +20,14 @@ import java.util.stream.Collectors;
 
 public class PaymentScheduler {
 
-    private final Users users;
+    private final SubscriptionOffers subscriptionOffers;
     private final CreditCards creditCards;
     private final PaypalAccounts paypalAccounts;
     private final EventBus<Event> eventBus;
 
     @Autowired
-    public PaymentScheduler(Users users, CreditCards creditCards, PaypalAccounts paypalAccounts, EventBus<Event> eventBus) {
-        this.users = users;
+    public PaymentScheduler(SubscriptionOffers subscriptionOffers, CreditCards creditCards, PaypalAccounts paypalAccounts, EventBus<Event> eventBus) {
+        this.subscriptionOffers = subscriptionOffers;
         this.creditCards = creditCards;
         this.paypalAccounts = paypalAccounts;
         this.eventBus = eventBus;
@@ -35,8 +35,7 @@ public class PaymentScheduler {
 
     @Scheduled(cron = "* * 18 * * *")
     public void PayUserSubscriptionOffer() {
-        List<User> userList = users.findAllByPaidSinceMoreThanCertainMonthAgo(1).stream().collect(Collectors.toList());
-
+        List<User> userList = subscriptionOffers.findAllByPaidSinceMoreThanCertainMonthAgo(1).stream().collect(Collectors.toList());
 
         for(User user: userList) {
             this.payUserSubscription(user);
@@ -44,7 +43,7 @@ public class PaymentScheduler {
     }
 
     private void payUserSubscription(User user) {
-        SubscriptionOffer subscriptionOffer = users.getSubscriptionOffer(user.getUserId());
+        SubscriptionOffer subscriptionOffer = subscriptionOffers.findByUserId(user.getUserId());
         Payment payment = null;
         CreditCard creditCard = this.creditCards.findByUserId(user.getUserId());
         if(creditCard != null) {

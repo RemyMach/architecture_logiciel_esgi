@@ -3,6 +3,8 @@ package fr.remy.cc1.certificate;
 import fr.remy.cc1.certificate.domain.Certificate;
 import fr.remy.cc1.certificate.domain.Certificates;
 import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.certificate.infrastructure.InMemoryCertificates;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
@@ -28,7 +30,9 @@ public class CertificateCreationValidationTest {
 
     @BeforeEach
     void setup(){
-        users = new InMemoryUsers(new ConcurrentHashMap<>());
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
         certificates = new InMemoryCertificates();
     }
 

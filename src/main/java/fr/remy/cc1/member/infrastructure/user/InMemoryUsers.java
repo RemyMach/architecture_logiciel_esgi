@@ -22,15 +22,16 @@ public class InMemoryUsers implements Users {
 
     private final AtomicInteger counter = new AtomicInteger(0);
     private final Map<UserId, User> usersData;
-    private final Map<UserId, SubscriptionOffer> userSubscriptionData = new ConcurrentHashMap<>();
+    private final Map<UserId, SubscriptionOffer> userSubscriptionData;
 
-    public InMemoryUsers(Map<UserId, User> usersData) {
+    public InMemoryUsers(Map<UserId, User> usersData, Map<UserId, SubscriptionOffer> userSubscriptionData) {
         this.usersData = usersData;
+        this.userSubscriptionData = userSubscriptionData;
     }
 
     @Override
     public void save(User user) {
-        usersData.put(user.getUserId(), user);
+        this.usersData.put(user.getUserId(), user);
     }
 
     @Override
@@ -68,32 +69,6 @@ public class InMemoryUsers implements Users {
         return usersData.values().stream().collect(Collectors.toList());
     }
 
-    @Override
-    public List<User> findAllByPaidSinceMoreThanCertainMonthAgo(int months) {
-        ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        ZonedDateTime thresholdZoneDateTime = zonedDateTime.minusMonths(months);
-        return List.copyOf(usersData.values().stream().filter( user -> {
-            SubscriptionOffer subscriptionOffer = this.getSubscriptionOffer(user.getUserId());
-            if(subscriptionOffer == null) return false;
-            List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
-            if(InvoiceList.size() > 0) {
-                int i = 0;
-                while(i >= 0 && InvoiceList.get(i).getPaymentState() == PaymentState.REJECTED) {
-
-                    i--;
-                }
-                if(i == -1) return false;
-                Invoice invoice = InvoiceList.get(i);
-                Instant thresholdInstantTime = thresholdZoneDateTime.toInstant().truncatedTo( ChronoUnit.DAYS );
-                Instant lastInvoiceInstantTime = invoice.getCreateAt().toInstant().truncatedTo( ChronoUnit.DAYS );
-                if(invoice.getPaymentState() == PaymentState.REJECTED) return false;
-                if(lastInvoiceInstantTime.isBefore(thresholdInstantTime) || lastInvoiceInstantTime.equals(thresholdInstantTime)) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList()));
-    }
 
     @Override
     public SubscriptionOffer getSubscriptionOffer(UserId userId) {

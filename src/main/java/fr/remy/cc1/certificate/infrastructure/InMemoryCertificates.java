@@ -52,7 +52,6 @@ public class InMemoryCertificates implements Certificates {
     @Override
     public CertificateId nextIdentity() {
         int counter1 = counter.incrementAndGet();
-        System.out.println(counter1);
         return CertificateId.of(counter1);
     }
 

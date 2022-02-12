@@ -6,8 +6,10 @@ import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.subscription.domain.PaymentState;
-import fr.remy.cc1.subscription.domain.Subscriptions;
+import fr.remy.cc1.subscription.domain.SubscriptionOffers;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOfferId;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
+import fr.remy.cc1.subscription.domain.invoice.InvoiceId;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -15,15 +17,25 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class InMemorySubscriptions implements Subscriptions {
+public class InMemorySubscriptionOffers implements SubscriptionOffers {
 
-    private final Map<UserId, SubscriptionOffer> userSubscriptionData = new ConcurrentHashMap<>();
+    private final AtomicInteger counter = new AtomicInteger(0);
+    private final Map<UserId, SubscriptionOffer> userSubscriptionData;
     private final Map<UserId, User> usersData;
+    private final Map<SubscriptionOfferId, List<Invoice>> subscriptionInvoicesData;
 
-    public InMemorySubscriptions(Map<UserId, User> usersData) {
+    public InMemorySubscriptionOffers(Map<UserId, User> usersData, Map<UserId, SubscriptionOffer> userSubscriptionData, Map<SubscriptionOfferId, List<Invoice>> subscriptionInvoicesData) {
         this.usersData = usersData;
+        this.userSubscriptionData = userSubscriptionData;
+        this.subscriptionInvoicesData = subscriptionInvoicesData;
+    }
+
+    @Override
+    public SubscriptionOfferId nextIdentity()  {
+        return SubscriptionOfferId.of(counter.incrementAndGet());
     }
 
     @Override
@@ -45,9 +57,9 @@ public class InMemorySubscriptions implements Subscriptions {
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
         ZonedDateTime thresholdZoneDateTime = zonedDateTime.minusMonths(months);
         return List.copyOf(usersData.values().stream().filter( user -> {
-            SubscriptionOffer subscriptionOffer = this.getSubscriptionOffer(user.getUserId());
+            SubscriptionOffer subscriptionOffer = this.findByUserId(user.getUserId());
             if(subscriptionOffer == null) return false;
-            List<Invoice> InvoiceList = subscriptionOffer.getInvoiceList();
+            List<Invoice> InvoiceList = subscriptionInvoicesData.get(subscriptionOffer.getSubscriptionOfferId());
             if(InvoiceList.size() > 0) {
                 int i = 0;
                 while(i >= 0 && InvoiceList.get(i).getPaymentState() == PaymentState.REJECTED) {
@@ -68,7 +80,7 @@ public class InMemorySubscriptions implements Subscriptions {
     }
 
     @Override
-    public SubscriptionOffer getSubscriptionOffer(UserId userId) {
-        return userSubscriptionData.get(userId);
+    public SubscriptionOffer findByUserId(UserId userId) {
+        return this.userSubscriptionData.get(userId);
     }
 }
