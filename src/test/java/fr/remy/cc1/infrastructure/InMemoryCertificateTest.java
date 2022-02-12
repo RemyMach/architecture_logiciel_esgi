@@ -8,7 +8,7 @@ import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.certificate.infrastructure.InMemoryCertificates;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
-import fr.remy.cc1.member.infrastructure.user.InMemory.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

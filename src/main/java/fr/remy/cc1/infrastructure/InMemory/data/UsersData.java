@@ -1,4 +1,4 @@
-package fr.remy.cc1.member.infrastructure.user.InMemory;
+package fr.remy.cc1.infrastructure.InMemory.data;
 
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
