@@ -1,5 +1,13 @@
 package fr.remy.cc1.project.application;
 
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.kernel.CommandHandler;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.ValidationException;
+import fr.remy.cc1.kernel.event.Event;
+import fr.remy.cc1.kernel.event.EventBus;
+import fr.remy.cc1.legacy.domain.skill.Skill;
+import fr.remy.cc1.legacy.domain.trades.Trade;
 import fr.remy.cc1.project.domain.duration.Duration;
 import fr.remy.cc1.project.domain.duration.DurationUnit;
 import fr.remy.cc1.project.domain.location.Address;
@@ -8,14 +16,6 @@ import fr.remy.cc1.project.domain.location.LocationGeocoding;
 import fr.remy.cc1.project.domain.project.*;
 import fr.remy.cc1.subscription.domain.Money;
 import fr.remy.cc1.subscription.domain.currency.CurrencyCreator;
-import fr.remy.cc1.legacy.domain.skill.Skill;
-import fr.remy.cc1.legacy.domain.trades.Trade;
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
-import fr.remy.cc1.kernel.CommandHandler;
-import fr.remy.cc1.kernel.error.ExceptionsDictionary;
-import fr.remy.cc1.kernel.error.ValidationException;
-import fr.remy.cc1.kernel.event.Event;
-import fr.remy.cc1.kernel.event.EventBus;
 
 import java.util.Arrays;
 import java.util.List;

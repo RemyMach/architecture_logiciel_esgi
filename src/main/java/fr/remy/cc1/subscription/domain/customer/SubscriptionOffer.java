@@ -1,13 +1,7 @@
 package fr.remy.cc1.subscription.domain.customer;
 
 import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
-import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.Money;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public final class SubscriptionOffer {
 

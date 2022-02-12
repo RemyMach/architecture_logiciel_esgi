@@ -1,10 +1,10 @@
 package fr.remy.cc1.project.infrastructure;
 
-import fr.remy.cc1.project.domain.project.ProjectRequirements;
-import fr.remy.cc1.project.domain.project.ProjectId;
-import fr.remy.cc1.project.domain.project.ProjectsRequirements;
 import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.project.domain.project.ProjectId;
+import fr.remy.cc1.project.domain.project.ProjectRequirements;
+import fr.remy.cc1.project.domain.project.ProjectsRequirements;
 
 import java.util.List;
 import java.util.Map;

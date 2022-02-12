@@ -2,19 +2,15 @@ package fr.remy.cc1.member.infrastructure.user;
 
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.subscription.domain.invoice.Invoice;
-import fr.remy.cc1.subscription.domain.PaymentState;
-import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.member.domain.user.Email;
+import fr.remy.cc1.member.domain.user.Password;
+import fr.remy.cc1.member.domain.user.Users;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 

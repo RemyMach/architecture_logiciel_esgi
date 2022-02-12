@@ -2,15 +2,18 @@ package fr.remy.cc1.member.application;
 
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.member.domain.company.Company;
-import fr.remy.cc1.member.domain.user.*;
-import fr.remy.cc1.member.domain.user.contractor.Contractor;
-import fr.remy.cc1.member.domain.user.contractor.ContractorCreationCandidate;
-import fr.remy.cc1.member.domain.user.contractor.Contractors;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
+import fr.remy.cc1.member.domain.company.Company;
+import fr.remy.cc1.member.domain.user.Email;
+import fr.remy.cc1.member.domain.user.Password;
+import fr.remy.cc1.member.domain.user.UserCategory;
+import fr.remy.cc1.member.domain.user.Users;
+import fr.remy.cc1.member.domain.user.contractor.Contractor;
+import fr.remy.cc1.member.domain.user.contractor.ContractorCreationCandidate;
+import fr.remy.cc1.member.domain.user.contractor.Contractors;
 
 public class CreateContractorCommandHandler implements CommandHandler<CreateContractor, UserId> {
 

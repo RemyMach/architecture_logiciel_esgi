@@ -1,9 +1,9 @@
 package fr.remy.cc1.subscription.infrastructure.paypalAccounts;
 
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.subscription.domain.paypal.PayPalAccountId;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccount;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
-import fr.remy.cc1.domain.UserId;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

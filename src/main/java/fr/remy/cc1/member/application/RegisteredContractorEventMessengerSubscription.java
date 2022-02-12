@@ -3,8 +3,8 @@ package fr.remy.cc1.member.application;
 import fr.remy.cc1.domain.mail.Content;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.Message;
-import fr.remy.cc1.member.domain.user.Email;
 import fr.remy.cc1.kernel.event.Subscriber;
+import fr.remy.cc1.member.domain.user.Email;
 
 public class RegisteredContractorEventMessengerSubscription implements Subscriber<RegisteredContractorEvent> {
 

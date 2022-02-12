@@ -1,11 +1,11 @@
 package fr.remy.cc1.project.infrastructure.location;
 
-import fr.remy.cc1.project.domain.location.Address;
-import fr.remy.cc1.project.domain.location.LatLng;
-import fr.remy.cc1.project.domain.location.LocationGeocoding;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.LocationValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
+import fr.remy.cc1.project.domain.location.Address;
+import fr.remy.cc1.project.domain.location.LatLng;
+import fr.remy.cc1.project.domain.location.LocationGeocoding;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

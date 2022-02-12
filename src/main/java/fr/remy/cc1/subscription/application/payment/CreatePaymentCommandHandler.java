@@ -1,5 +1,8 @@
 package fr.remy.cc1.subscription.application.payment;
 
+import fr.remy.cc1.domain.User;
+import fr.remy.cc1.kernel.CommandHandler;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.subscription.domain.PaymentMethod.PaymentMethod;
 import fr.remy.cc1.subscription.domain.PaymentMethod.PaymentMethodCreator;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
@@ -8,9 +11,6 @@ import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
 import fr.remy.cc1.subscription.domain.paypal.PayPalAccountId;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccount;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
-import fr.remy.cc1.domain.User;
-import fr.remy.cc1.member.domain.user.Users;
-import fr.remy.cc1.kernel.CommandHandler;
 
 public class CreatePaymentCommandHandler implements CommandHandler<CreatePayment, Void> {
 

@@ -1,7 +1,7 @@
 package fr.remy.cc1.project.application;
 
-import fr.remy.cc1.project.domain.project.ProjectState;
 import fr.remy.cc1.kernel.event.Subscriber;
+import fr.remy.cc1.project.domain.project.ProjectState;
 
 public class ActivateProjectEventMessengerSubscription implements Subscriber<RegisteredProjectRequirementsEvent> {
 

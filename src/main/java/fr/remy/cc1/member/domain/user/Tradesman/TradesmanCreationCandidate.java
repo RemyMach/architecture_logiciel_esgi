@@ -1,10 +1,10 @@
 package fr.remy.cc1.member.domain.user.Tradesman;
 
+import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.member.domain.user.Email;
 import fr.remy.cc1.member.domain.user.Password;
 import fr.remy.cc1.member.domain.user.UserCandidate;
 import fr.remy.cc1.member.domain.user.UserCategory;
-import fr.remy.cc1.kernel.error.ValidationException;
 
 public class TradesmanCreationCandidate {
 

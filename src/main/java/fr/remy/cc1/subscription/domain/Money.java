@@ -1,7 +1,7 @@
 package fr.remy.cc1.subscription.domain;
 
-import fr.remy.cc1.subscription.domain.currency.Currency;
 import fr.remy.cc1.kernel.error.CurrencyValidationException;
+import fr.remy.cc1.subscription.domain.currency.Currency;
 
 import java.math.BigDecimal;
 import java.util.Objects;

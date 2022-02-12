@@ -1,9 +1,9 @@
 package fr.remy.cc1.subscription.infrastructure.creditcards;
 
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCardId;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
-import fr.remy.cc1.domain.UserId;
 
 public class MysqlCreditCards implements CreditCards {
     @Override

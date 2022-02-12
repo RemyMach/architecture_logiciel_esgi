@@ -1,10 +1,10 @@
 package fr.remy.cc1.subscription.infrastructure.payment;
 
+import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.subscription.domain.Money;
 import fr.remy.cc1.subscription.domain.Payment;
 import fr.remy.cc1.subscription.domain.PaymentCardMiddleware;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
-import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 
 public class CreditCardPayment implements Payment {
 

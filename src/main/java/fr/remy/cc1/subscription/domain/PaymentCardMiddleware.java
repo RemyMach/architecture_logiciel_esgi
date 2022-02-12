@@ -1,7 +1,7 @@
 package fr.remy.cc1.subscription.domain;
 
-import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
+import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
 
 public interface PaymentCardMiddleware {
     

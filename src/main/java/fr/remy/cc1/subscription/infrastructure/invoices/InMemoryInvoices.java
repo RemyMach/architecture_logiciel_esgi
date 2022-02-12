@@ -1,6 +1,5 @@
 package fr.remy.cc1.subscription.infrastructure.invoices;
 
-import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.customer.SubscriptionOfferId;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.invoice.InvoiceId;

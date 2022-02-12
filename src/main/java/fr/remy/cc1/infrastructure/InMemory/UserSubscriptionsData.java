@@ -1,6 +1,5 @@
 package fr.remy.cc1.infrastructure.InMemory;
 
-import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 

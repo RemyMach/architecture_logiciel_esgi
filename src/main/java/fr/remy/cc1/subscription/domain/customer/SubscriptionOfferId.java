@@ -1,7 +1,5 @@
 package fr.remy.cc1.subscription.domain.customer;
 
-import fr.remy.cc1.domain.UserId;
-
 import java.util.Objects;
 
 public class SubscriptionOfferId {
