@@ -39,4 +39,8 @@ public class Certificate {
     public CertificateId getCertificateId() {
         return certificateId;
     }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
 }

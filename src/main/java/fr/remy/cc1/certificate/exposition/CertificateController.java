@@ -28,7 +28,9 @@ public class CertificateController {
     @GetMapping(path = "/{certificateId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CertificateResponse> getCertificateById(@PathVariable("certificateId") int certificateId) throws Exception {
         final Certificate certificate = this.retrieveCertificateByIdHandler.handle(new RetrieveCertificateById(CertificateId.of(certificateId)));
-        CertificateResponse certificateResponse = new CertificateResponse(certificate.getCertificateId().getValue(), certificate.getName(), certificate.getLink());
+        System.out.println(certificate);
+        CertificateResponse certificateResponse = new CertificateResponse(certificate.getCertificateId().getValue(), certificate.getName(), certificate.getLink(), certificate.getSkills());
+        System.out.println(certificateResponse);
         return ResponseEntity.ok(certificateResponse);
     }
 }

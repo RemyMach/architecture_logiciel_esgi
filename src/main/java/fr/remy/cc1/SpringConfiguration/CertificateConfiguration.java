@@ -19,14 +19,14 @@ import java.util.List;
 public class CertificateConfiguration {
 
     @Bean
-    public Certificates certificates() throws NoSuchEntityException, ValidationException {
+    public Certificates certificates() throws ValidationException {
         Certificates certificates =  new InMemoryCertificates();
         certificates.save(UserId.of(0), Certificate.of(certificates.nextIdentity(), "jean", "http://pomme", List.of(Skill.of("cleaning"))));
         return certificates;
     }
 
     @Bean
-    public RetrieveCertificateByIdHandler retrieveCertificateByIdHandler() throws NoSuchEntityException, ValidationException {
+    public RetrieveCertificateByIdHandler retrieveCertificateByIdHandler() throws ValidationException {
         return new RetrieveCertificateByIdHandler(certificates());
     }
 }
