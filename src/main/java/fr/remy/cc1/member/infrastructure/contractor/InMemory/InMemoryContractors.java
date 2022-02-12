@@ -1,4 +1,4 @@
-package fr.remy.cc1.member.infrastructure.contractor;
+package fr.remy.cc1.member.infrastructure.contractor.InMemory;
 
 import fr.remy.cc1.member.domain.user.UserId;
 import fr.remy.cc1.member.domain.user.contractor.Contractor;

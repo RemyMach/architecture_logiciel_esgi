@@ -9,10 +9,12 @@ import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemory.InMemoryUsers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -43,7 +45,7 @@ public class CreatePaymentTest {
         userId = UserId.of(1);
 
 
-        this.users = new InMemoryUsers();
+        this.users = new InMemoryUsers(new ConcurrentHashMap<>());
         this.myUserIdStub = users.nextIdentity();
         this.invoices = new InMemoryInvoices();
         this.creditCards = new InMemoryCreditCards();

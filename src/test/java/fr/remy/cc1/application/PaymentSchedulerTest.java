@@ -16,7 +16,7 @@ import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemory.InMemoryUsers;
 import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -42,7 +43,7 @@ public class PaymentSchedulerTest {
     @BeforeEach
     void initStubValues() {
         userId = UserId.of(1);
-        this.users = new InMemoryUsers();
+        this.users = new InMemoryUsers(new ConcurrentHashMap<>());
         this.myUserIdStub = users.nextIdentity();
         this.invoices = new InMemoryInvoices();
         this.creditCards = new InMemoryCreditCards();

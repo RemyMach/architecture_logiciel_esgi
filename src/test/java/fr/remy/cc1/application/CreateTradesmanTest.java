@@ -10,14 +10,16 @@ import fr.remy.cc1.member.domain.user.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.member.infrastructure.tradesman.InMemoryTradesmans;
-import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.tradesman.InMemory.InMemoryTradesmans;
+import fr.remy.cc1.member.infrastructure.user.InMemory.InMemoryUsers;
 import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -45,8 +47,8 @@ public class CreateTradesmanTest {
         this.passwordStub = "aZertyu9?";
         this.userCategoryStub = "TRADESMAN";
 
-        this.tradesmans = new InMemoryTradesmans();
-        this.users = new InMemoryUsers();
+        this.tradesmans = new InMemoryTradesmans(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(new ConcurrentHashMap<>());
         this.myUserIdStub = users.nextIdentity();
         this.invoices = new InMemoryInvoices();
         UserCreationStub.initUserCreationTest(this.users, this.invoices);

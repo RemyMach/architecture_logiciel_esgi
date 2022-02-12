@@ -1,4 +1,4 @@
-package fr.remy.cc1.member.infrastructure.user;
+package fr.remy.cc1.member.infrastructure.user.InMemory;
 
 import fr.remy.cc1.member.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;

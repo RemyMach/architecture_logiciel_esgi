@@ -8,13 +8,14 @@ import fr.remy.cc1.member.domain.user.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.certificate.infrastructure.InMemoryCertificates;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
-import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemory.InMemoryUsers;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -28,7 +29,7 @@ public class InMemoryCertificateTest {
 
     @BeforeEach
     void setup(){
-        users = new InMemoryUsers();
+        users = new InMemoryUsers(new ConcurrentHashMap<>());
         certificates = new InMemoryCertificates();
     }
 

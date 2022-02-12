@@ -1,8 +1,7 @@
-package fr.remy.cc1.member.data;
+package fr.remy.cc1.member.infrastructure.user.InMemory;
 
 import fr.remy.cc1.member.domain.user.User;
 import fr.remy.cc1.member.domain.user.UserId;
-import fr.remy.cc1.member.domain.user.contractor.Contractor;
 
 import java.util.Map;
 

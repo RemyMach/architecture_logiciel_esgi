@@ -25,7 +25,7 @@ import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.subscription.infrastructure.paypalAccounts.InMemoryPaypalAccounts;
-import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemory.InMemoryUsers;
 import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
 
@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Main {
 
@@ -42,7 +43,7 @@ public class Main {
         EmailSender emailSender = EmailSender.getInstance();
         emailSender.setMail(new SandboxMail());
 
-        Users users = new InMemoryUsers();
+        Users users = new InMemoryUsers(new ConcurrentHashMap<>());
         Invoices invoices = new InMemoryInvoices();
         CreditCards creditCards = new InMemoryCreditCards();
         PaypalAccounts paypalAccounts = new InMemoryPaypalAccounts();

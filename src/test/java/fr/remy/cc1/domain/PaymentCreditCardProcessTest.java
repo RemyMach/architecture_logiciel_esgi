@@ -9,7 +9,7 @@ import fr.remy.cc1.subscription.domain.creditcard.*;
 import fr.remy.cc1.subscription.domain.currency.Currency;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemory.InMemoryUsers;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -41,7 +42,7 @@ public class PaymentCreditCardProcessTest {
     void initStubValues() throws ValidationException {
         this.creditCards = new InMemoryCreditCards();
         this.creditCardIdStub = creditCards.nextIdentity();
-        Users users = new InMemoryUsers();
+        Users users = new InMemoryUsers(new ConcurrentHashMap<>());
         this.user = User.of(users.nextIdentity(), "Machavoine", "Rémy", new Email("pomme@pomme.fr"), new Password("aZertyu9?"), UserCategoryCreator.getValueOf("TRADESMAN"));
         this.creditCard = CreditCard.of(this.creditCardIdStub, "1234567262", 1203, 321, "POMME", user.getUserId());
         this.mockCreditCardChecker = new MockCreditCardValidityMiddleware();

@@ -10,13 +10,15 @@ import fr.remy.cc1.member.domain.user.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemory.InMemoryUsers;
 import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -44,7 +46,7 @@ public class CreateUserTest {
         this.userCategoryStub = "TRADESMAN";
 
 
-        this.users = new InMemoryUsers();
+        this.users = new InMemoryUsers(new ConcurrentHashMap<>());
         this.myUserIdStub = users.nextIdentity();
         this.invoices = new InMemoryInvoices();
         UserCreationStub.initUserCreationTest(this.users, this.invoices);

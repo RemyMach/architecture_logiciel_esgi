@@ -1,4 +1,4 @@
-package fr.remy.cc1.member.infrastructure.tradesman;
+package fr.remy.cc1.member.infrastructure.tradesman.InMemory;
 
 import fr.remy.cc1.member.domain.user.Tradesman.Tradesman;
 import fr.remy.cc1.member.domain.user.Tradesman.Tradesmans;
