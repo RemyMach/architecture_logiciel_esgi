@@ -6,7 +6,7 @@ import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
-import fr.remy.cc1.legacy.domain.skill.Skill;
+import fr.remy.cc1.certificate.domain.skill.Skill;
 import fr.remy.cc1.legacy.domain.trades.Trade;
 import fr.remy.cc1.project.domain.duration.Duration;
 import fr.remy.cc1.project.domain.duration.DurationUnit;

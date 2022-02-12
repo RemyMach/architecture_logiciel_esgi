@@ -7,7 +7,7 @@ import fr.remy.cc1.certificate.infrastructure.InMemoryCertificates;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.ValidationException;
-import fr.remy.cc1.legacy.domain.skill.Skill;
+import fr.remy.cc1.certificate.domain.skill.Skill;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

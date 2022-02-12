@@ -1,4 +1,4 @@
-package fr.remy.cc1.legacy.domain.skill;
+package fr.remy.cc1.certificate.domain.skill;
 
 import java.util.Objects;
 

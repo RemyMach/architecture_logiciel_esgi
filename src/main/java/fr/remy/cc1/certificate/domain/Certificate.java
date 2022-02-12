@@ -3,7 +3,7 @@ package fr.remy.cc1.certificate.domain;
 import fr.remy.cc1.kernel.error.CertificateValidationException;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
-import fr.remy.cc1.legacy.domain.skill.Skill;
+import fr.remy.cc1.certificate.domain.skill.Skill;
 
 import java.util.List;
 
