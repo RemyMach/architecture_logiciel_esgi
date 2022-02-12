@@ -1,6 +1,7 @@
 package fr.remy.cc1.member.application;
 
-import fr.remy.cc1.application.UserDTO;
+import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.member.domain.user.Tradesman.Tradesman;
 import fr.remy.cc1.member.domain.user.Tradesman.TradesmanCreationCandidate;
@@ -27,9 +28,9 @@ public class CreateTradesmanCommandHandler implements CommandHandler<CreateTrade
         TradesmanCreationCandidate tradesmanCreationCandidate = TradesmanCreationCandidate.of(createTradesman.lastname, createTradesman.firstname, new Email(createTradesman.email), new Password(createTradesman.password));
         final UserId userId = users.nextIdentity();
         Tradesman tradesman = Tradesman.of(userId, tradesmanCreationCandidate.lastname, tradesmanCreationCandidate.firstname, tradesmanCreationCandidate.email, tradesmanCreationCandidate.password, null, null, null, null);
-        this.tradesmans.save(tradesman);
         this.users.save(User.of(tradesman.getUserId(), tradesman.getLastname(), tradesman.getFirstname(), tradesman.getEmail(), tradesman.getPassword(), UserCategory.TRADESMAN));
-        this.eventBus.send(RegisterTradesmanEvent.withUser(new UserDTO(userId, tradesman.getLastname(), tradesman.getFirstname(), tradesman.getEmail())));
+        this.tradesmans.save(tradesman);
+        this.eventBus.send(RegisteredTradesmanEvent.withUser(new UserDTO(userId, tradesman.getLastname(), tradesman.getFirstname(), tradesman.getEmail())));
         return userId;
     }
 }

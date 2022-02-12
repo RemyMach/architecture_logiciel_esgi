@@ -1,13 +1,10 @@
 package fr.remy.cc1.SpringConfiguration;
 
-import fr.remy.cc1.application.mail.*;
 import fr.remy.cc1.member.infrastructure.contractor.InMemory.ContractorsData;
 import fr.remy.cc1.member.infrastructure.tradesman.InMemory.TradesmansData;
 import fr.remy.cc1.member.infrastructure.user.InMemory.UsersData;
+import fr.remy.cc1.subscription.application.*;
 import fr.remy.cc1.subscription.application.payment.CreatePaymentCommandHandler;
-import fr.remy.cc1.subscription.application.CreateSubscriptionOfferCommandHandler;
-import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
-import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
 import fr.remy.cc1.subscription.scheduler.PaymentScheduler;
@@ -99,8 +96,8 @@ public class UserConfiguration {
         );
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
-                RegisterContractorEvent.class, Collections.singletonList(new RegisteredContractorEventMessengerSubscription(emailSender)),
-                RegisterTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(emailSender)),
+                RegisteredContractorEvent.class, Collections.singletonList(new RegisteredContractorEventMessengerSubscription(emailSender)),
+                RegisteredTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(emailSender)),
                 SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
@@ -116,10 +113,6 @@ public class UserConfiguration {
         return new InMemoryPaypalAccounts();
     }
 
-    @Bean
-    public CreateUserCommandHandler createUserCommandHandler() {
-        return new CreateUserCommandHandler(users(), userCreationEventBus());
-    }
 
     @Bean
     public CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler() {

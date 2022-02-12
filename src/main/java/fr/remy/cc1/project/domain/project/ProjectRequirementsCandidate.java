@@ -3,8 +3,8 @@ package fr.remy.cc1.project.domain.project;
 import fr.remy.cc1.project.domain.duration.Duration;
 import fr.remy.cc1.project.domain.location.Location;
 import fr.remy.cc1.subscription.domain.Money;
-import fr.remy.cc1.domain.skill.Skill;
-import fr.remy.cc1.domain.trades.Trade;
+import fr.remy.cc1.legacy.domain.skill.Skill;
+import fr.remy.cc1.legacy.domain.trades.Trade;
 
 import java.util.List;
 import java.util.Objects;

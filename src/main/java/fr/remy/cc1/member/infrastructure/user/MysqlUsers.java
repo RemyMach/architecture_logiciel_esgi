@@ -1,6 +1,8 @@
 package fr.remy.cc1.member.infrastructure.user;
 
-import fr.remy.cc1.member.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 

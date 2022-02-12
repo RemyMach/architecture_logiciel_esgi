@@ -1,7 +1,7 @@
 package fr.remy.cc1.subscription.application;
 
 import fr.remy.cc1.subscription.application.payment.PaymentService;
-import fr.remy.cc1.member.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.Money;
 import fr.remy.cc1.subscription.domain.Payment;
@@ -12,7 +12,7 @@ import fr.remy.cc1.subscription.domain.creditcard.*;
 import fr.remy.cc1.subscription.domain.currency.CurrencyCreator;
 import fr.remy.cc1.subscription.domain.currency.CurrencyValidator;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
-import fr.remy.cc1.member.domain.user.User;
+import fr.remy.cc1.domain.User;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.event.Event;

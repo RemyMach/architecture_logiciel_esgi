@@ -1,27 +1,25 @@
 package fr.remy.cc1.member.application;
 
-import fr.remy.cc1.application.UserDTO;
 import fr.remy.cc1.kernel.event.ApplicationEvent;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventId;
 
 import java.time.ZonedDateTime;
 
-//TODO deprecated
-public class RegisteredUserEvent implements Event, ApplicationEvent {
+public class RegisteredTradesmanEvent implements Event, ApplicationEvent {
 
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
     private final UserDTO userDTO;
 
-    private RegisteredUserEvent(EventId eventId, ZonedDateTime occurredDate, UserDTO userDTO) {
+    private RegisteredTradesmanEvent(EventId eventId, ZonedDateTime occurredDate, UserDTO userDTO) {
         this.eventId = eventId;
         this.occurredDate = occurredDate;
         this.userDTO = userDTO;
     }
 
-    public static RegisteredUserEvent withUser(UserDTO userDTO) {
-        return new RegisteredUserEvent(EventId.create(), ZonedDateTime.now(), userDTO);
+    public static RegisteredTradesmanEvent withUser(UserDTO userDTO) {
+        return new RegisteredTradesmanEvent(EventId.create(), ZonedDateTime.now(), userDTO);
     }
 
     @Override

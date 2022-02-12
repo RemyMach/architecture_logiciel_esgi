@@ -1,9 +1,10 @@
 package fr.remy.cc1.member.domain.user.Tradesman;
 
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.project.domain.location.Country;
 import fr.remy.cc1.subscription.domain.Money;
-import fr.remy.cc1.domain.skill.Skill;
-import fr.remy.cc1.domain.trades.ETrade;
+import fr.remy.cc1.legacy.domain.skill.Skill;
+import fr.remy.cc1.legacy.domain.trades.ETrade;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.kernel.error.ValidationException;
 

@@ -1,13 +1,12 @@
 package fr.remy.cc1.member.infrastructure.contractor.InMemory;
 
-import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.user.contractor.Contractor;
 import fr.remy.cc1.member.domain.user.contractor.Contractors;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryContractors implements Contractors {
 

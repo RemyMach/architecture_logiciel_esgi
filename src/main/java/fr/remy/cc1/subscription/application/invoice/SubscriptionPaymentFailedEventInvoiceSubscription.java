@@ -1,7 +1,7 @@
 package fr.remy.cc1.subscription.application.invoice;
 
 import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
-import fr.remy.cc1.member.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.invoice.InvoiceId;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;

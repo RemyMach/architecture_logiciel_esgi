@@ -1,6 +1,7 @@
 package fr.remy.cc1.member.application;
 
-import fr.remy.cc1.application.UserDTO;
+import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.company.Company;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.member.domain.user.contractor.Contractor;
@@ -32,7 +33,7 @@ public class CreateContractorCommandHandler implements CommandHandler<CreateCont
         Contractor contractor = Contractor.of(userId, contractorCreationCandidate.lastname, contractorCreationCandidate.firstname, contractorCreationCandidate.email, contractorCreationCandidate.password, contractorCreationCandidate.company);
         this.contractors.save(contractor);
         this.users.save(User.of(contractor.getUserId(), contractor.getLastname(), contractor.getFirstname(), contractor.getEmail(), contractor.getPassword(), UserCategory.CONTRACTOR));
-        this.eventBus.send(RegisterContractorEvent.withUser(new UserDTO(userId, contractor.getLastname(), contractor.getFirstname(), contractor.getEmail())));
+        this.eventBus.send(RegisteredContractorEvent.withUser(new UserDTO(userId, contractor.getLastname(), contractor.getFirstname(), contractor.getEmail())));
         return userId;
     }
 }

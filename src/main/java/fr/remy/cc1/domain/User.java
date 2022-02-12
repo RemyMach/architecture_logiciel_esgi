@@ -1,8 +1,12 @@
-package fr.remy.cc1.member.domain.user;
+package fr.remy.cc1.domain;
 
 import fr.remy.cc1.kernel.error.ValidationException;
+import fr.remy.cc1.member.domain.user.Email;
+import fr.remy.cc1.member.domain.user.IUser;
+import fr.remy.cc1.member.domain.user.Password;
+import fr.remy.cc1.member.domain.user.UserCategory;
 
-public final class User implements IUser{
+public final class User implements IUser {
 
     private final UserId userId;
     private final String lastname;

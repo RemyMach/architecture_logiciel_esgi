@@ -2,7 +2,7 @@ package fr.remy.cc1.subscription.domain.invoice;
 
 import fr.remy.cc1.subscription.domain.Money;
 import fr.remy.cc1.subscription.domain.PaymentState;
-import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.domain.UserId;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain.trades;
+package fr.remy.cc1.legacy.domain.trades;
 
 import java.util.Objects;
 

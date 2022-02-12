@@ -1,4 +1,4 @@
-package fr.remy.cc1.member.domain.customer;
+package fr.remy.cc1.subscription.domain.customer;
 
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.Money;

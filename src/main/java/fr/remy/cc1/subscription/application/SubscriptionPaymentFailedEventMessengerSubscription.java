@@ -1,6 +1,6 @@
-package fr.remy.cc1.application.mail;
+package fr.remy.cc1.subscription.application;
 
-import fr.remy.cc1.application.UserDTO;
+import fr.remy.cc1.member.application.UserDTO;
 import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.domain.mail.Content;
 import fr.remy.cc1.domain.mail.EmailSender;

@@ -1,4 +1,4 @@
-package fr.remy.cc1.domain.skill;
+package fr.remy.cc1.legacy.domain.skill;
 
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.invoice.InvoiceId;

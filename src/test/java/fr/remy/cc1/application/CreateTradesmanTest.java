@@ -6,7 +6,7 @@ import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
 import fr.remy.cc1.member.domain.user.Tradesman.Tradesmans;
-import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;

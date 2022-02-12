@@ -1,4 +1,4 @@
-package fr.remy.cc1.member.domain.user;
+package fr.remy.cc1.domain;
 
 import fr.remy.cc1.kernel.ValueObjectId;
 

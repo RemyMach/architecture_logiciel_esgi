@@ -1,14 +1,12 @@
-package fr.remy.cc1.application.mail;
+package fr.remy.cc1.member.application;
 
-import fr.remy.cc1.application.UserDTO;
-import fr.remy.cc1.member.application.RegisterTradesmanEvent;
 import fr.remy.cc1.domain.mail.Content;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.domain.mail.Message;
 import fr.remy.cc1.member.domain.user.Email;
 import fr.remy.cc1.kernel.event.Subscriber;
 
-public class RegisteredTradesmanEventMessengerSubscription implements Subscriber<RegisterTradesmanEvent> {
+public class RegisteredTradesmanEventMessengerSubscription implements Subscriber<RegisteredTradesmanEvent> {
 
     private final EmailSender emailSender;
 
@@ -17,8 +15,8 @@ public class RegisteredTradesmanEventMessengerSubscription implements Subscriber
     }
 
     @Override
-    public void accept(RegisterTradesmanEvent registerTradesmanEvent) {
-        UserDTO userDTO = registerTradesmanEvent.getUserDTO();
+    public void accept(RegisteredTradesmanEvent registeredTradesmanEvent) {
+        UserDTO userDTO = registeredTradesmanEvent.getUserDTO();
         this.sendMail(userDTO);
     }
 

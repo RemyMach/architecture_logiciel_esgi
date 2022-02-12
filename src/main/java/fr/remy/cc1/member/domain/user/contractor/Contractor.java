@@ -1,5 +1,6 @@
 package fr.remy.cc1.member.domain.user.contractor;
 
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.company.Company;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.kernel.error.ValidationException;

@@ -1,25 +1,27 @@
 package fr.remy.cc1;
 
+import fr.remy.cc1.member.application.CreateTradesman;
+import fr.remy.cc1.member.application.CreateTradesmanCommandHandler;
+import fr.remy.cc1.member.application.RegisteredTradesmanEvent;
+import fr.remy.cc1.member.application.RegisteredTradesmanEventMessengerSubscription;
+import fr.remy.cc1.member.domain.user.Tradesman.Tradesmans;
+import fr.remy.cc1.member.infrastructure.tradesman.InMemory.InMemoryTradesmans;
 import fr.remy.cc1.subscription.application.CreateSubscriptionOffer;
 import fr.remy.cc1.subscription.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEvent;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
-import fr.remy.cc1.application.mail.RegisteredUserEventMessengerSubscription;
-import fr.remy.cc1.application.mail.SubscriptionPaymentFailedEventMessengerSubscription;
-import fr.remy.cc1.application.mail.SubscriptionSuccessTerminatedEventMessengerSubscription;
+import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEventMessengerSubscription;
+import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEventMessengerSubscription;
 import fr.remy.cc1.subscription.application.payment.CreatePayment;
 import fr.remy.cc1.subscription.application.payment.CreatePaymentCommandHandler;
-import fr.remy.cc1.member.application.CreateUser;
-import fr.remy.cc1.member.application.CreateUserCommandHandler;
-import fr.remy.cc1.member.application.RegisteredUserEvent;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.EmailSender;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
 import fr.remy.cc1.member.domain.user.UserCategoryCreator;
-import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
@@ -44,6 +46,7 @@ public class Main {
         emailSender.setMail(new SandboxMail());
 
         Users users = new InMemoryUsers(new ConcurrentHashMap<>());
+        Tradesmans tradesmans = new InMemoryTradesmans(new ConcurrentHashMap<>());
         Invoices invoices = new InMemoryInvoices();
         CreditCards creditCards = new InMemoryCreditCards();
         PaypalAccounts paypalAccounts = new InMemoryPaypalAccounts();
@@ -57,9 +60,9 @@ public class Main {
         String firstnameStub = "Rémy";
         String emailStub = "pomme@pomme.fr";
         String passwordStub = "aZertyu9?";
-        CreateUserCommandHandler createUserCommandHandler = new CreateUserCommandHandler(users, UserCreationEventBus.getInstance());
         CreatePaymentCommandHandler createPaymentCommandHandler = new CreatePaymentCommandHandler(creditCards, paypalAccounts, users);
         CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler = new CreateSubscriptionOfferCommandHandler(creditCards, paypalAccounts, users, UserCreationEventBus.getInstance());
+        CreateTradesmanCommandHandler createTradesmanCommandHandler = new CreateTradesmanCommandHandler(users, tradesmans, UserCreationEventBus.getInstance());
         BigDecimal priceSubscriptionOfferStub = new BigDecimal("12.05");
         int discountPercentageStub = 10;
 
@@ -71,8 +74,8 @@ public class Main {
         int creditCardSecurityCode = 321;
         String creditCardName = "Pomme";
 
-        CreateUser createUser = new CreateUser(lastnameStub, firstnameStub, emailStub, passwordStub, UserCategoryCreator.getValueOf(userCategoryChoiceStub));
-        UserId userId = createUserCommandHandler.handle(createUser);
+        CreateTradesman createUser = new CreateTradesman(lastnameStub, firstnameStub, emailStub, passwordStub);
+        UserId userId = createTradesmanCommandHandler.handle(createUser);
 
         CreatePayment createPayment = new CreatePayment(
                 paymentChoiceStub,
@@ -108,7 +111,7 @@ public class Main {
         );
 
         return Map.of(
-                RegisteredUserEvent.class, Collections.singletonList(new RegisteredUserEventMessengerSubscription(emailSender)),
+                RegisteredTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(emailSender)),
                 SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );

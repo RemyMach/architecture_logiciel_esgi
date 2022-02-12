@@ -1,7 +1,7 @@
 package fr.remy.cc1.subscription.domain.creditcard;
 
 import fr.remy.cc1.subscription.domain.Card;
-import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.domain.UserId;
 
 import java.util.Objects;
 

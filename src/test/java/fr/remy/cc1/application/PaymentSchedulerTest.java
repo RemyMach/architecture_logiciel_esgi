@@ -1,8 +1,10 @@
 package fr.remy.cc1.application;
 
+import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.subscription.scheduler.PaymentScheduler;
 import fr.remy.cc1.domain.UserCreationStub;
-import fr.remy.cc1.member.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;

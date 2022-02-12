@@ -1,6 +1,6 @@
 package fr.remy.cc1.member.exposition;
 
-import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.member.application.CreateContractor;
 import fr.remy.cc1.member.application.CreateContractorCommandHandler;

@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain;
 
-import fr.remy.cc1.member.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.Money;
 import fr.remy.cc1.subscription.domain.Payment;
 import fr.remy.cc1.subscription.domain.PaymentCardMiddleware;

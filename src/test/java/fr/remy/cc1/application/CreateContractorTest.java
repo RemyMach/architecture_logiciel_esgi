@@ -5,7 +5,7 @@ import fr.remy.cc1.member.application.CreateContractorCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.member.domain.user.UserId;
+import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.member.domain.user.contractor.Contractors;
 import fr.remy.cc1.member.infrastructure.contractor.InMemory.InMemoryContractors;
