@@ -3,10 +3,10 @@ package fr.remy.cc1.member.domain.user.Tradesman;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.domain.skill.Skill;
+import fr.remy.cc1.domain.trade.TradeJobs;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.project.domain.location.Country;
-import fr.remy.cc1.project.domain.trade.TradeJobs;
 
 import java.util.List;
 

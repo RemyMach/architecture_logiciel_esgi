@@ -2,6 +2,7 @@ package fr.remy.cc1.project.application;
 
 import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.domain.skill.Skill;
+import fr.remy.cc1.domain.trade.TradeJobs;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
@@ -14,9 +15,9 @@ import fr.remy.cc1.project.domain.location.Address;
 import fr.remy.cc1.project.domain.location.Location;
 import fr.remy.cc1.project.domain.location.LocationGeocoding;
 import fr.remy.cc1.project.domain.project.*;
-import fr.remy.cc1.project.domain.trade.Trade;
 import fr.remy.cc1.subscription.domain.currency.Currency;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,18 +52,23 @@ public final class CreateProjectRequirementsCommandHandler implements CommandHan
             throw new ValidationException(ExceptionsDictionary.PROJECT_REQUIREMENTS_ALREADY_EXISTS.getErrorCode(), ExceptionsDictionary.PROJECT_REQUIREMENTS_ALREADY_EXISTS.getMessage());
         }
 
-        Map<Trade, Money> tradesBudget = new ConcurrentHashMap<>();
-        for (int i = 0; i < createProjectRequirements.trade.size(); i++) {
-            tradesBudget.put(Trade.of(createProjectRequirements.trade.get(i)), Money.of(createProjectRequirements.amount.get(i), Currency.valueOf(createProjectRequirements.currency)));
+        List<TradeJobs> tradeJobs = new ArrayList<>();
+        for (String trade : createProjectRequirements.trade) {
+            tradeJobs.add(TradeJobs.getTradeFromJobName(trade));
         }
 
-        Map<Trade, Duration> tradesDuration = new ConcurrentHashMap<>();
+        Map<TradeJobs, Money> tradesBudget = new ConcurrentHashMap<>();
         for (int i = 0; i < createProjectRequirements.trade.size(); i++) {
-            tradesDuration.put(Trade.of(createProjectRequirements.trade.get(i)), Duration.of(createProjectRequirements.duration.get(i), DurationUnit.getUnitFromCode(createProjectRequirements.durationUnit.get(i))));
+            tradesBudget.put(tradeJobs.get(i), Money.of(createProjectRequirements.amount.get(i), Currency.valueOf(createProjectRequirements.currency)));
+        }
+
+        Map<TradeJobs, Duration> tradesDuration = new ConcurrentHashMap<>();
+        for (int i = 0; i < createProjectRequirements.trade.size(); i++) {
+            tradesDuration.put(tradeJobs.get(i), Duration.of(createProjectRequirements.duration.get(i), DurationUnit.getUnitFromCode(createProjectRequirements.durationUnit.get(i))));
         }
 
         ProjectRequirementsCandidate projectRequirementsCandidate = ProjectRequirementsCandidate.of(
-                List.copyOf(createProjectRequirements.trade.stream().map(Trade::of).collect(Collectors.toList())),
+                tradeJobs,
                 List.copyOf(createProjectRequirements.skills.stream().map(Skill::of).collect(Collectors.toList())),
                 tradesBudget,
                 tradesDuration,

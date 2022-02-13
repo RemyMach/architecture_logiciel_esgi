@@ -2,9 +2,9 @@ package fr.remy.cc1.project.domain.project;
 
 import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.domain.skill.Skill;
+import fr.remy.cc1.domain.trade.TradeJobs;
 import fr.remy.cc1.project.domain.duration.Duration;
 import fr.remy.cc1.project.domain.location.Location;
-import fr.remy.cc1.project.domain.trade.Trade;
 
 import java.util.List;
 import java.util.Map;
@@ -13,13 +13,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ProjectRequirementsCandidate {
 
-    public final List<Trade> tradeList;
+    public final List<TradeJobs> tradeList;
     public final List<Skill> skills;
-    public final Map<Trade, Money> tradesBudget;
-    public final Map<Trade, Duration> tradesDuration;
+    public final Map<TradeJobs, Money> tradesBudget;
+    public final Map<TradeJobs, Duration> tradesDuration;
     public final Location location;
 
-    private ProjectRequirementsCandidate(List<Trade> tradeList, List<Skill> skills, Map<Trade, Money> tradesBudget, Map<Trade, Duration> tradesDuration, Location location) {
+    private ProjectRequirementsCandidate(List<TradeJobs> tradeList, List<Skill> skills, Map<TradeJobs, Money> tradesBudget, Map<TradeJobs, Duration> tradesDuration, Location location) {
         this.tradeList = tradeList;
         this.skills = skills;
         this.tradesBudget = new ConcurrentHashMap<>(tradesBudget);
@@ -27,7 +27,7 @@ public class ProjectRequirementsCandidate {
         this.location = location;
     }
 
-    public static ProjectRequirementsCandidate of(List<Trade> tradeList, List<Skill> skills, Map<Trade, Money> tradesBudget, Map<Trade, Duration> tradesDuration, Location location) {
+    public static ProjectRequirementsCandidate of(List<TradeJobs> tradeList, List<Skill> skills, Map<TradeJobs, Money> tradesBudget, Map<TradeJobs, Duration> tradesDuration, Location location) {
         return new ProjectRequirementsCandidate(tradeList, skills, tradesBudget, tradesDuration, location);
     }
 

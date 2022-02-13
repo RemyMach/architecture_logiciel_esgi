@@ -2,9 +2,9 @@ package fr.remy.cc1.project.domain.project;
 
 import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.domain.skill.Skill;
+import fr.remy.cc1.domain.trade.TradeJobs;
 import fr.remy.cc1.project.domain.duration.Duration;
 import fr.remy.cc1.project.domain.location.Location;
-import fr.remy.cc1.project.domain.trade.Trade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +15,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class ProjectRequirements {
 
     private final ProjectId projectId;
-    private final List<Trade> tradeList;
+    private final List<TradeJobs> tradeList;
     private final List<Skill> skills;
-    private final Map<Trade, Money> tradesBudget;
-    private final Map<Trade, Duration> tradesDuration;
+    private final Map<TradeJobs, Money> tradesBudget;
+    private final Map<TradeJobs, Duration> tradesDuration;
     private final Location location;
 
 
-    private ProjectRequirements(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Map<Trade, Money> tradesBudget, Map<Trade, Duration> tradesDuration, Location location) {
+    private ProjectRequirements(ProjectId projectId, List<TradeJobs> tradeList, List<Skill> skills, Map<TradeJobs, Money> tradesBudget, Map<TradeJobs, Duration> tradesDuration, Location location) {
         this.projectId = projectId;
         this.tradeList = new ArrayList<>(tradeList);
         this.skills = new ArrayList<>(skills);
@@ -31,11 +31,11 @@ public final class ProjectRequirements {
         this.location = location;
     }
 
-    public static ProjectRequirements of(ProjectId projectId, List<Trade> tradeList, List<Skill> skills, Map<Trade, Money> tradesBudget, Map<Trade, Duration> tradesDuration, Location location) {
+    public static ProjectRequirements of(ProjectId projectId, List<TradeJobs> tradeList, List<Skill> skills, Map<TradeJobs, Money> tradesBudget, Map<TradeJobs, Duration> tradesDuration, Location location) {
         return new ProjectRequirements(projectId, tradeList, skills, tradesBudget, tradesDuration, location);
     }
 
-    public void addTrades(Trade trade) {
+    public void addTrades(TradeJobs trade) {
         this.tradeList.add(trade);
     }
 
