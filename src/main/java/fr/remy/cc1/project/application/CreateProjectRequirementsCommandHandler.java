@@ -1,24 +1,13 @@
 package fr.remy.cc1.project.application;
 
-import fr.remy.cc1.application.project.RegisteredProjectRequirementsEvent;
-import fr.remy.cc1.domain.duration.Duration;
-import fr.remy.cc1.domain.duration.DurationUnit;
-import fr.remy.cc1.domain.location.Address;
-import fr.remy.cc1.domain.location.Location;
-import fr.remy.cc1.domain.location.LocationGeocoding;
-import fr.remy.cc1.domain.payment.Money;
-import fr.remy.cc1.domain.payment.currency.CurrencyCreator;
-import fr.remy.cc1.domain.project.*;
-import fr.remy.cc1.domain.skill.Skill;
-import fr.remy.cc1.domain.trades.Trade;
+import fr.remy.cc1.certificate.domain.skill.Skill;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
-import fr.remy.cc1.certificate.domain.skill.Skill;
-import fr.remy.cc1.legacy.domain.trades.Trade;
+import fr.remy.cc1.project.domain.trade.Trade;
 import fr.remy.cc1.project.domain.duration.Duration;
 import fr.remy.cc1.project.domain.duration.DurationUnit;
 import fr.remy.cc1.project.domain.location.Address;
@@ -26,9 +15,8 @@ import fr.remy.cc1.project.domain.location.Location;
 import fr.remy.cc1.project.domain.location.LocationGeocoding;
 import fr.remy.cc1.project.domain.project.*;
 import fr.remy.cc1.subscription.domain.Money;
-import fr.remy.cc1.subscription.domain.currency.CurrencyCreator;
+import fr.remy.cc1.subscription.domain.currency.Currency;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

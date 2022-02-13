@@ -1,4 +1,4 @@
-package fr.remy.cc1.legacy.domain.trades;
+package fr.remy.cc1.project.domain.trade;
 
 import java.util.Objects;
 
@@ -28,7 +28,7 @@ public final class Trade {
 
     @Override
     public String toString() {
-        return "Trades{" +
+        return "Trade{" +
                 "name='" + name + '\'' +
                 '}';
     }

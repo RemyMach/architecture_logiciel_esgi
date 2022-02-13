@@ -1,9 +1,9 @@
 package fr.remy.cc1.member.domain.user.Tradesman;
 
+import fr.remy.cc1.certificate.domain.skill.Skill;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.kernel.error.ValidationException;
-import fr.remy.cc1.certificate.domain.skill.Skill;
-import fr.remy.cc1.legacy.domain.trades.ETrade;
+import fr.remy.cc1.project.domain.trade.TradeJobs;
 import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.project.domain.location.Country;
 import fr.remy.cc1.subscription.domain.Money;
@@ -19,12 +19,12 @@ public final class Tradesman implements IUser {
     private final Password password;
 
     //InMemory -> User(User_Category) -> Tradesman(userId)
-    private final List<ETrade> trade;
+    private final List<TradeJobs> trade;
     private final List<Skill> skills;
     private final List<Country> availabilityZone;
     private final Money dailyRate;
 
-    private Tradesman(UserId userId, String lastname, String firstname, Email email, Password password, List<ETrade> trade, List<Country> availabilityZone, Money dailyRate, List<Skill> skills) {
+    private Tradesman(UserId userId, String lastname, String firstname, Email email, Password password, List<TradeJobs> trade, List<Country> availabilityZone, Money dailyRate, List<Skill> skills) {
         this.userId = userId;
         this.lastname = lastname;
         this.firstname = firstname;
@@ -36,7 +36,7 @@ public final class Tradesman implements IUser {
         this.skills = skills;
     }
 
-    public static Tradesman of(UserId userId, String lastname, String firstname, Email email, Password password, List<ETrade> trade, List<Country> availabilityZone, Money dailyRate, List<Skill> skills) throws ValidationException {
+    public static Tradesman of(UserId userId, String lastname, String firstname, Email email, Password password, List<TradeJobs> trade, List<Country> availabilityZone, Money dailyRate, List<Skill> skills) throws ValidationException {
         UserCandidate userCandidate = UserCandidate.of(lastname, firstname, email, password, UserCategory.TRADESMAN);
         return new Tradesman(userId, userCandidate.lastname, userCandidate.firstname, userCandidate.email,  userCandidate.password, trade, availabilityZone, dailyRate, skills);
     }
@@ -46,7 +46,7 @@ public final class Tradesman implements IUser {
         return userId;
     }
 
-    public List<ETrade> getTrades() {
+    public List<TradeJobs> getTrades() {
         return trade;
     }
 

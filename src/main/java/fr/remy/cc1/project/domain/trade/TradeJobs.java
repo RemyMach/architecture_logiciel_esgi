@@ -1,18 +1,18 @@
-package fr.remy.cc1.legacy.domain.trades;
+package fr.remy.cc1.project.domain.trade;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.TradesValidationException;
 import fr.remy.cc1.kernel.error.ValidationException;
 
 import java.util.Arrays;
 
-public enum ETrade {
+public enum TradeJobs {
     LUMBERJACK("lumberjack"),
     CARPENTER("carpenter"),
     MASON("mason");
 
     private final String code;
 
-    ETrade(String code) {
+    TradeJobs(String code) {
         this.code = code;
     }
 
@@ -20,8 +20,8 @@ public enum ETrade {
         return code;
     }
 
-    public static ETrade getUnitFromCode(String code) throws ValidationException {
-        return Arrays.stream(ETrade.values())
+    public static TradeJobs getTradeFromJobName(String code) throws ValidationException {
+        return Arrays.stream(TradeJobs.values())
             .filter(trade -> trade.getCode().equals(code))
             .findFirst()
             .orElseThrow(

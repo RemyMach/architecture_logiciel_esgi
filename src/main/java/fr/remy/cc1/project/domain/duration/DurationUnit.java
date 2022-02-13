@@ -38,7 +38,7 @@ public enum DurationUnit {
 
     @Override
     public String toString() {
-        return "DurationEnum{" +
+        return "DurationUnit{" +
                 "code='" + code + '\'' +
                 '}';
     }
