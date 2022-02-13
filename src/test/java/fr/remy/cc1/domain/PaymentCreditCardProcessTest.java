@@ -1,5 +1,6 @@
 package fr.remy.cc1.domain;
 
+import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
 import fr.remy.cc1.infrastructure.InMemory.UsersData;
 import fr.remy.cc1.subscription.domain.*;

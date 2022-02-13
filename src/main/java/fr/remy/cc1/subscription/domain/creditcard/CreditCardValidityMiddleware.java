@@ -2,7 +2,7 @@ package fr.remy.cc1.subscription.domain.creditcard;
 
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
-import fr.remy.cc1.subscription.domain.Money;
+import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.subscription.domain.PaymentCardMiddleware;
 
 public class CreditCardValidityMiddleware implements PaymentCardMiddleware {

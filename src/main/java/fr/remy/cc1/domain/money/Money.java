@@ -1,4 +1,4 @@
-package fr.remy.cc1.subscription.domain;
+package fr.remy.cc1.domain.money;
 
 import fr.remy.cc1.kernel.error.CurrencyValidationException;
 import fr.remy.cc1.subscription.domain.currency.Currency;

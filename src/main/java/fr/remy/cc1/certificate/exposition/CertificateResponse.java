@@ -1,6 +1,6 @@
 package fr.remy.cc1.certificate.exposition;
 
-import fr.remy.cc1.certificate.domain.skill.Skill;
+import fr.remy.cc1.domain.skill.Skill;
 
 import java.util.List;
 

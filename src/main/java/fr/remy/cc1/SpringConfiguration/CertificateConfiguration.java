@@ -3,7 +3,7 @@ package fr.remy.cc1.SpringConfiguration;
 import fr.remy.cc1.certificate.application.RetrieveCertificateByIdHandler;
 import fr.remy.cc1.certificate.domain.Certificate;
 import fr.remy.cc1.certificate.domain.Certificates;
-import fr.remy.cc1.certificate.domain.skill.Skill;
+import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.certificate.infrastructure.InMemoryCertificates;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.kernel.error.ValidationException;

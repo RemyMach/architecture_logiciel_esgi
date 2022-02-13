@@ -5,7 +5,7 @@ import fr.remy.cc1.certificate.domain.CertificateId;
 import fr.remy.cc1.certificate.domain.Certificates;
 import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
 import fr.remy.cc1.infrastructure.InMemory.UsersData;
-import fr.remy.cc1.certificate.domain.skill.Skill;
+import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.certificate.infrastructure.InMemoryCertificates;

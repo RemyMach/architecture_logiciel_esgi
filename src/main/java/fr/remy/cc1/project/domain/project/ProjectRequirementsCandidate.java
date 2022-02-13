@@ -1,10 +1,10 @@
 package fr.remy.cc1.project.domain.project;
 
-import fr.remy.cc1.certificate.domain.skill.Skill;
+import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.project.domain.trade.Trade;
 import fr.remy.cc1.project.domain.duration.Duration;
 import fr.remy.cc1.project.domain.location.Location;
-import fr.remy.cc1.subscription.domain.Money;
+import fr.remy.cc1.domain.money.Money;
 
 import java.util.List;
 import java.util.Map;

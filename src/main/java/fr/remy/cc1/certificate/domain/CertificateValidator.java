@@ -1,6 +1,6 @@
 package fr.remy.cc1.certificate.domain;
 
-import fr.remy.cc1.certificate.domain.skill.Skill;
+import fr.remy.cc1.domain.skill.Skill;
 import fr.remy.cc1.kernel.Validator;
 import fr.remy.cc1.kernel.error.ValidationException;
 

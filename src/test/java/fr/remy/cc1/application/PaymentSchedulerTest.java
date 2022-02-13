@@ -14,7 +14,7 @@ import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.subscription.domain.Money;
+import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.subscription.domain.PaymentState;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

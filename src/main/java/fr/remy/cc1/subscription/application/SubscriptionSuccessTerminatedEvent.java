@@ -5,7 +5,7 @@ import fr.remy.cc1.kernel.event.ApplicationEvent;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventId;
 import fr.remy.cc1.member.application.UserDTO;
-import fr.remy.cc1.subscription.domain.Money;
+import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 
 import java.time.ZonedDateTime;

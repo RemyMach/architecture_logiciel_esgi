@@ -6,7 +6,7 @@ import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.subscription.application.payment.PaymentService;
-import fr.remy.cc1.subscription.domain.Money;
+import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.subscription.domain.Payment;
 import fr.remy.cc1.subscription.domain.PaymentDirector;
 import fr.remy.cc1.subscription.domain.PaymentMethod.PaymentMethod;
