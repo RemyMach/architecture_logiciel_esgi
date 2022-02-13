@@ -1,6 +1,6 @@
 package fr.remy.cc1.domain;
 
-import fr.remy.cc1.domain.user.*;
+import fr.remy.cc1.member.domain.user.*;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,7 +25,7 @@ public class UserCreationValidationTest {
     @DisplayName("should return an error because email and password are empty")
     void userHasNullPasswordAndEmail() {
         try {
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email(""), new Password(""), UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email(""), new Password(""), UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -37,7 +37,7 @@ public class UserCreationValidationTest {
     @DisplayName("should return an error because email is empty")
     void userHasNullEmail() {
         try {
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email(""), new Password("azertyuiop"),UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email(""), new Password("azertyuiop"),UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -49,7 +49,7 @@ public class UserCreationValidationTest {
     @DisplayName("should return an error because email has no domain")
     void userHasANEmailWithNoDomain() {
         try {
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@"), new Password(""), UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@"), new Password(""), UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -62,7 +62,7 @@ public class UserCreationValidationTest {
     void userHasAPasswordWithALengthLessThan8Characters() {
         try {
             String password = "aZert9!";
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -76,7 +76,7 @@ public class UserCreationValidationTest {
         try {
             String stringRepeated = "b";
             String password = "aZert9!" + stringRepeated.repeat(14);
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -89,7 +89,7 @@ public class UserCreationValidationTest {
     void userHasAPasswordWithNoUppercase() {
         try {
             String password = "azerty9!";
-            UserCandidate userCandidate = UserCandidate.of("", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of("", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -102,7 +102,7 @@ public class UserCreationValidationTest {
     void userHasAPasswordWithNoLowercase() {
         try {
             String password = "AZERTY9!";
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -115,7 +115,7 @@ public class UserCreationValidationTest {
     void userHasAPasswordWithNoNumber() {
         try {
             String password = "aZertyo!";
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -128,7 +128,7 @@ public class UserCreationValidationTest {
     void userHasAPasswordWithNoSpecialCharacters() {
         try {
             String password = "aZerty98";
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password),UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password),UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException validationException) {
@@ -141,7 +141,7 @@ public class UserCreationValidationTest {
     void userHasANotValidUserCategory() {
         try {
             String password = "aZerty98";
-            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("pomme"));
+            UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.ofCode("pomme"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             fail( "Should have thrown an exception" );
         }catch (ValidationException userCategoryValidatorException) {
@@ -154,7 +154,7 @@ public class UserCreationValidationTest {
     void userHasAValidEmailAndPassword() {
         try {
             String password = "aZertyo9!";
-            UserCandidate userCandidate = UserCandidate.of(  "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+            UserCandidate userCandidate = UserCandidate.of(  "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.ofCode("tradesman"));
             User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
         }catch (ValidationException exception) {
             fail( "Should have not thrown an exception" );
@@ -169,7 +169,7 @@ public class UserCreationValidationTest {
             for(int i = 0; i<specialCharacters.length(); i++) {
                 String password = "aZertyo9";
                 password += specialCharacters.charAt(i);
-                UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategoryCreator.getValueOf("TRADESMAN"));
+                UserCandidate userCandidate = UserCandidate.of( "", "", new Email("pomme@pomme.com"), new Password(password), UserCategory.ofCode("tradesman"));
                 User user = User.of(stubUserId, userCandidate.firstname, userCandidate.lastname, userCandidate.email, userCandidate.password, userCandidate.userCategory);
             }
         } catch (ValidationException exception) {

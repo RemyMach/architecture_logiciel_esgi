@@ -1,23 +1,28 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.user.CreateTradesman;
-import fr.remy.cc1.application.user.CreateTradesmanCommandHandler;
+import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.member.application.CreateTradesman;
+import fr.remy.cc1.member.application.CreateTradesmanCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
-import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.user.Tradesman.Tradesmans;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.member.domain.user.Tradesman.Tradesmans;
+import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.infrastructure.tradesman.InMemoryTradesmans;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
+import fr.remy.cc1.member.infrastructure.tradesman.InMemoryTradesmans;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -45,10 +50,14 @@ public class CreateTradesmanTest {
         this.passwordStub = "aZertyu9?";
         this.userCategoryStub = "TRADESMAN";
 
-        this.tradesmans = new InMemoryTradesmans();
-        this.users = new InMemoryUsers();
+        this.tradesmans = new InMemoryTradesmans(new ConcurrentHashMap<>());
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
         this.myUserIdStub = users.nextIdentity();
-        this.invoices = new InMemoryInvoices();
+        SubscriptionInvoiceData.setup(new ConcurrentHashMap<>());
+        SubscriptionInvoiceData subscriptionInvoiceData = SubscriptionInvoiceData.getInstance();
+        this.invoices = new InMemoryInvoices(subscriptionInvoiceData.data);
         UserCreationStub.initUserCreationTest(this.users, this.invoices);
         this.createTradesmanCommandHandler = new CreateTradesmanCommandHandler(users, tradesmans, UserCreationEventBus.getInstance());
     }

@@ -1,8 +1,8 @@
 package fr.remy.cc1.SpringConfiguration;
 
-import fr.remy.cc1.application.CreateProjectCommandHandler;
-import fr.remy.cc1.domain.project.Projects;
-import fr.remy.cc1.infrastructure.project.InMemoryProjects;
+import fr.remy.cc1.project.application.CreateProjectCommandHandler;
+import fr.remy.cc1.project.domain.project.Projects;
+import fr.remy.cc1.project.infrastructure.InMemoryProjects;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

@@ -1,18 +1,17 @@
 package fr.remy.cc1.domain;
 
-import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
-import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
-import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
-import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
-import fr.remy.cc1.application.mail.*;
-import fr.remy.cc1.application.user.RegisterContractorEvent;
-import fr.remy.cc1.application.user.RegisterTradesmanEvent;
-import fr.remy.cc1.application.user.RegisteredUserEvent;
-import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.member.application.*;
+import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
+import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEventMessengerSubscription;
+import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEvent;
+import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEventMessengerSubscription;
+import fr.remy.cc1.subscription.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
+import fr.remy.cc1.subscription.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.user.Users;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
 
 import java.util.Arrays;
@@ -47,9 +46,8 @@ public class UserCreationStub {
         );
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
-                RegisteredUserEvent.class, Collections.singletonList(new RegisteredUserEventMessengerSubscription(mockEmailSender)),
-                RegisterContractorEvent.class, Collections.singletonList(new RegisteredContractorEventMessengerSubscription(mockEmailSender)),
-                RegisterTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(mockEmailSender)),
+                RegisteredContractorEvent.class, Collections.singletonList(new RegisteredContractorEventMessengerSubscription(mockEmailSender)),
+                RegisteredTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(mockEmailSender)),
                 SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );

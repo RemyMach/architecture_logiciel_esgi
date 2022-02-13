@@ -2,9 +2,7 @@ package fr.remy.cc1.exposition.exception;
 
 import fr.remy.cc1.exposition.CustomErrorResponse;
 import fr.remy.cc1.exposition.CustomErrorResponseCreator;
-import fr.remy.cc1.exposition.exception.authentication.AuthFailedException;
 import fr.remy.cc1.exposition.exception.authentication.AuthPasswordEmailNotMatchException;
-import fr.remy.cc1.exposition.exception.authentication.AuthRequiredException;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.BasicException;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
@@ -63,7 +61,6 @@ public class BasicExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<CustomErrorResponse> globalExceptionHandler(Exception e) {
-        System.out.println(e);
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionaryMapper.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create("");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(customErrorResponse);

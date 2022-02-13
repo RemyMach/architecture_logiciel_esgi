@@ -1,36 +1,36 @@
 package fr.remy.cc1.SpringConfiguration;
 
-import fr.remy.cc1.application.mail.*;
-import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
-import fr.remy.cc1.application.customer.CreateSubscriptionOfferCommandHandler;
-import fr.remy.cc1.application.user.*;
-import fr.remy.cc1.application.customer.SubscriptionPaymentFailedEvent;
-import fr.remy.cc1.application.customer.SubscriptionSuccessTerminatedEvent;
-import fr.remy.cc1.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
-import fr.remy.cc1.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
-import fr.remy.cc1.application.scheduler.PaymentScheduler;
-import fr.remy.cc1.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.EmailSender;
-import fr.remy.cc1.domain.payment.creditcard.CreditCards;
-import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
-import fr.remy.cc1.domain.user.Tradesman.Tradesmans;
-import fr.remy.cc1.domain.user.Users;
-import fr.remy.cc1.domain.user.contractor.Contractors;
 import fr.remy.cc1.exposition.authentication.AuthMiddleware;
 import fr.remy.cc1.exposition.authentication.CreateAuthTokenCommandHandler;
 import fr.remy.cc1.exposition.authentication.Tokens;
+import fr.remy.cc1.infrastructure.InMemory.*;
 import fr.remy.cc1.infrastructure.authentication.token.InMemoryToken;
-import fr.remy.cc1.infrastructure.contractor.InMemoryContractors;
-import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.infrastructure.mail.SandboxMail;
-import fr.remy.cc1.infrastructure.paypalAccounts.InMemoryPaypalAccounts;
-import fr.remy.cc1.infrastructure.tradesman.InMemoryTradesmans;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
+import fr.remy.cc1.member.application.*;
+import fr.remy.cc1.member.domain.user.Tradesman.Tradesmans;
+import fr.remy.cc1.member.domain.user.Users;
+import fr.remy.cc1.member.domain.user.contractor.Contractors;
+import fr.remy.cc1.member.infrastructure.contractor.InMemoryContractors;
+import fr.remy.cc1.member.infrastructure.tradesman.InMemoryTradesmans;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.subscription.application.*;
+import fr.remy.cc1.subscription.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
+import fr.remy.cc1.subscription.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
+import fr.remy.cc1.subscription.application.payment.CreatePaymentCommandHandler;
+import fr.remy.cc1.subscription.domain.SubscriptionOffers;
+import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
+import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
+import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
+import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
+import fr.remy.cc1.subscription.infrastructure.paypalAccounts.InMemoryPaypalAccounts;
+import fr.remy.cc1.subscription.infrastructure.subscriptions.InMemorySubscriptionOffers;
+import fr.remy.cc1.subscription.scheduler.PaymentScheduler;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,19 +40,51 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 @EnableScheduling
 public class UserConfiguration {
 
     @Bean
+    public ContractorsData contractorsData() {
+        ContractorsData.setup(new ConcurrentHashMap<>());
+        return ContractorsData.getInstance();
+    }
+
+    @Bean
+    public UsersData usersData() {
+        UsersData.setup(new ConcurrentHashMap<>());
+        return UsersData.getInstance();
+    }
+
+    @Bean
+    public SubscriptionInvoiceData subscriptionInvoiceData() {
+        SubscriptionInvoiceData.setup(new ConcurrentHashMap<>());
+        return SubscriptionInvoiceData.getInstance();
+    }
+
+    @Bean
+    public TradesmansData tradesmansData() {
+        TradesmansData.setup(new ConcurrentHashMap<>());
+        return TradesmansData.getInstance();
+    }
+
+    @Bean
+    public UserSubscriptionsData userSubscriptionsData() {
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        return UserSubscriptionsData.getInstance();
+    }
+
+
+    @Bean
     public Users users() {
-        return new InMemoryUsers();
+        return new InMemoryUsers(usersData().data, userSubscriptionsData().data);
     }
 
     @Bean
     public Invoices invoices() {
-        return new InMemoryInvoices();
+        return new InMemoryInvoices(subscriptionInvoiceData().data);
     }
 
     @Bean
@@ -77,8 +109,8 @@ public class UserConfiguration {
         );
 
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
-                RegisterContractorEvent.class, Collections.singletonList(new RegisteredContractorEventMessengerSubscription(emailSender)),
-                RegisterTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(emailSender)),
+                RegisteredContractorEvent.class, Collections.singletonList(new RegisteredContractorEventMessengerSubscription(emailSender)),
+                RegisteredTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(emailSender)),
                 SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
@@ -95,13 +127,14 @@ public class UserConfiguration {
     }
 
     @Bean
-    public CreateUserCommandHandler createUserCommandHandler() {
-        return new CreateUserCommandHandler(users(), userCreationEventBus());
+    public SubscriptionOffers subscriptionOffers() {
+        return new InMemorySubscriptionOffers(usersData().data,userSubscriptionsData().data, subscriptionInvoiceData().data);
     }
+
 
     @Bean
     public CreateSubscriptionOfferCommandHandler createSubscriptionOfferCommandHandler() {
-        return new CreateSubscriptionOfferCommandHandler(creditCards(), paypalAccounts(), users(), userCreationEventBus());
+        return new CreateSubscriptionOfferCommandHandler(creditCards(), paypalAccounts(),subscriptionOffers(), users(), userCreationEventBus());
     }
 
     @Bean
@@ -111,7 +144,7 @@ public class UserConfiguration {
 
     @Bean
     PaymentScheduler paymentScheduler() {
-        return new PaymentScheduler(users(), creditCards(), paypalAccounts(), userCreationEventBus());
+        return new PaymentScheduler(subscriptionOffers(), creditCards(), paypalAccounts(), userCreationEventBus());
     }
 
     @Bean
@@ -142,12 +175,12 @@ public class UserConfiguration {
 
     @Bean
     public Tradesmans tradesmans() {
-        return new InMemoryTradesmans();
+        return new InMemoryTradesmans(tradesmansData().data);
     }
 
     @Bean
     public Contractors contractors() {
-        return new InMemoryContractors();
+        return new InMemoryContractors(contractorsData().data);
     }
 
     @Bean

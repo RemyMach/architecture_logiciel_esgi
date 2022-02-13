@@ -1,20 +1,23 @@
 package fr.remy.cc1.infrastructure;
 
-import fr.remy.cc1.domain.certificate.Certificate;
-import fr.remy.cc1.domain.certificate.CertificateId;
-import fr.remy.cc1.domain.certificate.Certificates;
-import fr.remy.cc1.domain.skill.Skill;
-import fr.remy.cc1.domain.user.UserId;
-import fr.remy.cc1.domain.user.Users;
-import fr.remy.cc1.infrastructure.certificates.InMemoryCertificates;
+import fr.remy.cc1.certificate.domain.Certificate;
+import fr.remy.cc1.certificate.domain.CertificateId;
+import fr.remy.cc1.certificate.domain.Certificates;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.certificate.domain.skill.Skill;
+import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.member.domain.user.Users;
+import fr.remy.cc1.certificate.infrastructure.InMemoryCertificates;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.kernel.error.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -27,8 +30,10 @@ public class InMemoryCertificateTest {
     Users users;
 
     @BeforeEach
-    void setup(){
-        users = new InMemoryUsers();
+    void setup() {
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
         certificates = new InMemoryCertificates();
     }
 

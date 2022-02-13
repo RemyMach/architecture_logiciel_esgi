@@ -1,28 +1,36 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.customer.CreateSubscriptionOffer;
-import fr.remy.cc1.application.customer.CreateSubscriptionOfferCommandHandler;
+import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.subscription.application.CreateSubscriptionOffer;
+import fr.remy.cc1.subscription.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
-import fr.remy.cc1.domain.customer.SubscriptionOffer;
-import fr.remy.cc1.domain.invoice.Invoice;
-import fr.remy.cc1.domain.invoice.Invoices;
+import fr.remy.cc1.subscription.domain.SubscriptionOffers;
+import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
+import fr.remy.cc1.subscription.domain.invoice.Invoice;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
 import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.payment.PaymentState;
-import fr.remy.cc1.domain.payment.creditcard.CreditCard;
-import fr.remy.cc1.domain.payment.creditcard.CreditCards;
-import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
-import fr.remy.cc1.domain.user.*;
-import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
-import fr.remy.cc1.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.subscription.domain.PaymentState;
+import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
+import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
+import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
+import fr.remy.cc1.member.domain.user.*;
+import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
+import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
 import fr.remy.cc1.kernel.error.ValidationException;
+import fr.remy.cc1.subscription.infrastructure.subscriptions.InMemorySubscriptionOffers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -32,6 +40,7 @@ public class CreateSubscriptionOfferTest {
     Users users;
     UserId myUserIdStub;
     Invoices invoices;
+    SubscriptionOffers subscriptionOffers;
     CreditCards creditCards;
     PaypalAccounts paypalAccounts;
 
@@ -51,13 +60,17 @@ public class CreateSubscriptionOfferTest {
         currencyChoiceStub = "EUR";
         priceSubscriptionOfferStub = new BigDecimal(10);
         userId = UserId.of(1);
-        this.users = new InMemoryUsers();
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
         this.myUserIdStub = users.nextIdentity();
-        this.invoices = new InMemoryInvoices();
+        SubscriptionInvoiceData.setup(new ConcurrentHashMap<>());
+        this.invoices = new InMemoryInvoices(SubscriptionInvoiceData.getInstance().data);
         this.creditCards = new InMemoryCreditCards();
+        this.subscriptionOffers = new InMemorySubscriptionOffers(new ConcurrentHashMap<>(),UserSubscriptionsData.getInstance().data, SubscriptionInvoiceData.getInstance().data);
 
         UserCreationStub.initUserCreationTest(this.users, this.invoices);
-        this.createSubscriptionOfferCommandHandler = new CreateSubscriptionOfferCommandHandler(creditCards, paypalAccounts, users, UserCreationEventBus.getInstance());
+        this.createSubscriptionOfferCommandHandler = new CreateSubscriptionOfferCommandHandler(creditCards, paypalAccounts,subscriptionOffers, users, UserCreationEventBus.getInstance());
     }
 
     @Test
@@ -84,7 +97,7 @@ public class CreateSubscriptionOfferTest {
 
         try {
             SubscriptionOffer subscriptionOffer = users.getSubscriptionOffer(user.getUserId());
-            List<Invoice> invoiceList = subscriptionOffer.getInvoiceList();
+            List<Invoice> invoiceList = this.invoices.findBySubscriptionOfferId(subscriptionOffer.getSubscriptionOfferId());
             assertEquals(invoiceList.size(), 1);
             assertEquals(invoiceList.get(0).getPaymentState(), PaymentState.VALIDATE);
             assertEquals(MockEmailSender.getInstance().getCountMail(), 1);
@@ -118,7 +131,7 @@ public class CreateSubscriptionOfferTest {
         }catch (ValidationException validationException) {
             try {
                 SubscriptionOffer subscriptionOffer = users.getSubscriptionOffer(user.getUserId());
-                List<Invoice> invoiceList = subscriptionOffer.getInvoiceList();
+                List<Invoice> invoiceList = this.invoices.findBySubscriptionOfferId(subscriptionOffer.getSubscriptionOfferId());
                 assertEquals(invoiceList.size(), 1);
                 assertEquals(invoiceList.get(0).getPaymentState(), PaymentState.REJECTED);
                 assertEquals(MockEmailSender.getInstance().getCountMail(), 1);

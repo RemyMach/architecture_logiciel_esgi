@@ -1,18 +1,25 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.application.payment.CreatePayment;
-import fr.remy.cc1.application.payment.CreatePaymentCommandHandler;
+import fr.remy.cc1.domain.User;
+import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.subscription.application.payment.CreatePayment;
+import fr.remy.cc1.subscription.application.payment.CreatePaymentCommandHandler;
 import fr.remy.cc1.domain.UserCreationStub;
-import fr.remy.cc1.domain.invoice.Invoices;
-import fr.remy.cc1.domain.payment.creditcard.CreditCards;
-import fr.remy.cc1.domain.payment.paypal.PaypalAccounts;
-import fr.remy.cc1.domain.user.*;
-import fr.remy.cc1.infrastructure.creditcards.InMemoryCreditCards;
-import fr.remy.cc1.infrastructure.invoices.InMemoryInvoices;
-import fr.remy.cc1.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.subscription.domain.invoice.Invoices;
+import fr.remy.cc1.subscription.domain.creditcard.CreditCards;
+import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
+import fr.remy.cc1.member.domain.user.*;
+import fr.remy.cc1.subscription.infrastructure.creditcards.InMemoryCreditCards;
+import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
+import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -42,10 +49,13 @@ public class CreatePaymentTest {
         creditCardName = "Pomme";
         userId = UserId.of(1);
 
-
-        this.users = new InMemoryUsers();
+        UsersData.setup(new ConcurrentHashMap<>());
+        UserSubscriptionsData.setup(new ConcurrentHashMap<>());
+        this.users = new InMemoryUsers(UsersData.getInstance().data, UserSubscriptionsData.getInstance().data);
         this.myUserIdStub = users.nextIdentity();
-        this.invoices = new InMemoryInvoices();
+        SubscriptionInvoiceData.setup(new ConcurrentHashMap<>());
+        SubscriptionInvoiceData subscriptionInvoiceData = SubscriptionInvoiceData.getInstance();
+        this.invoices = new InMemoryInvoices(subscriptionInvoiceData.data);
         this.creditCards = new InMemoryCreditCards();
 
         UserCreationStub.initUserCreationTest(this.users, this.invoices);
