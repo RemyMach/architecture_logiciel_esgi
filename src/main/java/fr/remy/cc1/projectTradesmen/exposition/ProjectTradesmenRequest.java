@@ -2,6 +2,7 @@ package fr.remy.cc1.projectTradesmen.exposition;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public final class ProjectTradesmenRequest {
     @NotNull(message = "project_id_empty_null")
@@ -10,5 +11,5 @@ public final class ProjectTradesmenRequest {
 
     @NotNull(message = "tradesmen_id_empty_null")
     @NotBlank(message = "tradesmen_id_empty_null")
-    public String tradesmenId;
+    public List<String> tradesmenId;
 }

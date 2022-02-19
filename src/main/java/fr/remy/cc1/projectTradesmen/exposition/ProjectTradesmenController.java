@@ -1,5 +1,6 @@
 package fr.remy.cc1.projectTradesmen.exposition;
 
+import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmen;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmenCommandHandler;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmenId;
@@ -27,7 +28,7 @@ public final class ProjectTradesmenController
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectTradesmenId> create(@RequestBody @Valid ProjectTradesmenRequest request) throws ValidationException
+    public ResponseEntity<ProjectTradesmenId> create(@RequestBody @Valid ProjectTradesmenRequest request) throws ValidationException, NoSuchEntityException
     {
         CreateProjectTradesmen createProjectTradesmen = new CreateProjectTradesmen(request.projectId, request.tradesmenId);
         ProjectTradesmenId projectTradesmenId = createProjectTradesmenCommandHandler.handle(createProjectTradesmen);
