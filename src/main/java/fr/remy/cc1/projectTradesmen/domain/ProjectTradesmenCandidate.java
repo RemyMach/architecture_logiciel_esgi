@@ -15,10 +15,6 @@ public final class ProjectTradesmenCandidate {
     }
 
     public static ProjectTradesmenCandidate of(ProjectId projectId, List<UserId> tradesmenId) {
-        ProjectTradesmenCandidate projectTradesmenCandidate = new ProjectTradesmenCandidate(projectId, tradesmenId);
-        /*if(!ValidationProjectTradesmenCandidateEngine.getInstance().test(projectTradesmenCandidate)) {
-            return null;
-        }*/
-        return projectTradesmenCandidate;
+        return new ProjectTradesmenCandidate(projectId, tradesmenId);
     }
 }
