@@ -6,20 +6,18 @@ import fr.remy.cc1.project.domain.project.ProjectId;
 import java.util.List;
 import java.util.Objects;
 
-public final class ProjectTradesmen
-{
+public final class ProjectTradesmen {
     private final ProjectTradesmenId projectTradesmenId;
     private final ProjectId projectId;
     private final List<UserId> tradesmenId;
 
-    private ProjectTradesmen(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId)
-    {
+    private ProjectTradesmen(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId) {
         this.projectTradesmenId = projectTradesmenId;
         this.projectId = projectId;
         this.tradesmenId = tradesmenId;
     }
 
-    public static ProjectTradesmen of(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId){
+    public static ProjectTradesmen of(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId) {
         return new ProjectTradesmen(projectTradesmenId, projectId, tradesmenId);
     }
 

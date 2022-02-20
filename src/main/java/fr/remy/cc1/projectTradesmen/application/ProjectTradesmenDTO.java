@@ -1,19 +1,18 @@
 package fr.remy.cc1.projectTradesmen.application;
 
-import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.project.domain.project.ProjectId;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmenId;
-
-import java.util.List;
+import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmenStateHistory;
 
 public final class ProjectTradesmenDTO {
     public final ProjectTradesmenId projectTradesmenId;
-    public final ProjectId projectId;
-    public final List<UserId> tradesmenId;
+    public final ProjectTradesmenStateHistory history;
 
-    public ProjectTradesmenDTO(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId) {
+    public ProjectTradesmenDTO(ProjectTradesmenId projectTradesmenId, ProjectTradesmenStateHistory history) {
         this.projectTradesmenId = projectTradesmenId;
-        this.projectId = projectId;
-        this.tradesmenId = tradesmenId;
+        this.history = history;
+    }
+
+    public ProjectTradesmenStateHistory getHistory() {
+        return history;
     }
 }
