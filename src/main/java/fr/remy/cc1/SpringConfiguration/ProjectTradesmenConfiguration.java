@@ -2,12 +2,15 @@ package fr.remy.cc1.SpringConfiguration;
 
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
+import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.project.application.ActivateProjectEventMessengerSubscription;
+import fr.remy.cc1.project.domain.project.Projects;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmenCommandHandler;
 import fr.remy.cc1.projectTradesmen.application.RegisteredProjectTradesmenRequirementsEvent;
 import fr.remy.cc1.projectTradesmen.domain.ProjectsTradesmen;
 import fr.remy.cc1.projectTradesmen.infrastructure.InMemoryProjectTradesmen;
 import fr.remy.cc1.projectTradesmen.infrastructure.ProjectTradesmenCreationEventBus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -30,9 +33,10 @@ public class ProjectTradesmenConfiguration
         return ProjectTradesmenCreationEventBus.getInstance();
     }
 
+    @Autowired
     @Bean
-    public CreateProjectTradesmenCommandHandler createProjectTradesmenCommandHandler()
+    public CreateProjectTradesmenCommandHandler createProjectTradesmenCommandHandler(Projects projects, Users users)
     {
-        return new CreateProjectTradesmenCommandHandler(projectsTradesmen());
+        return new CreateProjectTradesmenCommandHandler(projectsTradesmen(), projects, users);
     }
 }
