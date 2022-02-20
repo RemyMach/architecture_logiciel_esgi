@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ProjectTradesmenCreationEventBus<E extends Event> implements EventBus<E>
-{
+public class ProjectTradesmenCreationEventBus<E extends Event> implements EventBus<E> {
     private final Map<Class<E>, List<Subscriber<E>>> subscribers = new ConcurrentHashMap<>();
 
     private static final ProjectTradesmenCreationEventBus INSTANCE = new ProjectTradesmenCreationEventBus();
 
-    private ProjectTradesmenCreationEventBus() {}
+    private ProjectTradesmenCreationEventBus() {
+    }
 
     public static ProjectTradesmenCreationEventBus getInstance() {
         return INSTANCE;

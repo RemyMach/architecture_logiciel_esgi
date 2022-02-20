@@ -4,8 +4,7 @@ import fr.remy.cc1.kernel.Command;
 
 import java.util.List;
 
-public final class CreateProjectTradesmen implements Command
-{
+public final class CreateProjectTradesmen implements Command {
     public final String projectId;
     public final List<String> tradesmenId;
 

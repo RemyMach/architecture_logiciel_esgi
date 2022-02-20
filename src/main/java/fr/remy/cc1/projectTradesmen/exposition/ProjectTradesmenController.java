@@ -18,8 +18,7 @@ import javax.validation.ValidationException;
 
 @RestController
 @RequestMapping("/projectTradesmen")
-public final class ProjectTradesmenController
-{
+public final class ProjectTradesmenController {
     private final CreateProjectTradesmenCommandHandler createProjectTradesmenCommandHandler;
 
     @Autowired
@@ -28,8 +27,7 @@ public final class ProjectTradesmenController
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectTradesmenId> create(@RequestBody @Valid ProjectTradesmenRequest request) throws ValidationException, NoSuchEntityException
-    {
+    public ResponseEntity<ProjectTradesmenId> create(@RequestBody @Valid ProjectTradesmenRequest request) throws ValidationException, NoSuchEntityException {
         CreateProjectTradesmen createProjectTradesmen = new CreateProjectTradesmen(request.projectId, request.tradesmenId);
         ProjectTradesmenId projectTradesmenId = createProjectTradesmenCommandHandler.handle(createProjectTradesmen);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectTradesmenId);

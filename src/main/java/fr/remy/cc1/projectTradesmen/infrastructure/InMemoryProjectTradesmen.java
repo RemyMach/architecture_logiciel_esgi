@@ -11,8 +11,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public final class InMemoryProjectTradesmen implements ProjectsTradesmen
-{
+public final class InMemoryProjectTradesmen implements ProjectsTradesmen {
     private final AtomicInteger counter = new AtomicInteger(0);
     private final Map<ProjectTradesmenId, ProjectTradesmen> projectsTradesmenData = new ConcurrentHashMap<>();
 
@@ -24,7 +23,7 @@ public final class InMemoryProjectTradesmen implements ProjectsTradesmen
     @Override
     public ProjectTradesmen byId(ProjectTradesmenId projectTradesmenId) throws NoSuchEntityException {
         final ProjectTradesmen projectTradesmen = projectsTradesmenData.get(projectTradesmenId);
-        if(projectTradesmen == null) {
+        if (projectTradesmen == null) {
             throw new NoSuchEntityException(InfrastructureExceptionsDictionary.PROJECT_TRADESMEN_NOT_FOUND.getErrorCode(), InfrastructureExceptionsDictionary.PROJECT_TRADESMEN_NOT_FOUND.getMessage());
         }
         return projectTradesmen;

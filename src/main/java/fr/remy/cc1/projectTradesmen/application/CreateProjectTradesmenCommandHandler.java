@@ -3,9 +3,7 @@ package fr.remy.cc1.projectTradesmen.application;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.CommandHandler;
-import fr.remy.cc1.member.domain.user.Tradesman.Tradesmans;
 import fr.remy.cc1.project.domain.project.ProjectId;
-import fr.remy.cc1.project.domain.project.Projects;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmen;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmenCandidate;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmenId;
@@ -14,8 +12,7 @@ import fr.remy.cc1.projectTradesmen.domain.ProjectsTradesmen;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class CreateProjectTradesmenCommandHandler implements CommandHandler<CreateProjectTradesmen, ProjectTradesmenId>
-{
+public final class CreateProjectTradesmenCommandHandler implements CommandHandler<CreateProjectTradesmen, ProjectTradesmenId> {
     private final ProjectsTradesmen projectsTradesmen;
 
     public CreateProjectTradesmenCommandHandler(ProjectsTradesmen projectsTradesmen) {
