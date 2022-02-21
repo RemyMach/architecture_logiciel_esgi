@@ -10,19 +10,25 @@ public final class ProjectTradesmen {
     private final ProjectTradesmenId projectTradesmenId;
     private final ProjectId projectId;
     private final List<UserId> tradesmenId;
+    private final ProjectTradesmenStateHistory history;
 
-    private ProjectTradesmen(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId) {
+    private ProjectTradesmen(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId, ProjectTradesmenState initialState) {
         this.projectTradesmenId = projectTradesmenId;
         this.projectId = projectId;
         this.tradesmenId = tradesmenId;
+        this.history = ProjectTradesmenStateHistory.create(initialState);
     }
 
-    public static ProjectTradesmen of(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId) {
-        return new ProjectTradesmen(projectTradesmenId, projectId, tradesmenId);
+    public static ProjectTradesmen of(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId, ProjectTradesmenState initialState) {
+        return new ProjectTradesmen(projectTradesmenId, projectId, tradesmenId, initialState);
     }
 
     public ProjectTradesmenId getProjectTradesmenId() {
         return projectTradesmenId;
+    }
+
+    public ProjectTradesmenStateHistory getHistory() {
+        return history;
     }
 
     @Override
@@ -44,6 +50,7 @@ public final class ProjectTradesmen {
                 "projectTradesmenId=" + projectTradesmenId +
                 ", projectId=" + projectId +
                 ", tradesmenId=" + tradesmenId +
+                ", history=" + history +
                 '}';
     }
 }

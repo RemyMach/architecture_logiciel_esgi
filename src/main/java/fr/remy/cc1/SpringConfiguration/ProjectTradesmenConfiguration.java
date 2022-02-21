@@ -37,6 +37,6 @@ public class ProjectTradesmenConfiguration
     @Bean
     public CreateProjectTradesmenCommandHandler createProjectTradesmenCommandHandler(Projects projects, Users users)
     {
-        return new CreateProjectTradesmenCommandHandler(projectsTradesmen(), projects, users);
+        return new CreateProjectTradesmenCommandHandler(projectsTradesmen(), projects, users, projectTradesmenCreationEventBus());
     }
 }
