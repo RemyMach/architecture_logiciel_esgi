@@ -3,8 +3,8 @@ package fr.remy.cc1.SpringConfiguration;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.member.domain.user.Users;
-import fr.remy.cc1.project.application.ActivateProjectEventMessengerSubscription;
 import fr.remy.cc1.project.domain.project.Projects;
+import fr.remy.cc1.projectTradesmen.application.ActivateProjectTradesmenEventMessengerSubscription;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmenCommandHandler;
 import fr.remy.cc1.projectTradesmen.application.RegisteredProjectTradesmenRequirementsEvent;
 import fr.remy.cc1.projectTradesmen.domain.ProjectsTradesmen;
@@ -29,7 +29,7 @@ public class ProjectTradesmenConfiguration
 
     @Bean
     public EventBus<Event> projectTradesmenCreationEventBus() {
-        ProjectTradesmenCreationEventBus.getInstance().registerSubscriber(RegisteredProjectTradesmenRequirementsEvent.class, List.of(new ActivateProjectEventMessengerSubscription()));
+        ProjectTradesmenCreationEventBus.getInstance().registerSubscriber(RegisteredProjectTradesmenRequirementsEvent.class, List.of(new ActivateProjectTradesmenEventMessengerSubscription()));
         return ProjectTradesmenCreationEventBus.getInstance();
     }
 
