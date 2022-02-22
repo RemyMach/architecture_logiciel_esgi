@@ -1,10 +1,14 @@
 package fr.remy.cc1.projectTradesmen.application;
 
+import fr.remy.cc1.domain.User;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.CommandHandler;
+import fr.remy.cc1.kernel.error.ExceptionsDictionary;
+import fr.remy.cc1.kernel.error.UserCategoryValidatorException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
+import fr.remy.cc1.member.domain.user.UserCategory;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.project.domain.project.ProjectId;
 import fr.remy.cc1.project.domain.project.Projects;
@@ -27,16 +31,20 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
     }
 
     @Override
-    public ProjectTradesmenId handle(CreateProjectTradesmen command) throws NoSuchEntityException {
+    public ProjectTradesmenId handle(CreateProjectTradesmen command) throws NoSuchEntityException, UserCategoryValidatorException {
         final ProjectTradesmenId projectTradesmenId = projectsTradesmen.nextIdentity();
         final ProjectId projectId = ProjectId.of(Integer.parseInt(command.projectId));
 
         List<UserId> tradesmen = new ArrayList<>();
+        User user = null;
         for (String tradesmanId : command.tradesmenId) {
             UserId userId = UserId.of(Integer.parseInt(tradesmanId));
             try {
-                users.byId(userId);
+                user = users.byId(userId);
             } catch (NoSuchEntityException ignored) {
+            }
+            if(!user.getUserCategory().equals(UserCategory.TRADESMAN)) {
+                throw new UserCategoryValidatorException(ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getErrorCode(), ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getMessage());
             }
             tradesmen.add(userId);
         }
