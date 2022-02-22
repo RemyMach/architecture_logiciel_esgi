@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ProjectTradesmenStateHistory {
+public final class ProjectTradesmenStateHistory {
     private final List<ProjectTradesmenState> history;
 
     private ProjectTradesmenStateHistory(List<ProjectTradesmenState> history) {

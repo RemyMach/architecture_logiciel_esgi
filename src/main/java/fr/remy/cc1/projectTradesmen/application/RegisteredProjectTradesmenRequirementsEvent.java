@@ -6,7 +6,7 @@ import fr.remy.cc1.kernel.event.EventId;
 
 import java.time.ZonedDateTime;
 
-public class RegisteredProjectTradesmenRequirementsEvent implements Event, ApplicationEvent {
+public final class RegisteredProjectTradesmenRequirementsEvent implements Event, ApplicationEvent {
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
     private final ProjectTradesmenDTO projectTradesmenDTO;
