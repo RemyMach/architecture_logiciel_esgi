@@ -43,4 +43,8 @@ public final class User implements IUser {
     }
 
     public Password getPassword() { return password; }
+
+    public UserCategory getUserCategory() {
+        return userCategory;
+    }
 }
