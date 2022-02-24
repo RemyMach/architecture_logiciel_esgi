@@ -5,7 +5,8 @@ import java.util.Date;
 public enum ProjectTradesmenState {
     PENDING(0),
     CREATED(1),
-    ACTIVE(2);
+    ACTIVE(2),
+    FINISHED(3);
 
     private final int id;
     private Date date;
