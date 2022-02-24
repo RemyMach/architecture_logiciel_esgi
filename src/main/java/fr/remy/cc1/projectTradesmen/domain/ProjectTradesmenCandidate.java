@@ -1,20 +1,20 @@
 package fr.remy.cc1.projectTradesmen.domain;
 
-import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.project.domain.project.ProjectId;
+import fr.remy.cc1.projectTradesmen.domain.TrademenInformations.TradesmenInformations;
 
 import java.util.List;
 
 public final class ProjectTradesmenCandidate {
     public final ProjectId projectId;
-    public final List<UserId> tradesmenId;
+    public final List<TradesmenInformations> tradesmenInformations;
 
-    private ProjectTradesmenCandidate(ProjectId projectId, List<UserId> tradesmenId) {
+    private ProjectTradesmenCandidate(ProjectId projectId, List<TradesmenInformations> tradesmenInformations) {
         this.projectId = projectId;
-        this.tradesmenId = tradesmenId;
+        this.tradesmenInformations = tradesmenInformations;
     }
 
-    public static ProjectTradesmenCandidate of(ProjectId projectId, List<UserId> tradesmenId) {
-        return new ProjectTradesmenCandidate(projectId, tradesmenId);
+    public static ProjectTradesmenCandidate of(ProjectId projectId, List<TradesmenInformations> tradesmenInformations) {
+        return new ProjectTradesmenCandidate(projectId, tradesmenInformations);
     }
 }

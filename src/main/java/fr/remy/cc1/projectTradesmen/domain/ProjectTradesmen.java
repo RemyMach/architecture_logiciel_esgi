@@ -1,7 +1,7 @@
 package fr.remy.cc1.projectTradesmen.domain;
 
-import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.project.domain.project.ProjectId;
+import fr.remy.cc1.projectTradesmen.domain.TrademenInformations.TradesmenInformations;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,18 +9,18 @@ import java.util.Objects;
 public final class ProjectTradesmen {
     private final ProjectTradesmenId projectTradesmenId;
     private final ProjectId projectId;
-    private final List<UserId> tradesmenId;
+    private final List<TradesmenInformations> tradesmenInformations;
     private final ProjectTradesmenStateHistory history;
 
-    private ProjectTradesmen(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId, ProjectTradesmenState initialState) {
+    private ProjectTradesmen(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<TradesmenInformations> tradesmenInformations, ProjectTradesmenState initialState) {
         this.projectTradesmenId = projectTradesmenId;
         this.projectId = projectId;
-        this.tradesmenId = tradesmenId;
+        this.tradesmenInformations = tradesmenInformations;
         this.history = ProjectTradesmenStateHistory.create(initialState);
     }
 
-    public static ProjectTradesmen of(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<UserId> tradesmenId, ProjectTradesmenState initialState) {
-        return new ProjectTradesmen(projectTradesmenId, projectId, tradesmenId, initialState);
+    public static ProjectTradesmen of(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<TradesmenInformations> tradesmenInformations, ProjectTradesmenState initialState) {
+        return new ProjectTradesmen(projectTradesmenId, projectId, tradesmenInformations, initialState);
     }
 
     public ProjectTradesmenId getProjectTradesmenId() {
@@ -36,12 +36,12 @@ public final class ProjectTradesmen {
         if (this == o) return true;
         if (!(o instanceof ProjectTradesmen)) return false;
         ProjectTradesmen that = (ProjectTradesmen) o;
-        return Objects.equals(getProjectTradesmenId(), that.getProjectTradesmenId()) && Objects.equals(projectId, that.projectId) && Objects.equals(tradesmenId, that.tradesmenId);
+        return Objects.equals(getProjectTradesmenId(), that.getProjectTradesmenId()) && Objects.equals(projectId, that.projectId) && Objects.equals(tradesmenInformations, that.tradesmenInformations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getProjectTradesmenId(), projectId, tradesmenId);
+        return Objects.hash(getProjectTradesmenId(), projectId, tradesmenInformations);
     }
 
     @Override
@@ -49,7 +49,7 @@ public final class ProjectTradesmen {
         return "ProjectTradesmen{" +
                 "projectTradesmenId=" + projectTradesmenId +
                 ", projectId=" + projectId +
-                ", tradesmenId=" + tradesmenId +
+                ", tradesmenInformations=" + tradesmenInformations +
                 ", history=" + history +
                 '}';
     }
