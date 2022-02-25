@@ -16,7 +16,7 @@ import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.project.domain.project.ProjectId;
 import fr.remy.cc1.project.domain.project.Projects;
 import fr.remy.cc1.projectTradesmen.domain.*;
-import fr.remy.cc1.projectTradesmen.domain.TrademenInformations.DateRange;
+import fr.remy.cc1.projectTradesmen.domain.DateRange;
 import fr.remy.cc1.projectTradesmen.domain.TrademenInformations.TradesmenInformations;
 import fr.remy.cc1.subscription.domain.currency.Currency;
 
