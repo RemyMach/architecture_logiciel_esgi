@@ -1,6 +1,7 @@
 package fr.remy.cc1.projectTradesmen.exposition;
 
 import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmen;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmenCommandHandler;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmenId;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 
 @RestController
 @RequestMapping("/projectTradesmen")
@@ -27,8 +27,8 @@ public final class ProjectTradesmenController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectTradesmenId> create(@RequestBody @Valid ProjectTradesmenRequest request) throws ValidationException, NoSuchEntityException {
-        CreateProjectTradesmen createProjectTradesmen = new CreateProjectTradesmen(request.projectId, request.tradesmenId);
+    public ResponseEntity<ProjectTradesmenId> create(@RequestBody @Valid ProjectTradesmenRequest request) throws NoSuchEntityException, ValidationException {
+        CreateProjectTradesmen createProjectTradesmen = new CreateProjectTradesmen(request.projectId, request.tradesmenId, request.tradeJob, request.dailyRate, request.currency, request.startDates,request.endDates);
         ProjectTradesmenId projectTradesmenId = createProjectTradesmenCommandHandler.handle(createProjectTradesmen);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectTradesmenId);
     }
