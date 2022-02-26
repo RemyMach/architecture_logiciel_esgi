@@ -16,8 +16,11 @@ import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.project.domain.project.ProjectId;
 import fr.remy.cc1.project.domain.project.Projects;
 import fr.remy.cc1.projectTradesmen.domain.*;
-import fr.remy.cc1.projectTradesmen.domain.DateRange;
-import fr.remy.cc1.projectTradesmen.domain.TradesmenInformations;
+import fr.remy.cc1.projectTradesmen.domain.dateRange.DateRange;
+import fr.remy.cc1.projectTradesmen.domain.dateRange.DateRangeValidationEngine;
+import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanSchedule;
+import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanScheduleCandidate;
+import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanSchedules;
 import fr.remy.cc1.subscription.domain.currency.Currency;
 
 import java.math.BigDecimal;
@@ -27,12 +30,14 @@ import java.util.List;
 
 public final class CreateProjectTradesmenCommandHandler implements CommandHandler<CreateProjectTradesmen, ProjectTradesmenId> {
     private final ProjectsTradesmen projectsTradesmen;
+    private final TradesmanSchedules tradesmanSchedules;
     private final Projects projects;
     private final Users users;
     private final EventBus<Event> eventBus;
 
-    public CreateProjectTradesmenCommandHandler(ProjectsTradesmen projectsTradesmen, Projects projects, Users users, EventBus<Event> eventBus) {
+    public CreateProjectTradesmenCommandHandler(ProjectsTradesmen projectsTradesmen, TradesmanSchedules tradesmanSchedules, Projects projects, Users users, EventBus<Event> eventBus) {
         this.projectsTradesmen = projectsTradesmen;
+        this.tradesmanSchedules = tradesmanSchedules;
         this.projects = projects;
         this.users = users;
         this.eventBus = eventBus;
@@ -42,10 +47,17 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
     public ProjectTradesmenId handle(CreateProjectTradesmen command) throws NoSuchEntityException, ValidationException {
         final ProjectTradesmenId projectTradesmenId = projectsTradesmen.nextIdentity();
         final ProjectId projectId = ProjectId.of(Integer.parseInt(command.projectId));
+        User user;
         UserId userId;
         TradeJobs tradeJobs;
         Money dailyRate;
         DateRange dateRange;
+
+        ProjectTradesmenCandidate projectTradesmenCandidates;
+        ProjectTradesmen projectTradesmen;
+
+        TradesmanScheduleCandidate tradesmanScheduleCandidate;
+        TradesmanSchedule tradesmanSchedule = null;
 
         try {
             this.projects.byId(projectId);
@@ -53,7 +65,6 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
         }
 
         List<TradesmenInformations> tradesmenInformations = new ArrayList<>();
-        User user;
         for (int i = 0; i < command.tradesmenId.size(); i++) {
             userId = UserId.of(Integer.parseInt(command.tradesmenId.get(i)));
             tradeJobs = TradeJobs.getTradeFromJobName(command.tradeJob.get(i));
@@ -62,17 +73,45 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
 
             try {
                 user = users.byId(userId);
-                if(!user.getUserCategory().equals(UserCategory.TRADESMAN)) {
+                if (!user.getUserCategory().equals(UserCategory.TRADESMAN)) {
                     throw new UserCategoryValidatorException(ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getErrorCode(), ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getMessage());
                 }
             } catch (NoSuchEntityException ignored) {
             }
 
+            try {
+                tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
+                if (DateRangeValidationEngine.getInstance().isValid(dateRange)) {
+                    throw new UserCategoryValidatorException(ExceptionsDictionary.WRONG_DATES_ORDER.getErrorCode(), ExceptionsDictionary.WRONG_DATES_ORDER.getMessage());
+                }
+            } catch (NoSuchEntityException ignored) {
+            }
+
+            try {
+                tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
+                if (DateRangeValidationEngine.getInstance().isValid(dateRange, tradesmanSchedule)) {
+                    throw new UserCategoryValidatorException(ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getErrorCode(), ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getMessage());
+                }
+            } catch (NoSuchEntityException ignored) {
+            }
+
             tradesmenInformations.add(TradesmenInformations.of(userId, tradeJobs, dailyRate, dateRange));
+            tradesmanScheduleCandidate = TradesmanScheduleCandidate.of(dateRange);
+
+            try {
+                tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
+                tradesmanSchedule.addUnavailableDate(tradesmanScheduleCandidate.unavailableDate);
+            }
+            catch (NoSuchEntityException ignored) {
+                tradesmanSchedule = TradesmanSchedule.of(userId, List.of(tradesmanScheduleCandidate.unavailableDate));
+            }
+            finally {
+                tradesmanSchedules.save(tradesmanSchedule);
+            }
         }
 
-        ProjectTradesmenCandidate candidates = ProjectTradesmenCandidate.of(projectId, tradesmenInformations);
-        ProjectTradesmen projectTradesmen = ProjectTradesmen.of(projectTradesmenId, candidates.projectId, candidates.tradesmenInformations, ProjectTradesmenState.CREATED);
+        projectTradesmenCandidates = ProjectTradesmenCandidate.of(projectId, tradesmenInformations);
+        projectTradesmen = ProjectTradesmen.of(projectTradesmenId, projectTradesmenCandidates.projectId, projectTradesmenCandidates.tradesmenInformations, ProjectTradesmenState.CREATED);
 
         this.projectsTradesmen.save(projectTradesmen);
         this.eventBus.send(RegisteredProjectTradesmenRequirementsEvent.withProjectId(new ProjectTradesmenDTO(projectTradesmenId, projectTradesmen.getHistory())));

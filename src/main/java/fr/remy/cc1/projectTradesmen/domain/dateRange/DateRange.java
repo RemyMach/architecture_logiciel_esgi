@@ -1,4 +1,4 @@
-package fr.remy.cc1.projectTradesmen.domain;
+package fr.remy.cc1.projectTradesmen.domain.dateRange;
 
 import java.util.Date;
 import java.util.Objects;

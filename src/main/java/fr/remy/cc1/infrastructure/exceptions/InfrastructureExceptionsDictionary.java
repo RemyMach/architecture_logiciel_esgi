@@ -7,4 +7,5 @@ public class InfrastructureExceptionsDictionary {
     public static final NoSuchEntityException PROJECT_REQUIREMENTS_NOT_FOUND = new NoSuchEntityException("project_requirements_not_found", "the specified projectId does not match any known project requirements");
     public static final NoSuchEntityException CERTIFICATE_NOT_FOUND = new NoSuchEntityException("certificate_not_found", "the specified certificateId does not match any known certificate");
     public static final NoSuchEntityException PROJECT_TRADESMEN_NOT_FOUND = new NoSuchEntityException("project_tradesmen_not_found", "the specified projectTradesmenId does not match any known project tradesmen");
+    public static final NoSuchEntityException TRADESMAN_SCHEDULE_NOT_FOUND = new NoSuchEntityException("tradesman_schedule_not_found", "the specified tradesmanId does not match any known tradesman schedule");
 }

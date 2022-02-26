@@ -28,7 +28,7 @@ public final class ProjectTradesmenController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectTradesmenId> create(@RequestBody @Valid ProjectTradesmenRequest request) throws NoSuchEntityException, ValidationException {
-        CreateProjectTradesmen createProjectTradesmen = new CreateProjectTradesmen(request.projectId, request.tradesmenId, request.tradeJob, request.dailyRate, request.currency, request.startDates,request.endDates);
+        CreateProjectTradesmen createProjectTradesmen = new CreateProjectTradesmen(request.projectId, request.tradesmenId, request.tradeJob, request.dailyRate, request.currency, request.startDates, request.endDates);
         ProjectTradesmenId projectTradesmenId = createProjectTradesmenCommandHandler.handle(createProjectTradesmen);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectTradesmenId);
     }

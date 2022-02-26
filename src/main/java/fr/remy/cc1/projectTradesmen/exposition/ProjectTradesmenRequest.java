@@ -31,5 +31,5 @@ public final class ProjectTradesmenRequest {
 
     @NotNull(message = "end_dates_empty_null")
     @NotBlank(message = "end_dates_empty_null")
-    public  List<String> endDates;
+    public List<String> endDates;
 }
