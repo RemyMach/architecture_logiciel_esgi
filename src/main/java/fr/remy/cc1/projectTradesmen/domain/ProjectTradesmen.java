@@ -1,7 +1,6 @@
 package fr.remy.cc1.projectTradesmen.domain;
 
 import fr.remy.cc1.project.domain.project.ProjectId;
-import fr.remy.cc1.projectTradesmen.domain.TrademenInformations.TradesmenInformations;
 
 import java.util.List;
 import java.util.Objects;

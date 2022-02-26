@@ -1,9 +1,8 @@
-package fr.remy.cc1.projectTradesmen.domain.TrademenInformations;
+package fr.remy.cc1.projectTradesmen.domain;
 
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.domain.money.Money;
 import fr.remy.cc1.domain.trade.TradeJobs;
-import fr.remy.cc1.projectTradesmen.domain.DateRange;
 
 import java.util.Objects;
 

@@ -17,7 +17,7 @@ import fr.remy.cc1.project.domain.project.ProjectId;
 import fr.remy.cc1.project.domain.project.Projects;
 import fr.remy.cc1.projectTradesmen.domain.*;
 import fr.remy.cc1.projectTradesmen.domain.DateRange;
-import fr.remy.cc1.projectTradesmen.domain.TrademenInformations.TradesmenInformations;
+import fr.remy.cc1.projectTradesmen.domain.TradesmenInformations;
 import fr.remy.cc1.subscription.domain.currency.Currency;
 
 import java.math.BigDecimal;
