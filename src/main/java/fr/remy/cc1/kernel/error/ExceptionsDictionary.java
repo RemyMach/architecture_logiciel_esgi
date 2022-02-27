@@ -4,6 +4,8 @@ public class ExceptionsDictionary {
     public static final ValidationException EMAIL_NOT_VALID = new ValidationException("email_not_valid", "the email is not valid");
     public static final ValidationException PASSWORD_NOT_VALID = new ValidationException("password_not_valid", "the password is not valid");
 
+    public static final ValidationException USER_NOT_FOUND = new ValidationException("user_not_found", "the user wasn't found");
+
     public static final ValidationException CURRENCY_NOT_PRESENT = new ValidationException("currency_not_supported", "the currency is not supported by the application");
 
     public static final ValidationException PAYMENT_NOT_PRESENT = new ValidationException("payment_method_not_supported", "the payment method is not supported by the application");

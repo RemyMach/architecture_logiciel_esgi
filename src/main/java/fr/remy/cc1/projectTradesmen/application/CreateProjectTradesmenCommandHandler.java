@@ -76,20 +76,17 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
                 if (!user.getUserCategory().equals(UserCategory.TRADESMAN)) {
                     throw new UserCategoryValidatorException(ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getErrorCode(), ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getMessage());
                 }
-            } catch (NoSuchEntityException ignored) {
+            } catch (NoSuchEntityException e) {
+                throw new NoSuchEntityException(ExceptionsDictionary.USER_NOT_FOUND.getErrorCode(), ExceptionsDictionary.USER_NOT_FOUND.getMessage());
+            }
+
+            if (!DateRangeValidationEngine.getInstance().isValid(dateRange)) {
+                throw new UserCategoryValidatorException(ExceptionsDictionary.WRONG_DATES_ORDER.getErrorCode(), ExceptionsDictionary.WRONG_DATES_ORDER.getMessage());
             }
 
             try {
                 tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
-                if (DateRangeValidationEngine.getInstance().isValid(dateRange)) {
-                    throw new UserCategoryValidatorException(ExceptionsDictionary.WRONG_DATES_ORDER.getErrorCode(), ExceptionsDictionary.WRONG_DATES_ORDER.getMessage());
-                }
-            } catch (NoSuchEntityException ignored) {
-            }
-
-            try {
-                tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
-                if (DateRangeValidationEngine.getInstance().isValid(dateRange, tradesmanSchedule)) {
+                if (!DateRangeValidationEngine.getInstance().isValid(dateRange, tradesmanSchedule)) {
                     throw new UserCategoryValidatorException(ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getErrorCode(), ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getMessage());
                 }
             } catch (NoSuchEntityException ignored) {

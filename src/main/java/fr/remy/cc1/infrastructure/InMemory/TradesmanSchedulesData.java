@@ -25,9 +25,6 @@ public final class TradesmanSchedulesData {
 
     public static void setup(Map<UserId, TradesmanSchedule> data) {
         synchronized (TradesmanSchedulesData.class) {
-            if (instance != null) {
-                throw new Error("You can only call TradesmanSchedulesData.setup() once");
-            }
             instance = new TradesmanSchedulesData(data);
         }
     }

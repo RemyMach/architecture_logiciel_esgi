@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ProjectTradesmenCreationEventBus<E extends Event> implements EventBus<E> {
-    private final Map<Class<E>, List<Subscriber<E>>> subscribers = new ConcurrentHashMap<>();
+    private Map<Class<E>, List<Subscriber<E>>> subscribers = new ConcurrentHashMap<>();
 
     private static final ProjectTradesmenCreationEventBus INSTANCE = new ProjectTradesmenCreationEventBus();
 
@@ -18,6 +18,10 @@ public final class ProjectTradesmenCreationEventBus<E extends Event> implements 
 
     public static ProjectTradesmenCreationEventBus getInstance() {
         return INSTANCE;
+    }
+
+    public void setSubscribers(Map<Class<E>, List<Subscriber<E>>> subscribers) {
+        this.subscribers = subscribers;
     }
 
     @Override
