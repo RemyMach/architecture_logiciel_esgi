@@ -11,8 +11,8 @@ public final class TradesmanSchedule {
     private final List<DateRange> unavailableDates;
 
     private TradesmanSchedule(UserId tradesmanId, List<DateRange> unavailableDates) {
-        this.tradesmanId = tradesmanId;
-        this.unavailableDates = unavailableDates;
+        this.tradesmanId = Objects.requireNonNull(tradesmanId);
+        this.unavailableDates = Objects.requireNonNull(unavailableDates);
     }
 
     public static TradesmanSchedule of(UserId tradesmanId, List<DateRange> unavailableDates) {

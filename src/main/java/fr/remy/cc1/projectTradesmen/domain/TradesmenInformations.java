@@ -14,10 +14,10 @@ public final class TradesmenInformations {
     private final DateRange dateRange;
 
     private TradesmenInformations(UserId tradesmenId, TradeJobs tradeJob, Money dailyRate, DateRange dateRange) {
-        this.tradesmenId = tradesmenId;
-        this.tradeJob = tradeJob;
-        this.dailyRate = dailyRate;
-        this.dateRange = dateRange;
+        this.tradesmenId = Objects.requireNonNull(tradesmenId);
+        this.tradeJob = Objects.requireNonNull(tradeJob);
+        this.dailyRate = Objects.requireNonNull(dailyRate);
+        this.dateRange = Objects.requireNonNull(dateRange);
     }
 
     public static TradesmenInformations of(UserId tradesmenId, TradeJobs tradeJob, Money dailyRate, DateRange dateRange) {

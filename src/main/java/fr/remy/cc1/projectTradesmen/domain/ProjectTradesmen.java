@@ -12,10 +12,10 @@ public final class ProjectTradesmen {
     private final ProjectTradesmenStateHistory history;
 
     private ProjectTradesmen(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<TradesmenInformations> tradesmenInformations, ProjectTradesmenState initialState) {
-        this.projectTradesmenId = projectTradesmenId;
-        this.projectId = projectId;
-        this.tradesmenInformations = tradesmenInformations;
-        this.history = ProjectTradesmenStateHistory.create(initialState);
+        this.projectTradesmenId = Objects.requireNonNull(projectTradesmenId);
+        this.projectId = Objects.requireNonNull(projectId);
+        this.tradesmenInformations = Objects.requireNonNull(tradesmenInformations);
+        this.history = ProjectTradesmenStateHistory.create(Objects.requireNonNull(initialState));
     }
 
     public static ProjectTradesmen of(ProjectTradesmenId projectTradesmenId, ProjectId projectId, List<TradesmenInformations> tradesmenInformations, ProjectTradesmenState initialState) {

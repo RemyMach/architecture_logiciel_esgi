@@ -8,8 +8,8 @@ public final class DateRange {
     private final Date endDate;
 
     private DateRange(Date startDate, Date endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = Objects.requireNonNull(startDate);
+        this.endDate = Objects.requireNonNull(endDate);
     }
 
     public static DateRange of(Date startDate, Date endDate) {
