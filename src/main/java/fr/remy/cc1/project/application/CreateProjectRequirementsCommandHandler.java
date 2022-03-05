@@ -16,6 +16,7 @@ import fr.remy.cc1.project.domain.location.Location;
 import fr.remy.cc1.project.domain.location.LocationGeocoding;
 import fr.remy.cc1.project.domain.project.*;
 import fr.remy.cc1.subscription.domain.currency.Currency;
+import fr.remy.cc1.subscription.domain.currency.CurrencyCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public final class CreateProjectRequirementsCommandHandler implements CommandHan
 
         Map<TradeJobs, Money> tradesBudget = new ConcurrentHashMap<>();
         for (int i = 0; i < createProjectRequirements.trade.size(); i++) {
-            tradesBudget.put(tradeJobs.get(i), Money.of(createProjectRequirements.amount.get(i), Currency.valueOf(createProjectRequirements.currency)));
+            tradesBudget.put(tradeJobs.get(i), Money.of(createProjectRequirements.amount.get(i), CurrencyCreator.getValueOf(createProjectRequirements.currency)));
         }
 
         Map<TradeJobs, Duration> tradesDuration = new ConcurrentHashMap<>();

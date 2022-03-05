@@ -30,6 +30,7 @@ public final class ProjectController {
     public ResponseEntity<ProjectId> create(@RequestBody @Valid ProjectRequest request) throws ValidationException {
         CreateProject createProject = new CreateProject(request.name, request.description);
         ProjectId projectId = createProjectCommandHandler.handle(createProject);
+        System.out.println(projectId);
         return ResponseEntity.status(HttpStatus.CREATED).body(projectId);
     }
 }

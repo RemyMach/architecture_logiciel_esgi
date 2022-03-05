@@ -45,6 +45,7 @@ public class BasicExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleTypeMismatchException(MethodArgumentNotValidException e) {
+        System.out.println(e);
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(ExpositionExceptionsDictionaryMapper.codeToExpositionErrors);
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors().forEach(error -> {
@@ -61,6 +62,7 @@ public class BasicExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<CustomErrorResponse> globalExceptionHandler(Exception e) {
+        System.out.println(e);
         CustomErrorResponseCreator customErrorResponseCreator = new CustomErrorResponseCreator(DomainExceptionsDictionaryMapper.codeToExpositionErrors);
         CustomErrorResponse customErrorResponse = customErrorResponseCreator.create("");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(customErrorResponse);

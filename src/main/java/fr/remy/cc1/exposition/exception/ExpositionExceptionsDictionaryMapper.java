@@ -1,5 +1,10 @@
 package fr.remy.cc1.exposition.exception;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 public class ExpositionExceptionsDictionaryMapper {
@@ -26,6 +31,22 @@ public class ExpositionExceptionsDictionaryMapper {
             Map.entry( "card_parameters_empty_or_null" ,"Card can't be null or empty"),
             Map.entry( "paypal_parameters_empty_or_null" ,"Paypal can't be null or empty"),
             Map.entry( "company_name_empty_null" ,"Company name can't be null or empty"),
-            Map.entry( "company_siren_empty_null" ,"Company Siren can't be null or empty")
+            Map.entry( "company_siren_empty_null" ,"Company Siren can't be null or empty"),
+            Map.entry("description_empty_null", "the project description is null or empty"),
+            Map.entry("name_empty_null", "the project name is empty or null"),
+            Map.entry( "project_empty_null" ,"Paypal can't be null or empty"),
+            Map.entry( "trades_empty_null" ,"trade can't be null or empty"),
+            Map.entry( "skills_empty_null" ,"Skillsn can't be null or empty"),
+            Map.entry("currency_empty_null", "the currency can't be empty or null"),
+            Map.entry("address_empty_null", "the adress can't be  empty or null"),
+            Map.entry("duration_empty_null", "the duration can't be empty or null"),
+            Map.entry("durationUnit_empty_null", "the duration unit can\'t be empty or null"),
+            Map.entry( "project_id_empty_null" ,"Company name can't be null or empty"),
+            Map.entry( "tradesmen_id_empty_null" ,"Tradesman empty or null"),
+            Map.entry("trade_job_empty_null", "trade job empty or null"),
+            Map.entry("daily_rate_empty_null", "daily rate empty or null"),
+            Map.entry("start_dates_empty_null", "start dates empty or null"),
+            Map.entry("end_dates_empty_null", "end date empty or null")
+
     );
 }
