@@ -31,6 +31,6 @@ public class ExceptionsDictionary {
     public static final ValidationException CERTIFICATE_SKILLS_VALIDATION_ERROR = new ValidationException("certificate_skills_validation_error", "the certificate must have skills");
 
     // Tradesman scheduler
-    public static final ValidationException WRONG_DATES_ORDER = new ValidationException("WRONG_DATE_ORDER", "the start date must be before the end date");
-    public static final ValidationException TRADESMAN_ALREADY_TAKEN = new ValidationException("tra_desman_already_taken", "the tradesman is already taken with the given date range");
+    public static final ValidationException WRONG_DATES_ORDER = new ValidationException("wrong_dates_order", "the start date must be before the end date");
+    public static final ValidationException TRADESMAN_ALREADY_TAKEN = new ValidationException("tradesman_already_taken", "the tradesman is already taken with the given date range");
 }
