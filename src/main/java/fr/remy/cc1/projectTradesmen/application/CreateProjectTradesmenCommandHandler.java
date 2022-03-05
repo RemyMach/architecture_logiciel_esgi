@@ -57,12 +57,9 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
         ProjectTradesmen projectTradesmen;
 
         TradesmanScheduleCandidate tradesmanScheduleCandidate;
-        TradesmanSchedule tradesmanSchedule = null;
+        TradesmanSchedule tradesmanSchedule;
 
-        try {
-            this.projects.byId(projectId);
-        } catch (NoSuchEntityException ignored) {
-        }
+        this.projects.byId(projectId);
 
         List<TradesmenInformations> tradesmenInformations = new ArrayList<>();
         for (int i = 0; i < command.tradesmenId.size(); i++) {
@@ -71,25 +68,18 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
             dailyRate = Money.of(BigDecimal.valueOf(Long.parseLong(command.dailyRate.get(i))), Currency.valueOf(command.currency));
             dateRange = DateRange.of(Date.valueOf(command.startDates.get(i)), Date.valueOf(command.endDates.get(i)));
 
-            try {
-                user = users.byId(userId);
-                if (!user.getUserCategory().equals(UserCategory.TRADESMAN)) {
-                    throw new UserCategoryValidatorException(ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getErrorCode(), ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getMessage());
-                }
-            } catch (NoSuchEntityException e) {
-                throw new NoSuchEntityException(ExceptionsDictionary.USER_NOT_FOUND.getErrorCode(), ExceptionsDictionary.USER_NOT_FOUND.getMessage());
+            user = users.byId(userId);
+            if (!user.getUserCategory().equals(UserCategory.TRADESMAN)) {
+                throw new UserCategoryValidatorException(ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getErrorCode(), ExceptionsDictionary.USER_CATEGORY_NOT_VALID.getMessage());
             }
 
             if (!DateRangeValidationEngine.getInstance().isValid(dateRange)) {
                 throw new UserCategoryValidatorException(ExceptionsDictionary.WRONG_DATES_ORDER.getErrorCode(), ExceptionsDictionary.WRONG_DATES_ORDER.getMessage());
             }
 
-            try {
-                tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
-                if (!DateRangeValidationEngine.getInstance().isValid(dateRange, tradesmanSchedule)) {
-                    throw new UserCategoryValidatorException(ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getErrorCode(), ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getMessage());
-                }
-            } catch (NoSuchEntityException ignored) {
+            tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
+            if (!DateRangeValidationEngine.getInstance().isValid(dateRange, tradesmanSchedule)) {
+                throw new UserCategoryValidatorException(ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getErrorCode(), ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getMessage());
             }
 
             tradesmenInformations.add(TradesmenInformations.of(userId, tradeJobs, dailyRate, dateRange));
