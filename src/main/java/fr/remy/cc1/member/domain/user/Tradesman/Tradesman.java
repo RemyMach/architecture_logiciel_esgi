@@ -18,7 +18,6 @@ public final class Tradesman implements IUser {
     private final Email email;
     private final Password password;
 
-    //InMemory -> User(User_Category) -> Tradesman(userId)
     private final List<TradeJobs> trade;
     private final List<Skill> skills;
     private final List<Country> availabilityZone;
