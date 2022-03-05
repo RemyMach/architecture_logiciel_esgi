@@ -17,8 +17,8 @@ public final class ProjectTradesmenRequest {
     @NotBlank(message = "trade_job_empty_null")
     public List<String> tradeJob;
 
-    @NotNull(message = "trade_job_empty_null")
-    @NotBlank(message = "trade_job_empty_null")
+    @NotNull(message = "daily_rate_empty_null")
+    @NotBlank(message = "daily_rate_empty_null")
     public List<String> dailyRate;
 
     @NotNull(message = "currency_empty_null")
