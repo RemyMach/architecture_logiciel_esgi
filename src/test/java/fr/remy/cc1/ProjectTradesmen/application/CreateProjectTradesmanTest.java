@@ -90,7 +90,7 @@ public class CreateProjectTradesmanTest {
 
     @Test
     @DisplayName("Shouldn't create a project tradesmen because the user is not a tradesman")
-    void projectsTradesmenIsntCreated() throws ValidationException, NoSuchEntityException {
+    void projectsTradesmenIsntCreated() {
         assertEquals(0, projectsTradesmen.findAll().size());
 
         tradesmenIdStub = List.of("3");
