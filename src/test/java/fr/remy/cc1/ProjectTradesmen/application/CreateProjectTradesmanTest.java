@@ -1,6 +1,5 @@
 package fr.remy.cc1.ProjectTradesmen.application;
 
-import fr.remy.cc1.ProjectTradesmen.application.ProjectTradesmenCreationStub;
 import fr.remy.cc1.domain.User;
 import fr.remy.cc1.infrastructure.InMemory.TradesmanSchedulesData;
 import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
@@ -13,6 +12,8 @@ import fr.remy.cc1.member.domain.user.Password;
 import fr.remy.cc1.member.domain.user.UserCategory;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
+import fr.remy.cc1.project.domain.project.Project;
+import fr.remy.cc1.project.domain.project.ProjectState;
 import fr.remy.cc1.project.domain.project.Projects;
 import fr.remy.cc1.project.infrastructure.InMemoryProjects;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmen;
@@ -23,7 +24,6 @@ import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanSchedules;
 import fr.remy.cc1.projectTradesmen.infrastructure.InMemoryProjectTradesmen;
 import fr.remy.cc1.projectTradesmen.infrastructure.ProjectTradesmenCreationEventBus;
 import fr.remy.cc1.projectTradesmen.infrastructure.scheduler.InMemoryTradesmanSchedule;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,6 +73,8 @@ public class CreateProjectTradesmanTest {
         users.save(User.of(users.nextIdentity(), "Quentin", "ROUVILLE", new Email("qrouville@gmail.com"), new Password("aZertyu9?"), UserCategory.ofCode("tradesman")));
         users.save(User.of(users.nextIdentity(), "Quentin", "MOLERO", new Email("minecraft123@gmail.com"), new Password("aZertyu9?"), UserCategory.ofCode("tradesman")));
         users.save(User.of(users.nextIdentity(), "Thomas", "SAMAAN", new Email("th0mas@outlook.com"), new Password("aZertyu9?"), UserCategory.ofCode("contractor")));
+
+        projects.save(Project.of(projects.nextIdentity(), ProjectState.CREATED, "Facade renewal", "Renovation of the facade of the house"));
 
         ProjectTradesmenCreationStub.initProjectTradesmenCreationTest();
     }

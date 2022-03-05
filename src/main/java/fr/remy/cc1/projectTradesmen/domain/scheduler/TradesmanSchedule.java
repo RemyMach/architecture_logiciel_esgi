@@ -3,12 +3,14 @@ package fr.remy.cc1.projectTradesmen.domain.scheduler;
 import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.projectTradesmen.domain.dateRange.DateRange;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public final class TradesmanSchedule {
     private final UserId tradesmanId;
-    private final List<DateRange> unavailableDates;
+    private List<DateRange> unavailableDates;
 
     private TradesmanSchedule(UserId tradesmanId, List<DateRange> unavailableDates) {
         this.tradesmanId = Objects.requireNonNull(tradesmanId);
@@ -28,7 +30,9 @@ public final class TradesmanSchedule {
     }
 
     public void addUnavailableDate(DateRange dateRange) {
-        unavailableDates.add(dateRange);
+        List<DateRange> newUnavailableDates = new ArrayList(List.of(unavailableDates));
+        newUnavailableDates.add(dateRange);
+        unavailableDates = newUnavailableDates;
     }
 
     @Override

@@ -77,24 +77,22 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
                 throw new UserCategoryValidatorException(ExceptionsDictionary.WRONG_DATES_ORDER.getErrorCode(), ExceptionsDictionary.WRONG_DATES_ORDER.getMessage());
             }
 
-            tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
-            if (!DateRangeValidationEngine.getInstance().isValid(dateRange, tradesmanSchedule)) {
-                throw new UserCategoryValidatorException(ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getErrorCode(), ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getMessage());
-            }
-
             tradesmenInformations.add(TradesmenInformations.of(userId, tradeJobs, dailyRate, dateRange));
             tradesmanScheduleCandidate = TradesmanScheduleCandidate.of(dateRange);
 
             try {
                 tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
-                tradesmanSchedule.addUnavailableDate(tradesmanScheduleCandidate.unavailableDate);
             }
             catch (NoSuchEntityException ignored) {
                 tradesmanSchedule = TradesmanSchedule.of(userId, List.of(tradesmanScheduleCandidate.unavailableDate));
             }
-            finally {
-                tradesmanSchedules.save(tradesmanSchedule);
+
+            if (!DateRangeValidationEngine.getInstance().isValid(dateRange, tradesmanSchedule)) {
+                throw new UserCategoryValidatorException(ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getErrorCode(), ExceptionsDictionary.TRADESMAN_ALREADY_TAKEN.getMessage());
             }
+
+            tradesmanSchedule.addUnavailableDate(tradesmanScheduleCandidate.unavailableDate);
+            tradesmanSchedules.save(tradesmanSchedule);
         }
 
         projectTradesmenCandidates = ProjectTradesmenCandidate.of(projectId, tradesmenInformations);
