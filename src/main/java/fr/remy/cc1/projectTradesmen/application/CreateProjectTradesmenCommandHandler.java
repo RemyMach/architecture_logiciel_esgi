@@ -101,6 +101,7 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
         this.projectsTradesmen.save(projectTradesmen);
         this.eventBus.send(RegisteredProjectTradesmenRequirementsEvent.withProjectId(new ProjectTradesmenDTO(projectTradesmenId, projectTradesmen.getHistory())));
         System.out.println(this.projectsTradesmen.findAll());
+        System.out.println(this.tradesmanSchedules.findAll());
         return projectTradesmenId;
     }
 }

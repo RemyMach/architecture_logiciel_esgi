@@ -26,6 +26,12 @@ public class ExpositionExceptionsDictionaryMapper {
             Map.entry( "card_parameters_empty_or_null" ,"Card can't be null or empty"),
             Map.entry( "paypal_parameters_empty_or_null" ,"Paypal can't be null or empty"),
             Map.entry( "company_name_empty_null" ,"Company name can't be null or empty"),
-            Map.entry( "company_siren_empty_null" ,"Company Siren can't be null or empty")
+            Map.entry( "project_id_empty_null" ,"Project ID can't be null or empty"),
+            Map.entry( "tradesmen_id_empty_null" ,"Tradesman's user ID can't be null or empty"),
+            Map.entry( "daily_rate_empty_null" ,"Daily rates can't be null or empty"),
+            Map.entry( "start_dates_empty_null" ,"Start dates can't be null or empty"),
+            Map.entry( "end_dates_empty_null" ,"End dates can't be null or empty"),
+            Map.entry( "trade_job_empty_null" ,"Trade jobs can't be null or empty"),
+            Map.entry( "currency_empty_null" ,"Currency can't be null or empty")
     );
 }
