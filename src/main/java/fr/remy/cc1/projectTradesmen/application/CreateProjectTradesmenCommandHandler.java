@@ -84,7 +84,7 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
                 tradesmanSchedule = tradesmanSchedules.findByTradesmanId(userId);
             }
             catch (NoSuchEntityException ignored) {
-                tradesmanSchedule = TradesmanSchedule.of(userId, List.of(tradesmanScheduleCandidate.unavailableDate));
+                tradesmanSchedule = TradesmanSchedule.of(userId);
             }
 
             if (!DateRangeValidationEngine.getInstance().isValid(dateRange, tradesmanSchedule)) {

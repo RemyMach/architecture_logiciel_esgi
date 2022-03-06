@@ -11,13 +11,13 @@ public final class TradesmanSchedule {
     private final UserId tradesmanId;
     private List<DateRange> unavailableDates;
 
-    private TradesmanSchedule(UserId tradesmanId, List<DateRange> unavailableDates) {
+    private TradesmanSchedule(UserId tradesmanId) {
         this.tradesmanId = Objects.requireNonNull(tradesmanId);
-        this.unavailableDates = Objects.requireNonNull(unavailableDates);
+        this.unavailableDates = new ArrayList<>();
     }
 
-    public static TradesmanSchedule of(UserId tradesmanId, List<DateRange> unavailableDates) {
-        return new TradesmanSchedule(tradesmanId, unavailableDates);
+    public static TradesmanSchedule of(UserId tradesmanId) {
+        return new TradesmanSchedule(tradesmanId);
     }
 
     public UserId getTradesmanId() {
@@ -25,11 +25,11 @@ public final class TradesmanSchedule {
     }
 
     public List<DateRange> getUnavailableDates() {
-        return unavailableDates;
+        return new ArrayList(unavailableDates);
     }
 
     public void addUnavailableDate(DateRange dateRange) {
-        List<DateRange> newUnavailableDates = new ArrayList(List.of(unavailableDates));
+        List<DateRange> newUnavailableDates = new ArrayList(unavailableDates);
         newUnavailableDates.add(dateRange);
         unavailableDates = newUnavailableDates;
     }
