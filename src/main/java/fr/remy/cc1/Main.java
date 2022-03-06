@@ -106,7 +106,7 @@ public class Main {
     private static Map<Class, List<Subscriber>> initSubscriptionMap(EmailSender emailSender, Invoices invoices, Users users) {
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
-                new SubscriptionSuccessTerminatedEventMessengerSubscription(emailSender),
+                new SubscriptionPaymentSuccessTerminatedEventMessengerSubscription(emailSender),
                 new SubscriptionSuccessTerminatedEventInvoiceSubscription(invoices, users)
         );
 
@@ -117,7 +117,7 @@ public class Main {
 
         return Map.of(
                 RegisteredTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(emailSender)),
-                SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
+                SubscriptionPaymentSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
     }

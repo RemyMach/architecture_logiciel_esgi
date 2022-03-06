@@ -4,6 +4,7 @@ import fr.remy.cc1.certificate.application.RetrieveCertificateById;
 import fr.remy.cc1.certificate.application.RetrieveCertificateByIdHandler;
 import fr.remy.cc1.certificate.domain.Certificate;
 import fr.remy.cc1.certificate.domain.CertificateId;
+import fr.remy.cc1.domain.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,10 @@ public class CertificateController {
         this.retrieveCertificateByIdHandler = retrieveCertificateByIdHandler;
     }
 
-    @GetMapping(path = "/{certificateId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<CertificateResponse> getCertificateById(@PathVariable("certificateId") int certificateId) throws Exception {
-        final Certificate certificate = this.retrieveCertificateByIdHandler.handle(new RetrieveCertificateById(CertificateId.of(certificateId)));
-        System.out.println(certificate);
+    @GetMapping(path = "/{certificateId}/users/{userId}",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<CertificateResponse> getCertificateById(@PathVariable("certificateId") int certificateId, @PathVariable("userId") int userId) throws Exception {
+        final Certificate certificate = this.retrieveCertificateByIdHandler.handle(new RetrieveCertificateById(CertificateId.of(certificateId), UserId.of(userId)));
         CertificateResponse certificateResponse = new CertificateResponse(certificate.getCertificateId().getValue(), certificate.getName(), certificate.getLink(), certificate.getSkills());
-        System.out.println(certificateResponse);
         return ResponseEntity.ok(certificateResponse);
     }
 }
