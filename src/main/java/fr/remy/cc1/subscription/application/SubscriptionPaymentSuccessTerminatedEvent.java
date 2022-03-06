@@ -10,7 +10,7 @@ import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 
 import java.time.ZonedDateTime;
 
-public class SubscriptionSuccessTerminatedEvent implements Event, ApplicationEvent {
+public class SubscriptionPaymentSuccessTerminatedEvent implements Event, ApplicationEvent {
 
     private final EventId eventId;
     private final ZonedDateTime occurredDate;
@@ -19,7 +19,7 @@ public class SubscriptionSuccessTerminatedEvent implements Event, ApplicationEve
     private final SubscriptionOffer subscriptionOffer;
     private final Money money;
 
-    private SubscriptionSuccessTerminatedEvent(EventId eventId, ZonedDateTime occurredDate, UserId userId, SubscriptionOffer subscriptionOffer, Money money, UserDTO userDTO) {
+    private SubscriptionPaymentSuccessTerminatedEvent(EventId eventId, ZonedDateTime occurredDate, UserId userId, SubscriptionOffer subscriptionOffer, Money money, UserDTO userDTO) {
         this.eventId = eventId;
         this.occurredDate = occurredDate;
         this.userId = userId;
@@ -29,8 +29,8 @@ public class SubscriptionSuccessTerminatedEvent implements Event, ApplicationEve
     }
 
 
-    public static SubscriptionSuccessTerminatedEvent of(UserId userId, SubscriptionOffer subscriptionOffer, Money money, UserDTO userDTO) {
-        return new SubscriptionSuccessTerminatedEvent(EventId.create(), ZonedDateTime.now(), userId, subscriptionOffer, money, userDTO);
+    public static SubscriptionPaymentSuccessTerminatedEvent of(UserId userId, SubscriptionOffer subscriptionOffer, Money money, UserDTO userDTO) {
+        return new SubscriptionPaymentSuccessTerminatedEvent(EventId.create(), ZonedDateTime.now(), userId, subscriptionOffer, money, userDTO);
     }
 
     @Override

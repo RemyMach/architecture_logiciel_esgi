@@ -3,8 +3,8 @@ package fr.remy.cc1.domain;
 import fr.remy.cc1.member.application.*;
 import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEvent;
 import fr.remy.cc1.subscription.application.SubscriptionPaymentFailedEventMessengerSubscription;
-import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEvent;
-import fr.remy.cc1.subscription.application.SubscriptionSuccessTerminatedEventMessengerSubscription;
+import fr.remy.cc1.subscription.application.SubscriptionPaymentSuccessTerminatedEvent;
+import fr.remy.cc1.subscription.application.SubscriptionPaymentSuccessTerminatedEventMessengerSubscription;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
@@ -36,7 +36,7 @@ public class UserCreationStub {
         MockEmailSender mockEmailSender = MockEmailSender.getInstance();
 
         List<Subscriber> subscriptionSuccessfulEventSubscriptions = Arrays.asList(
-                new SubscriptionSuccessTerminatedEventMessengerSubscription(mockEmailSender),
+                new SubscriptionPaymentSuccessTerminatedEventMessengerSubscription(mockEmailSender),
                 new SubscriptionSuccessTerminatedEventInvoiceSubscription(invoices, users)
         );
 
@@ -48,7 +48,7 @@ public class UserCreationStub {
         Map<Class, List<Subscriber>> subscriptionMap = Map.of(
                 RegisteredContractorEvent.class, Collections.singletonList(new RegisteredContractorEventMessengerSubscription(mockEmailSender)),
                 RegisteredTradesmanEvent.class, Collections.singletonList(new RegisteredTradesmanEventMessengerSubscription(mockEmailSender)),
-                SubscriptionSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
+                SubscriptionPaymentSuccessTerminatedEvent.class, Collections.unmodifiableList(subscriptionSuccessfulEventSubscriptions),
                 SubscriptionPaymentFailedEvent.class, Collections.unmodifiableList(subscriptionPaymentFailedEventSubscriptions)
         );
 

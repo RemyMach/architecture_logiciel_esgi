@@ -7,17 +7,17 @@ import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.member.application.UserDTO;
 import fr.remy.cc1.member.domain.user.Email;
 
-public class SubscriptionSuccessTerminatedEventMessengerSubscription implements Subscriber<SubscriptionSuccessTerminatedEvent> {
+public class SubscriptionPaymentSuccessTerminatedEventMessengerSubscription implements Subscriber<SubscriptionPaymentSuccessTerminatedEvent> {
 
     private final EmailSender emailSender;
 
-    public SubscriptionSuccessTerminatedEventMessengerSubscription(EmailSender emailSender) {
+    public SubscriptionPaymentSuccessTerminatedEventMessengerSubscription(EmailSender emailSender) {
         this.emailSender = emailSender;
     }
 
     @Override
-    public void accept(SubscriptionSuccessTerminatedEvent subscriptionSuccessTerminatedEvent) {
-        this.sendMail(subscriptionSuccessTerminatedEvent.getUserDTO());
+    public void accept(SubscriptionPaymentSuccessTerminatedEvent subscriptionPaymentSuccessTerminatedEvent) {
+        this.sendMail(subscriptionPaymentSuccessTerminatedEvent.getUserDTO());
     }
 
     private void sendMail(UserDTO userDTO) {
