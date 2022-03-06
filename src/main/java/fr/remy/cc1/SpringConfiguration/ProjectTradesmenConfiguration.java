@@ -1,7 +1,5 @@
 package fr.remy.cc1.SpringConfiguration;
 
-import fr.remy.cc1.infrastructure.InMemory.TradesmanSchedulesData;
-import fr.remy.cc1.infrastructure.InMemory.TradesmansData;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.member.domain.user.Users;
@@ -10,11 +8,11 @@ import fr.remy.cc1.projectTradesmen.application.ActivateProjectTradesmenEventMes
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmenCommandHandler;
 import fr.remy.cc1.projectTradesmen.application.RegisteredProjectTradesmenRequirementsEvent;
 import fr.remy.cc1.projectTradesmen.domain.ProjectsTradesmen;
-import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanSchedule;
 import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanSchedules;
 import fr.remy.cc1.projectTradesmen.infrastructure.InMemoryProjectTradesmen;
+import fr.remy.cc1.projectTradesmen.infrastructure.InMemoryTradesmanSchedule;
 import fr.remy.cc1.projectTradesmen.infrastructure.ProjectTradesmenCreationEventBus;
-import fr.remy.cc1.projectTradesmen.infrastructure.scheduler.InMemoryTradesmanSchedule;
+import fr.remy.cc1.shared.infrastructure.InMemory.TradesmanSchedulesData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

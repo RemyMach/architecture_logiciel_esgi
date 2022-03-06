@@ -1,7 +1,7 @@
 package fr.remy.cc1.member.application;
 
-import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.member.domain.user.Email;
+import fr.remy.cc1.shared.domain.UserId;
 
 public class UserDTO {
     public final UserId id;

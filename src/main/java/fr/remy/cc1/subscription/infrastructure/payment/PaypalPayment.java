@@ -1,6 +1,6 @@
 package fr.remy.cc1.subscription.infrastructure.payment;
 
-import fr.remy.cc1.domain.money.Money;
+import fr.remy.cc1.shared.domain.money.Money;
 import fr.remy.cc1.subscription.domain.Payment;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccount;
 

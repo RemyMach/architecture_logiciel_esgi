@@ -4,7 +4,7 @@ import fr.remy.cc1.certificate.application.RetrieveCertificateById;
 import fr.remy.cc1.certificate.application.RetrieveCertificateByIdHandler;
 import fr.remy.cc1.certificate.domain.Certificate;
 import fr.remy.cc1.certificate.domain.CertificateId;
-import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.shared.domain.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

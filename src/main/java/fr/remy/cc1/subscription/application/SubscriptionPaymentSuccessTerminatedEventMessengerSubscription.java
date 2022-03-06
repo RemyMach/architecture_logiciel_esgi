@@ -1,11 +1,11 @@
 package fr.remy.cc1.subscription.application;
 
-import fr.remy.cc1.domain.mail.Content;
-import fr.remy.cc1.domain.mail.EmailSender;
-import fr.remy.cc1.domain.mail.Message;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.member.application.UserDTO;
 import fr.remy.cc1.member.domain.user.Email;
+import fr.remy.cc1.shared.domain.mail.Content;
+import fr.remy.cc1.shared.domain.mail.EmailSender;
+import fr.remy.cc1.shared.domain.mail.Message;
 
 public class SubscriptionPaymentSuccessTerminatedEventMessengerSubscription implements Subscriber<SubscriptionPaymentSuccessTerminatedEvent> {
 

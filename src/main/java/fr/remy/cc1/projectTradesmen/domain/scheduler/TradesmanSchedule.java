@@ -1,10 +1,9 @@
 package fr.remy.cc1.projectTradesmen.domain.scheduler;
 
-import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.projectTradesmen.domain.dateRange.DateRange;
+import fr.remy.cc1.shared.domain.UserId;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 

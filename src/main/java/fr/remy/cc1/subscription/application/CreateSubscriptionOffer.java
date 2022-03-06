@@ -1,7 +1,7 @@
 package fr.remy.cc1.subscription.application;
 
-import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.kernel.Command;
+import fr.remy.cc1.shared.domain.UserId;
 
 import java.math.BigDecimal;
 

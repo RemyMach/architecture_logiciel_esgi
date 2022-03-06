@@ -1,6 +1,6 @@
 package fr.remy.cc1.projectTradesmen.domain;
 
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.shared.infrastructure.exceptions.NoSuchEntityException;
 
 import java.util.List;
 

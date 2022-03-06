@@ -1,11 +1,5 @@
 package fr.remy.cc1;
 
-import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.domain.mail.EmailSender;
-import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
-import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
-import fr.remy.cc1.infrastructure.InMemory.UsersData;
-import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.kernel.event.Subscriber;
 import fr.remy.cc1.member.application.CreateTradesman;
 import fr.remy.cc1.member.application.CreateTradesmanCommandHandler;
@@ -16,6 +10,12 @@ import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.member.infrastructure.tradesman.InMemoryTradesmans;
 import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.shared.domain.UserId;
+import fr.remy.cc1.shared.domain.mail.EmailSender;
+import fr.remy.cc1.shared.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.shared.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.shared.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.shared.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.subscription.application.*;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;

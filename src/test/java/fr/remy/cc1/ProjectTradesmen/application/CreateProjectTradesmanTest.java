@@ -1,10 +1,10 @@
 package fr.remy.cc1.ProjectTradesmen.application;
 
-import fr.remy.cc1.domain.User;
-import fr.remy.cc1.infrastructure.InMemory.TradesmanSchedulesData;
-import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
-import fr.remy.cc1.infrastructure.InMemory.UsersData;
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.shared.domain.User;
+import fr.remy.cc1.shared.infrastructure.InMemory.TradesmanSchedulesData;
+import fr.remy.cc1.shared.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.shared.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.shared.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.UserCategoryValidatorException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.member.domain.user.Email;
@@ -23,7 +23,7 @@ import fr.remy.cc1.projectTradesmen.domain.ProjectsTradesmen;
 import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanSchedules;
 import fr.remy.cc1.projectTradesmen.infrastructure.InMemoryProjectTradesmen;
 import fr.remy.cc1.projectTradesmen.infrastructure.ProjectTradesmenCreationEventBus;
-import fr.remy.cc1.projectTradesmen.infrastructure.scheduler.InMemoryTradesmanSchedule;
+import fr.remy.cc1.projectTradesmen.infrastructure.InMemoryTradesmanSchedule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

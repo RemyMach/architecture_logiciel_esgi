@@ -1,6 +1,6 @@
 package fr.remy.cc1.subscription.infrastructure.creditcards;
 
-import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.shared.domain.UserId;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCardId;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCards;

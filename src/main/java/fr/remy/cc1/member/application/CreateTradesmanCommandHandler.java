@@ -1,7 +1,5 @@
 package fr.remy.cc1.member.application;
 
-import fr.remy.cc1.domain.User;
-import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.kernel.event.Event;
@@ -13,6 +11,8 @@ import fr.remy.cc1.member.domain.user.Tradesman.TradesmanCreationCandidate;
 import fr.remy.cc1.member.domain.user.Tradesman.Tradesmans;
 import fr.remy.cc1.member.domain.user.UserCategory;
 import fr.remy.cc1.member.domain.user.Users;
+import fr.remy.cc1.shared.domain.User;
+import fr.remy.cc1.shared.domain.UserId;
 
 public class CreateTradesmanCommandHandler implements CommandHandler<CreateTradesman, UserId> {
 

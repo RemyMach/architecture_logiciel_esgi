@@ -1,10 +1,10 @@
 package fr.remy.cc1.projectTradesmen.exposition;
 
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmen;
 import fr.remy.cc1.projectTradesmen.application.CreateProjectTradesmenCommandHandler;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmenId;
+import fr.remy.cc1.shared.infrastructure.exceptions.NoSuchEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

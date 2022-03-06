@@ -1,5 +1,5 @@
 package fr.remy.cc1.subscription.domain.paypal;
-import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.shared.domain.UserId;
 
 public interface PaypalAccounts {
     void save(PaypalAccount paypalAccount);

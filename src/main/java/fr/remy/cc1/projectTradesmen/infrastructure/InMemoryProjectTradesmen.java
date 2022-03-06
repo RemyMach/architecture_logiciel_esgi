@@ -1,10 +1,10 @@
 package fr.remy.cc1.projectTradesmen.infrastructure;
 
-import fr.remy.cc1.infrastructure.exceptions.InfrastructureExceptionsDictionary;
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmen;
 import fr.remy.cc1.projectTradesmen.domain.ProjectTradesmenId;
 import fr.remy.cc1.projectTradesmen.domain.ProjectsTradesmen;
+import fr.remy.cc1.shared.infrastructure.exceptions.InfrastructureExceptionsDictionary;
+import fr.remy.cc1.shared.infrastructure.exceptions.NoSuchEntityException;
 
 import java.util.List;
 import java.util.Map;

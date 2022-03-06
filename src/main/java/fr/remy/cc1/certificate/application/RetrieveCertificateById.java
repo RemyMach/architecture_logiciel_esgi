@@ -1,8 +1,8 @@
 package fr.remy.cc1.certificate.application;
 
 import fr.remy.cc1.certificate.domain.CertificateId;
-import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.kernel.Query;
+import fr.remy.cc1.shared.domain.UserId;
 
 public class RetrieveCertificateById implements Query {
     public final CertificateId certificateId;

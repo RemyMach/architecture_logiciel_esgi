@@ -1,7 +1,7 @@
 package fr.remy.cc1.certificate.domain;
 
-import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.shared.domain.UserId;
+import fr.remy.cc1.shared.infrastructure.exceptions.NoSuchEntityException;
 
 import java.util.List;
 

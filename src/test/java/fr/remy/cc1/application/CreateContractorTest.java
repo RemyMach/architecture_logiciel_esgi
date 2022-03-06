@@ -1,18 +1,18 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
-import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
-import fr.remy.cc1.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.shared.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.shared.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.shared.infrastructure.InMemory.UsersData;
 import fr.remy.cc1.member.application.CreateContractor;
 import fr.remy.cc1.member.application.CreateContractorCommandHandler;
-import fr.remy.cc1.domain.UserCreationStub;
+import fr.remy.cc1.shared.domain.UserCreationStub;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
-import fr.remy.cc1.domain.mail.MockEmailSender;
-import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.shared.domain.mail.MockEmailSender;
+import fr.remy.cc1.shared.domain.UserId;
 import fr.remy.cc1.member.domain.user.Users;
 import fr.remy.cc1.member.domain.user.contractor.Contractors;
 import fr.remy.cc1.member.infrastructure.contractor.InMemoryContractors;
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.shared.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.subscription.infrastructure.invoices.InMemoryInvoices;
 import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;

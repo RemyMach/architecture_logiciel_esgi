@@ -1,10 +1,5 @@
 package fr.remy.cc1.projectTradesmen.application;
 
-import fr.remy.cc1.domain.User;
-import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.domain.money.Money;
-import fr.remy.cc1.domain.trade.TradeJobs;
-import fr.remy.cc1.infrastructure.exceptions.NoSuchEntityException;
 import fr.remy.cc1.kernel.CommandHandler;
 import fr.remy.cc1.kernel.error.ExceptionsDictionary;
 import fr.remy.cc1.kernel.error.UserCategoryValidatorException;
@@ -21,7 +16,12 @@ import fr.remy.cc1.projectTradesmen.domain.dateRange.DateRangeValidationEngine;
 import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanSchedule;
 import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanScheduleCandidate;
 import fr.remy.cc1.projectTradesmen.domain.scheduler.TradesmanSchedules;
-import fr.remy.cc1.subscription.domain.currency.Currency;
+import fr.remy.cc1.shared.domain.User;
+import fr.remy.cc1.shared.domain.UserId;
+import fr.remy.cc1.shared.domain.money.Money;
+import fr.remy.cc1.shared.domain.trade.TradeJobs;
+import fr.remy.cc1.shared.infrastructure.exceptions.NoSuchEntityException;
+import fr.remy.cc1.subscription.domain.currency.CurrencyCreator;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -65,7 +65,7 @@ public final class CreateProjectTradesmenCommandHandler implements CommandHandle
         for (int i = 0; i < command.tradesmenId.size(); i++) {
             userId = UserId.of(Integer.parseInt(command.tradesmenId.get(i)));
             tradeJobs = TradeJobs.getTradeFromJobName(command.tradeJob.get(i));
-            dailyRate = Money.of(BigDecimal.valueOf(Long.parseLong(command.dailyRate.get(i))), Currency.valueOf(command.currency));
+            dailyRate = Money.of(BigDecimal.valueOf(Long.parseLong(command.dailyRate.get(i))), CurrencyCreator.getValueOf(command.currency));
             dateRange = DateRange.of(Date.valueOf(command.startDates.get(i)), Date.valueOf(command.endDates.get(i)));
 
             user = users.byId(userId);

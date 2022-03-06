@@ -1,18 +1,18 @@
 package fr.remy.cc1.application;
 
-import fr.remy.cc1.domain.User;
-import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.infrastructure.InMemory.SubscriptionInvoiceData;
-import fr.remy.cc1.infrastructure.InMemory.UserSubscriptionsData;
-import fr.remy.cc1.infrastructure.InMemory.UsersData;
+import fr.remy.cc1.shared.domain.User;
+import fr.remy.cc1.shared.domain.UserId;
+import fr.remy.cc1.shared.infrastructure.InMemory.SubscriptionInvoiceData;
+import fr.remy.cc1.shared.infrastructure.InMemory.UserSubscriptionsData;
+import fr.remy.cc1.shared.infrastructure.InMemory.UsersData;
 import fr.remy.cc1.subscription.application.CreateSubscriptionOffer;
 import fr.remy.cc1.subscription.application.CreateSubscriptionOfferCommandHandler;
-import fr.remy.cc1.domain.UserCreationStub;
+import fr.remy.cc1.shared.domain.UserCreationStub;
 import fr.remy.cc1.subscription.domain.SubscriptionOffers;
 import fr.remy.cc1.subscription.domain.customer.SubscriptionOffer;
 import fr.remy.cc1.subscription.domain.invoice.Invoice;
 import fr.remy.cc1.subscription.domain.invoice.Invoices;
-import fr.remy.cc1.domain.mail.MockEmailSender;
+import fr.remy.cc1.shared.domain.mail.MockEmailSender;
 import fr.remy.cc1.subscription.domain.PaymentState;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCard;
 import fr.remy.cc1.subscription.domain.creditcard.CreditCards;

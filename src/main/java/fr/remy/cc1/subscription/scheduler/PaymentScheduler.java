@@ -1,9 +1,9 @@
 package fr.remy.cc1.subscription.scheduler;
 
-import fr.remy.cc1.domain.User;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
+import fr.remy.cc1.shared.domain.User;
 import fr.remy.cc1.subscription.application.payment.PaymentService;
 import fr.remy.cc1.subscription.domain.Payment;
 import fr.remy.cc1.subscription.domain.PaymentDirector;

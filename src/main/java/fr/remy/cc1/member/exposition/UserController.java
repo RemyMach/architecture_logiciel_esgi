@@ -1,11 +1,11 @@
 package fr.remy.cc1.member.exposition;
 
-import fr.remy.cc1.domain.UserId;
 import fr.remy.cc1.kernel.error.ValidationException;
 import fr.remy.cc1.member.application.CreateContractor;
 import fr.remy.cc1.member.application.CreateContractorCommandHandler;
 import fr.remy.cc1.member.application.CreateTradesman;
 import fr.remy.cc1.member.application.CreateTradesmanCommandHandler;
+import fr.remy.cc1.shared.domain.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

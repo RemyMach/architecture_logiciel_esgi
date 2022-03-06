@@ -1,12 +1,5 @@
 package fr.remy.cc1.SpringConfiguration;
 
-import fr.remy.cc1.domain.mail.EmailSender;
-import fr.remy.cc1.exposition.authentication.AuthMiddleware;
-import fr.remy.cc1.exposition.authentication.CreateAuthTokenCommandHandler;
-import fr.remy.cc1.exposition.authentication.Tokens;
-import fr.remy.cc1.infrastructure.InMemory.*;
-import fr.remy.cc1.infrastructure.authentication.token.InMemoryToken;
-import fr.remy.cc1.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.kernel.event.Event;
 import fr.remy.cc1.kernel.event.EventBus;
 import fr.remy.cc1.kernel.event.Subscriber;
@@ -18,6 +11,13 @@ import fr.remy.cc1.member.infrastructure.contractor.InMemoryContractors;
 import fr.remy.cc1.member.infrastructure.tradesman.InMemoryTradesmans;
 import fr.remy.cc1.member.infrastructure.user.InMemoryUsers;
 import fr.remy.cc1.member.infrastructure.user.UserCreationEventBus;
+import fr.remy.cc1.shared.domain.mail.EmailSender;
+import fr.remy.cc1.shared.exposition.authentication.AuthMiddleware;
+import fr.remy.cc1.shared.exposition.authentication.CreateAuthTokenCommandHandler;
+import fr.remy.cc1.shared.exposition.authentication.Tokens;
+import fr.remy.cc1.shared.infrastructure.InMemory.*;
+import fr.remy.cc1.shared.infrastructure.authentication.token.InMemoryToken;
+import fr.remy.cc1.shared.infrastructure.mail.SandboxMail;
 import fr.remy.cc1.subscription.application.*;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionPaymentFailedEventInvoiceSubscription;
 import fr.remy.cc1.subscription.application.invoice.SubscriptionSuccessTerminatedEventInvoiceSubscription;

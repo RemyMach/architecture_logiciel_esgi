@@ -1,7 +1,7 @@
 package fr.remy.cc1.subscription.domain.creditcard;
 
-import fr.remy.cc1.domain.mock.CountProcess;
-import fr.remy.cc1.domain.money.Money;
+import fr.remy.cc1.shared.domain.mock.CountProcess;
+import fr.remy.cc1.shared.domain.money.Money;
 import fr.remy.cc1.kernel.error.PaymentProcessValidationException;
 
 public class MockCreditCardBankAccountValidityMiddleware extends CreditCardBankAccountValidityMiddleware implements CountProcess {

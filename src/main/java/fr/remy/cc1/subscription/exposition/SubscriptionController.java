@@ -1,6 +1,6 @@
 package fr.remy.cc1.subscription.exposition;
 
-import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.shared.domain.UserId;
 import fr.remy.cc1.subscription.application.CreateSubscriptionOffer;
 import fr.remy.cc1.subscription.application.CreateSubscriptionOfferCommandHandler;
 import fr.remy.cc1.subscription.application.payment.CreatePayment;

@@ -1,7 +1,7 @@
 package fr.remy.cc1.subscription.domain.invoice;
 
-import fr.remy.cc1.domain.UserId;
-import fr.remy.cc1.domain.money.Money;
+import fr.remy.cc1.shared.domain.UserId;
+import fr.remy.cc1.shared.domain.money.Money;
 import fr.remy.cc1.subscription.domain.PaymentState;
 
 import java.time.ZonedDateTime;

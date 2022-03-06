@@ -1,6 +1,6 @@
 package fr.remy.cc1.subscription.infrastructure.paypalAccounts;
 
-import fr.remy.cc1.domain.UserId;
+import fr.remy.cc1.shared.domain.UserId;
 import fr.remy.cc1.subscription.domain.paypal.PayPalAccountId;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccount;
 import fr.remy.cc1.subscription.domain.paypal.PaypalAccounts;
